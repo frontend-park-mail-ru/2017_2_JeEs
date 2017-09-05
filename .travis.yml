@@ -1,0 +1,13 @@
+sudo: required
+dist: trusty
+language: node_js
+node_js: 7
+branches:
+  only:
+  - develop
+deploy:
+  provider: heroku
+  app:
+    master: jees-quoridor
+  api_key:
+    secure: YV+IxYz1qyIy+94MWaYujq/Yri1eP2ozS1Cd85O6+ERG5vMUK1kp3ZEJvZkXJ2vAhF3Z0r0ctHMij5YXZO7WYvAei4/Or+EwPJXX4JbHklFWu5RxvdZgZQS6MtxaxMcuuakiutVDC4wG2NUtV307aOTXaVKIbxos8RHffuQCGfj6B3hcfGEV3ro6uSXL+m7NBR9UQhXte+yhhL69mUW1UgkwX4L7xYaqTWIj2HfSM1S6mv3UJzykfOxGJHZvdYs71UIx6JSbVv5ONjT8stBViecn2uLSQD6V3WgQmpeSgK8B5JOsaQAqYo1Q4pxFr6FrIw4q8olPCiZ/yb4MOll+Q7j0EwhHThOZrYe8NJhSczYdnFsj7cOxlFDRvYTO5x0xcB1Z8H9J0Wnic22CpKlTx4tSEnR2pXSt2WJL4aRLDt9S2X7hw+4LmLl7DLnOnBJR/hlFuEWQfVcO3QRcjld3upCLO7LeLswAGT6ngikyWMOZkiR/zjVJLs1Xzxnd1JZ+OcujF9xCDxM5pqGppg67zj+OoPZVFgssvkS18jVXY3gURPZCB9Enq7OWdNgsvsCa91o+/kqOjtNK89PmyAJOsPCTgOI0KovWuGlRuTUaJCp/QDGqenE2pQTm+b21HpMXOqK44CwT1ZrpJNb8NhVUw2Hp6Rioeinv9H5+z58ejV0=
