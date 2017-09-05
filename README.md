@@ -10,7 +10,7 @@
 ## Members
 * [@barzug](https://github.com/barzug) - Барсуков Сергей
 * [@OkciD](https://github.com/OkciD) - Байков Юрий
-* [@EvgeniaNevtrinosova](https://github.com/EvgeniaNevtrinosova) - Невтриносова Евегения
+* [@EvgeniaNevtrinosova](https://github.com/EvgeniaNevtrinosova) - Невтриносова Евгения
 * [@erm0shin](https://github.com/erm0shin) - Ермошин Даниил
 
 ## Mentors
