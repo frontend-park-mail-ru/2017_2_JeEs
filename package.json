@@ -2,8 +2,9 @@
   "name": "JeEs",
   "version": "0.0.1",
   "description": "Quoridor",
-  "main": "index.js",
+  "main": "main.js",
   "scripts": {
+	"start": "node server/index.js",
     "test": "echo \"Error: no test specified\" && exit 0"
   },
   "repository": {
@@ -16,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/frontend-park-mail-ru/2017_2_JeEs/issues"
   },
-  "homepage": "https://github.com/frontend-park-mail-ru/2017_2_JeEs#readme"
+  "homepage": "https://github.com/frontend-park-mail-ru/2017_2_JeEs#readme",
+  "dependencies": {
+    "express": "^4.15.4"
+  }
 }
