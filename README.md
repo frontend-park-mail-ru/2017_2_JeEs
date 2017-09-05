@@ -6,6 +6,9 @@
 ## Master application [![Build Status](https://travis-ci.org/frontend-park-mail-ru/2017_2_JeEs.svg?branch=master)](https://travis-ci.org/frontend-park-mail-ru/2017_2_JeEs)
 ### [https://quoridor-jees.herokuapp.com](https://quoridor-jees.herokuapp.com)
 
+## Developed application [![Build Status](https://travis-ci.org/frontend-park-mail-ru/2017_2_JeEs.svg?branch=develop)](https://travis-ci.org/frontend-park-mail-ru/2017_2_JeEs)
+### [https://jees-quoridor.herokuapp.com](https://jees-quoridor.herokuapp.com)
+
 
 ## Members
 * [@barzug](https://github.com/barzug) - Барсуков Сергей
