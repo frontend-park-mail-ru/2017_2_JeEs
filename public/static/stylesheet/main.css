@@ -1,6 +1,6 @@
 @font-face {
-	font-family: DS Kork;
-	src: url("fonts/ds-kork.ttf");
+	font-family: Lombardia Regular;
+	src: url("/static/fonts/lombardia.ttf");
   	font-weight: normal;
   	font-style: normal;
 }
@@ -14,8 +14,8 @@ html, body {
 }
 
 .greeting {
-    /*font-family: --apple-system, Artial, sans-serif;*/
-    font-family: "DS Kork";
+    font-family: Lombardia Regular, sans-serif;
+	font-size: 56px;
 	transition: all .7s;
 }
 
