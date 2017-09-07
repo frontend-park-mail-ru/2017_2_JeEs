@@ -9,6 +9,6 @@ app.get('*', (req, res) => {
 	res.send('404');
 });
 
-app.listen(process.env.PORT || '8080', () => {
-	console.log('listen')
+let listener = app.listen(process.env.PORT || '8080', () => {
+	console.log("Listening port " + listener.address().port);
 });
