@@ -1,13 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="static/stylesheet/main.css">
+    <link rel="stylesheet" href="static/stylesheet/containers.css">
+	<link rel="stylesheet" href="static/stylesheet/index.css">
     <title>JeEs</title>
 </head>
 <body>
-    <div class="greeting">Хеллоу ворлд</div>
-    <script src="static/scripts/main.js"></script>
+	<div class="flex flex-horizontal-container">
+		<div class="flex flex-horizontal-subcontainer left" style="width: 15%" id="sound-bar">
+			<div style="margin-right: 10%" id="mute">mute</div>
+			<input type="range" min="0" max="100" step="1" value="50" id="sound-range" class="hidden">
+		</div>
+		<div style="background-color: lightblue;" class="flex flex-horizontal-subcontainer right">
+			<img src="static/test-avatar.jpg" alt="avatar" style="width: 55px; height: 55px; margin-right: 10%">
+			<div style="margin-right: 10%">
+				<a href="#">никнейм</a>
+			</div>
+		</div>
+	</div>
+	<h1 id="game-name">Название игры</h1>
+	<div class="flex flex-vertical-container" style="background-color: red; width: 20%">
+		<p>Тут</p>
+		<p>типа</p>
+		<p>главное</p>
+		<p>меню</p>
+		<p>ок?</p>
+	</div>
+    <script src="static/scripts/index.js"></script>
 </body>
 </html>

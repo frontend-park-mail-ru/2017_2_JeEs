@@ -1,0 +1,14 @@
+#sound-range {
+	transition: all .5s;
+}
+
+.hidden {
+	opacity: 0;
+}
+
+#game-name {
+	font-family: "Lombardia Regular", sans-serif;
+	font-size: 56px;
+	margin-bottom: -7%;
+	margin-top: 3%;
+}
