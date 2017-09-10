@@ -6,9 +6,11 @@
 	opacity: 0;
 }
 
-#game-name {
-	font-family: "Lombardia Regular", sans-serif;
-	font-size: 56px;
-	margin-bottom: -7%;
-	margin-top: 3%;
-}
+/*Костыль: пришлось перенести в beauty.css, так как не работало, хрен знает почему*/
+/*Также заменил этот id на class heading*/
+/*#game-name {*/
+	/*font-family: "Lombardia Regular", sans-serif;*/
+	/*font-size: 56px;*/
+	/*margin-bottom: -7%;*/
+	/*margin-top: 3%;*/
+/*}*/

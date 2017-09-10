@@ -5,29 +5,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="static/stylesheet/containers.css">
 	<link rel="stylesheet" href="static/stylesheet/index.css">
+	<link rel="stylesheet" href="static/stylesheet/beauty.css">
+	<link rel="stylesheet" href="static/stylesheet/button.css">
+	<link rel="stylesheet" href="static/stylesheet/signup_form.css">
     <title>JeEs</title>
 </head>
+
 <body>
+
 	<div class="flex flex-horizontal-container">
+
 		<div class="flex flex-horizontal-subcontainer left" style="width: 15%" id="sound-bar">
-			<div style="margin-right: 10%" id="mute">mute</div>
+			<div style="font-family: Lombardia Regular, sans-serif; font-size: 50px" id="mute">Mute</div>
 			<input type="range" min="0" max="100" step="1" value="50" id="sound-range" class="hidden">
 		</div>
-		<div style="background-color: lightblue;" class="flex flex-horizontal-subcontainer right">
-			<img src="static/test-avatar.jpg" alt="avatar" style="width: 55px; height: 55px; margin-right: 10%">
-			<div style="margin-right: 10%">
-				<a href="#">никнейм</a>
+
+		<div style="background-color: lightblue;" class="flex flex-horizontal-subcontainer right form-container">
+			<img src="static/images/test-avatar.jpg" alt="avatar" style="width: 55px; height: 55px; margin-right: 25%">
+			<div style="margin-right: 25%">
+				<div><a href="#">Nickname</a></div>
+				<div><a href="#">Logout</a></div>
 			</div>
 		</div>
+
 	</div>
-	<h1 id="game-name">Название игры</h1>
-	<div class="flex flex-vertical-container" style="background-color: red; width: 20%">
-		<p>Тут</p>
-		<p>типа</p>
-		<p>главное</p>
-		<p>меню</p>
-		<p>ок?</p>
+
+	<!--<h1 id="game-name">Название игры</h1>-->
+	<h1 class="heading">Quoridor</h1>
+
+	<div class="flex flex-vertical-container main-menu">
+		<a href="#" data-icon="♚" class="button orange serif round glass">Play</a>
+		<a href="#" data-icon="♚" class="button orange serif round glass">Settings</a>
+		<a href="#" data-icon="♚" class="button orange serif round glass">Rating</a>
+		<a href="#" data-icon="♚" class="button orange serif round glass">Authors</a>
 	</div>
+
     <script src="static/scripts/index.js"></script>
+
 </body>
 </html>

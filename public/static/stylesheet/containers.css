@@ -1,9 +1,10 @@
-@font-face {
-	font-family: Lombardia Regular;
-	src: url("/static/fonts/lombardia.ttf");
-  	font-weight: normal;
-  	font-style: normal;
-}
+/*Костыль: пришлось перенести в beauty.css, так как не работало, хрен знает почему*/
+/*@font-face {*/
+	/*font-family: Lombardia Regular;*/
+	/*src: url("/static/fonts/lombardia.ttf");*/
+  	/*font-weight: normal;*/
+  	/*font-style: normal;*/
+/*}*/
 
 html, body
 {
@@ -25,8 +26,10 @@ html, body
 .flex.flex-vertical-container {
 	-webkit-flex-direction: column; /* Safari */
 	flex-direction: column;
-	-webkit-justify-content: space-around; /* Safari */
-	justify-content: space-around;
+	/*-webkit-justify-content: space-around; !* Safari *!*/
+	/*justify-content: space-around;*/
+	/*justify-content: space-between;*/
+	justify-content: center;
 	-webkit-align-items: center; /* Safari */
 	align-items: center;
 	margin: auto;

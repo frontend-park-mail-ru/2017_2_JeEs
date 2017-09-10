@@ -1,0 +1,31 @@
+.main-menu {
+	background-image: url(../images/ornament1.jpg);
+	background-repeat: no-repeat;
+	width: 450px;
+	height: 448px;
+	border-radius: 100px;
+	box-shadow: 0 0 0 3px #a54831, 0 0 13px #333;
+}
+
+@font-face {
+	font-family: Lombardia Regular;
+	src: url("../fonts/lombardia.ttf");
+	font-weight: normal;
+	font-style: normal;
+}
+
+.heading {
+	font-family: "Lombardia Regular", sans-serif;
+	font-size: 80px;
+	margin-bottom: -7%;
+	margin-top: 3%;
+	color: #a50009;
+}
+
+html {
+	background: url('../images/wall.jpg') no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
