@@ -23,17 +23,20 @@ html, body
 	flex-wrap: nowrap;
 }
 
+
+/**/
 .flex.flex-vertical-container {
 	-webkit-flex-direction: column; /* Safari */
 	flex-direction: column;
-	/*-webkit-justify-content: space-around; !* Safari *!*/
-	/*justify-content: space-around;*/
-	/*justify-content: space-between;*/
+	-webkit-justify-content: space-around; /* Safari */
+	justify-content: space-around;
+	justify-content: space-between;
 	justify-content: center;
 	-webkit-align-items: center; /* Safari */
 	align-items: center;
 	margin: auto;
 }
+/**/
 
 .flex.flex-horizontal-container {
 	-webkit-flex-direction: row; /* Safari */
@@ -45,6 +48,9 @@ html, body
 	width: 90%;
 }
 
+
+
+/**/
 .flex-horizontal-subcontainer {
 	-webkit-flex-direction: row; /* Safari */
 	flex-direction: row;
@@ -59,5 +65,14 @@ html, body
 	-webkit-justify-content: flex-end; /* Safari */
 	justify-content: flex-end;
 	-webkit-align-items: center; /* Safari */
+	align-items: center;
+}
+/**/
+
+
+.my-flex-container{
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
 	align-items: center;
 }
