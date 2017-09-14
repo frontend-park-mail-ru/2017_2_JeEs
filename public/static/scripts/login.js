@@ -8,16 +8,17 @@ const authorizedBlock = document.getElementById('authorized');
 
 const unauthorizedBlock = document.getElementById('unauthorized');
 
+
 const loginForm = document.getElementById('login-form');
 
 
 loginForm.addEventListener('submit', event => {
 	event.preventDefault();
 	console.log(loginForm.elements);
-	const email = loginForm.elements['email'].value;
+	const password = loginForm.elements['password'].value;
 	const username = loginForm.elements['username'].value;
 
-	login(username, email, (err, resp) => {
+	login(username, password, (err, resp) => {
 		if (err) {
 			return alert(`AUTH Error: ${err.status}`);
 		}
@@ -31,12 +32,12 @@ loginForm.addEventListener('submit', event => {
 });
 
 
-function login(username, email, callback) {
+function login(username, password, callback) {
 	const xhr = new XMLHttpRequest();
 	xhr.open('POST', '/login', true);
 	xhr.withCredentials = true;
 
-	const user = {username, email};
+	const user = {username, password};
 	const body = JSON.stringify(user);
 
 	xhr.setRequestHeader('Content-Type', 'application/json; charset=utf8');

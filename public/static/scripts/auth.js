@@ -14,10 +14,15 @@ const authForm = document.getElementById('auth-form');
 authForm.addEventListener('submit', event => {
 	event.preventDefault();
 	console.log(authForm.elements);
-	const email = authForm.elements['email'].value;
+	const password = authForm.elements['password'].value;
+	const repeatPassword = authForm.elements['repeat-password'].value;
 	const username = authForm.elements['username'].value;
 
-	auth(username, email, (err, resp) => {
+	if (password !== repeatPassword) {
+		return alert("Пароли не совпадают");
+	}
+
+	auth(username, password, (err, resp) => {
 		if (err) {
 			return alert(`AUTH Error: ${err.status}`);
 		}
@@ -30,12 +35,12 @@ authForm.addEventListener('submit', event => {
 	});
 });
 
-function auth(username, email, callback) {
+function auth(username, password, callback) {
 	const xhr = new XMLHttpRequest();
 	xhr.open('POST', '/auth', true);
 	xhr.withCredentials = true;
 
-	const user = {username, email};
+	const user = {username, password};
 	const body = JSON.stringify(user);
 
 	xhr.setRequestHeader('Content-Type', 'application/json; charset=utf8');

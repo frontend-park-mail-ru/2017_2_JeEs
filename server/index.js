@@ -18,18 +18,14 @@ const ids = {};
 
 app.post('/auth', function (req, res) {
 	const username = req.body.username;
-	const email = req.body.email;
-	if (!username || !email) {
+	const password = req.body.password;
+	if (users[username]) {
 		return res.status(400).end();
 	}
-	if (!users[email]) {
-		users[email] = {
-			username,
-			email
-		};
-	}
+
+	users[username] = password;
 	const id = uuid();
-	ids[id] = email;
+	ids[id] = username;
 
 	res.cookie('cookie', id, {expires: new Date(Date.now() + 1000 * 60 * 10)});
 	res.json({id});
@@ -38,26 +34,27 @@ app.post('/auth', function (req, res) {
 
 app.get('/me', function (req, res) {
 	const id = req.cookies['cookie'];
-	const email = ids[id];
-	if (!email || !users[email]) {
+	const username = ids[id];
+	if (!username || !users[username]) {
 		return res.status(401).end();
 	}
 
-	res.json(users[email]);
+	res.json({id});
 });
 
 app.post('/login', function (req, res) {
 	const username = req.body.username;
-	const email = req.body.email;
-	if (!username || !email) {
+	const password = req.body.password;
+
+	if (!users[username]) {
+		return res.status(401).end();
+	}
+	if (users[username] !== password) {
 		return res.status(400).end();
 	}
 
-	if (!users[email]) {
-		return res.status(401).end();
-	}
 	const id = uuid();
-	ids[id] = email;
+	ids[id] = username;
 
 	res.cookie('cookie', id, {expires: new Date(Date.now() + 1000 * 60 * 10)});
 	res.json({id});
