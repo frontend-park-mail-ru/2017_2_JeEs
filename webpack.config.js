@@ -8,7 +8,7 @@ module.exports = {
 		filename: './bundle.js',
 		path: __dirname + '/public'
 	},
-	entry: './public/static/application.js',
+	entry: './public/application.js',
 	module: {
 		rules: [
 			{
