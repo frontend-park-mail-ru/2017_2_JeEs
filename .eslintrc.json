@@ -1,0 +1,10 @@
+{
+    "extends": "standard",
+  	"rules": {
+		"no-tabs": "off",
+		"semi": "off",
+		"indent": "off",
+		"quotes": "off",
+	  	"space-before-function-paren": "off"
+  	}
+}

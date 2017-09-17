@@ -16,7 +16,7 @@ class SoundBlock extends Block {
 			"img",
 			["sound-block__mute"],
 			{
-				src: "static/images/soundon.png",
+				src: "static/images/soundon.png"
 			});
 		this.append(this.mute);
 
@@ -61,8 +61,7 @@ class SoundBlock extends Block {
 				this._previousSoundValue = this.soundRange.getValue();
 				this.soundRange.setValue(0);
 				this.mute.click();
-			}
-			else {
+			} else {
 				this.soundRange.setValue(this._previousSoundValue);
 				this.mute.unclick();
 			}

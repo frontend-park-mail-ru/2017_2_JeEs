@@ -1,10 +1,6 @@
 import Block from "../block/block"
 
 class Input extends Block {
-	constructor(element) {
-		super(element);
-	}
-
 	static Create(type = "text", classes = [], attrs = {}) {
 		const element = document.createElement("input");
 		element.type = type;

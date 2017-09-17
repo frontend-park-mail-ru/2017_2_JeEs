@@ -1,6 +1,6 @@
 /**
  * Модуль, реализующий общее поведение для каждого блока
- * @module Block*/
+ * @module Block */
 
 class Block {
 	constructor(element) {
@@ -39,8 +39,7 @@ class Block {
 		return this._element.hasAttribute(attribute);
 	}
 
-	setAttribute(attribute, value)
-	{
+	setAttribute(attribute, value) {
 		this._element.setAttribute(attribute, value);
 	}
 
