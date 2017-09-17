@@ -20,6 +20,7 @@ class Block {
 
 	setText(text) {
 		this._element.textContent = text;
+		return this;
 	}
 
 	setHidden(hidden) {
