@@ -10,5 +10,5 @@ topBar.append(new UserBlock());
 const gameNameBlock = new Block(document.getElementsByClassName("game-name-block")[0]);
 gameNameBlock.append(Block.Create("h1", ["game-name-block__game-name"], {}).setText("Quoridor"));
 
-const mainMenuBlock = new Block(document.getElementsByClassName("main-menu-block")[0]);
+const mainMenuBlock = new Block(document.getElementsByClassName("main-block")[0]);
 mainMenuBlock.append(new MenuBlock());
