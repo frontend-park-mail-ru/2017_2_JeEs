@@ -38,7 +38,5 @@ jspm_packages
 
 .idea
 
-node_modules
-
 public/bundle.*
 public/*.ttf
