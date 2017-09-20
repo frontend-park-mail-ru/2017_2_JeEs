@@ -1,28 +1,22 @@
 import Form from "../form/form";
-import Input from "../input/input";
-import Block from "../block/block"
 
 class AuthForm extends Form {
 	constructor() {
 		const fieldPrototypes = [
-			{ type: "text", placeholder: "Логин" },
-			{ type: "email", placeholder: "Email" },
-			{ type: "password", placeholder: "Пароль" }
+			{ name: "login", type: "text", placeholder: "Логин" },
+			{ name: "password", type: "password", placeholder: "Пароль" },
 		];
 
-		const fields = [];
-		fieldPrototypes.forEach((fieldPrototype) => {
-			fields.push(Input.Create(fieldPrototype.type, ["auth-form__field"], {
-				name: fieldPrototype.type,
-				placeholder: fieldPrototype.placeholder,
-				required: "required"
-			}));
-		});
+		const classes = {
+			formClass: "auth-form",
+			fieldClass: "auth-form__field",
+			submitClass: "auth-form__field"
+		};
 
-		fields.push(Input.Create("submit", ["auth-form__field"], { value: "Войти" }));
-		fields.push(Block.Create("a", [], { href: "#" }).setText("Регистрация"));
+		const submitText = "Войти";
+		const hrefText = "Создать аккаунт";
 
-		super(fields, ["auth-form"]);
+		super(fieldPrototypes, classes, submitText, hrefText);
 	}
 }
 
