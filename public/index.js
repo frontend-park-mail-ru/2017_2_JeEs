@@ -16,21 +16,27 @@ gameNameBlock.appendChildBlock(Block.Create("h1", ["game-name-block__game-name"]
 const mainBlock = new Block(document.getElementsByClassName("main-block")[0]);
 const mainMenu = new MenuBlock();
 const authForm = new Form(authFormConfig.title ,authFormConfig.fieldPrototypes, authFormConfig.refPrototype);
-const registrationForm = new Form(registrationFormConfig.title, registrationFormConfig.fieldPrototypes, registrationFormConfig.refPrototype);
+const registrationForm = new Form(
+	registrationFormConfig.title,
+	registrationFormConfig.fieldPrototypes,
+	registrationFormConfig.refPrototype
+);
+
+mainBlock.switch = (from, to) => {
+	mainBlock.removeChildBlock(from);
+	mainBlock.appendChildBlock(to);
+};
 
 mainMenu.onButtonClicked(0, () => {
-	mainBlock.removeChildBlock(mainMenu);
-	mainBlock.appendChildBlock(authForm);
+	mainBlock.switch(mainMenu, authForm);
 });
 
 authForm.onRef(() => {
-	mainBlock.removeChildBlock(authForm);
-	mainBlock.appendChildBlock(registrationForm);
+	mainBlock.switch(authForm, registrationForm);
 });
 
 registrationForm.onRef(() => {
-	mainBlock.removeChildBlock(registrationForm);
-	mainBlock.appendChildBlock(authForm);
+	mainBlock.switch(registrationForm, authForm);
 });
 
 mainBlock.appendChildBlock(mainMenu);
