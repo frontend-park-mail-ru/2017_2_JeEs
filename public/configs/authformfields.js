@@ -1,3 +1,5 @@
+const title = "Вход";
+
 const fieldPrototypes = [
 	{
 		type: "text",
@@ -29,4 +31,4 @@ const refPrototype = {
 };
 
 
-export {fieldPrototypes, refPrototype};
+export {title, fieldPrototypes, refPrototype};

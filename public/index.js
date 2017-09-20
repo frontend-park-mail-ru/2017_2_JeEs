@@ -15,8 +15,8 @@ gameNameBlock.appendChildBlock(Block.Create("h1", ["game-name-block__game-name"]
 
 const mainBlock = new Block(document.getElementsByClassName("main-block")[0]);
 const mainMenu = new MenuBlock();
-const authForm = new Form(authFormConfig.fieldPrototypes, authFormConfig.refPrototype);
-const registrationForm = new Form(registrationFormConfig.fieldPrototypes, registrationFormConfig.refPrototype);
+const authForm = new Form(authFormConfig.title ,authFormConfig.fieldPrototypes, authFormConfig.refPrototype);
+const registrationForm = new Form(registrationFormConfig.title, registrationFormConfig.fieldPrototypes, registrationFormConfig.refPrototype);
 
 mainMenu.onButtonClicked(0, () => {
 	mainBlock.removeChildBlock(mainMenu);

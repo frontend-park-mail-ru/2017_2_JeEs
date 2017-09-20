@@ -1,3 +1,5 @@
+const title = "Регистрация";
+
 const fieldPrototypes = [
 	{
 		type: "text",
@@ -43,4 +45,4 @@ const refPrototype = {
 };
 
 
-export {fieldPrototypes, refPrototype};
+export {title, fieldPrototypes, refPrototype};

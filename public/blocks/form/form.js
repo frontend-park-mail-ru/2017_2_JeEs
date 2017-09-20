@@ -2,8 +2,10 @@ import Block from "../block/block"
 import Input from "../input/input"
 
 class Form extends Block {
-	constructor(fieldPrototypes = [], refPrototype = {}) {
+	constructor(title = "", fieldPrototypes = [], refPrototype = {}) {
 		super(Block.Create("form",  ["form"])._element);
+
+		this.appendChildBlock(Block.Create("h4", ["form__title"], {}).setText(title));
 
 		fieldPrototypes.forEach((fieldPrototype) => {
 			this.appendChildBlock(Input.Create(fieldPrototype.type, ["form__field"], fieldPrototype.attributes));
