@@ -29,10 +29,11 @@ class Form extends Block {
 		this._element.reset();
 	}
 
-	onHref(callback) {
-		const href = this._element.getElementsByTagName("a")[0];
-		href.preventDefault();
-		href.addEventListener("click", callback);
+	onRef(callback) {
+		this._element.getElementsByTagName("a")[0].addEventListener("click", (event) => {
+			event.preventDefault();
+			callback();
+		});
 	}
 }
 
