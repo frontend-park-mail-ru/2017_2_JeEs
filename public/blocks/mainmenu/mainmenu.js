@@ -12,7 +12,13 @@ class MainMenu extends Block {
 		let buttons = ["Играть", "Настройки", "Рейтинг", "Правила", "Об игре"];
 
 		for (let key in buttons) {
-			this.append(Block.Create("button", [buttonsClass], {}).setText(buttons[key]));
+			this.appendChild(Block.Create("button", [buttonsClass], {}).setText(buttons[key]));
+		}
+	}
+
+	onButtonClicked(buttonId, callback) {
+		if (buttonId < this._element.childNodes.length) {
+			this._element.childNodes[buttonId].addEventListener("click", callback);
 		}
 	}
 }

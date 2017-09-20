@@ -1,0 +1,16 @@
+.auth-form
+{
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+
+	background-color: lightskyblue;
+	padding: 1% 3%;
+}
+
+.auth-form__field
+{
+	margin-bottom: 5%;
+	text-align: center;
+}
