@@ -18,7 +18,7 @@ class SoundBlock extends Block {
 			{
 				src: "static/images/soundon.png"
 			});
-		this.appendChild(this.mute);
+		this.appendChildBlock(this.mute);
 
 		this._previousSoundValue = 1;
 
@@ -32,7 +32,7 @@ class SoundBlock extends Block {
 				value: "50"
 			});
 		this.soundRange.setHidden(true);
-		this.appendChild(this.soundRange);
+		this.appendChildBlock(this.soundRange);
 	}
 
 	_setEventsForThis() {

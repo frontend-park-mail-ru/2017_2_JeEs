@@ -28,12 +28,12 @@ class Block {
 	}
 
 
-	appendChild(block) {
+	appendChildBlock(block) {
 		this._element.appendChild(block._element);
 		return this;
 	}
 
-	removeChild(block) {
+	removeChildBlock(block) {
 		this._element.removeChild(block._element);
 		return this;
 	}

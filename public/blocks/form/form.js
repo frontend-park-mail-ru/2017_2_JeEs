@@ -2,24 +2,14 @@ import Block from "../block/block"
 import Input from "../input/input"
 
 class Form extends Block {
-	constructor(fieldPrototypes = [], classes = {}, submitText = "", hrefText = "") {
-		const fields = [];
+	constructor(fieldPrototypes = [], refPrototype = {}) {
+		super(Block.Create("form",  ["form"])._element);
+
 		fieldPrototypes.forEach((fieldPrototype) => {
-			fields.push(Input.Create(fieldPrototype.type, [classes.fieldClass], {
-				name: fieldPrototype.name,
-				placeholder: fieldPrototype.placeholder,
-				required: "required"
-			}));
+			this.appendChildBlock(Input.Create(fieldPrototype.type, ["form__field"], fieldPrototype.attributes));
 		});
 
-		fields.push(Input.Create("submit", [classes.submitClass], { value: submitText }));
-		fields.push(Block.Create("a", [], { href: "" }).setText(hrefText));
-
-		super(Block.Create("form",  [classes.formClass])._element);
-
-		fields.forEach((field) => {
-			this.appendChild(field);
-		});
+		this.appendChildBlock(Block.Create("a", [], refPrototype.attributes).setText(refPrototype.text));
 	}
 
 	onSubmit(callback) {
@@ -37,6 +27,12 @@ class Form extends Block {
 
 	reset() {
 		this._element.reset();
+	}
+
+	onHref(callback) {
+		const href = this._element.getElementsByTagName("a")[0];
+		href.preventDefault();
+		href.addEventListener("click", callback);
 	}
 }
 

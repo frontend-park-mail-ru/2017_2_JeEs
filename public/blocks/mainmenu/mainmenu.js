@@ -12,7 +12,7 @@ class MainMenu extends Block {
 		let buttons = ["Играть", "Настройки", "Рейтинг", "Правила", "Об игре"];
 
 		for (let key in buttons) {
-			this.appendChild(Block.Create("button", [buttonsClass], {}).setText(buttons[key]));
+			this.appendChildBlock(Block.Create("button", [buttonsClass], {}).setText(buttons[key]));
 		}
 	}
 
