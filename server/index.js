@@ -5,7 +5,6 @@ const body = require('body-parser');
 const cookie = require('cookie-parser');
 const morgan = require('morgan');
 const uuid = require('uuid/v4');
-
 const app = express();
 
 app.use(morgan('dev'));
@@ -16,23 +15,51 @@ app.use(cookie());
 const users = {};
 const ids = {};
 
-app.post('/auth', function (req, res) {
+app.post('/signup', function (req, res) {
+	const email = req.body.email;
 	const username = req.body.username;
 	const password = req.body.password;
+	if (
+		!email || !username || !password ||
+		!email.match(/@/) ||
+		!username.match(/^\S{4,}$/) ||
+		!password.match(/^\S{4,}$/)
+
+	) {
+		return res.status(400).json({error: 'Не валидные данные пользователя'});
+	}
 	if (users[username]) {
-		return res.status(400).end();
+		return res.status(400).json({error: 'Пользователь уже существует'});
 	}
 
-	users[username] = password;
 	const id = uuid();
 	ids[id] = username;
+	users[username] = {password, email, score: 0};
+
 
 	res.cookie('cookie', id, {expires: new Date(Date.now() + 1000 * 60 * 10)});
 	res.json({id});
 });
 
+app.post('/login', function (req, res) {
+	const username = req.body.username;
+	const password = req.body.password;
 
-app.get('/me', function (req, res) {
+	if (!password || !username) {
+		return res.status(400).json({error: 'Не указан E-Mail или пароль'});
+	}
+	if (!users[username] || users[username].password !== password) {
+		return res.status(400).json({error: 'Не верный E-Mail и/или пароль'});
+	}
+
+	const id = uuid();
+	ids[id] = username;
+
+	res.cookie('cookie', id, {expires: new Date(Date.now() + 1000 * 60 * 10)});
+	res.status(201).json({id});
+});
+
+app.get('/game', function (req, res) {
 	const id = req.cookies['cookie'];
 	const username = ids[id];
 	if (!username || !users[username]) {
@@ -42,22 +69,17 @@ app.get('/me', function (req, res) {
 	res.json({id});
 });
 
-app.post('/login', function (req, res) {
-	const username = req.body.username;
-	const password = req.body.password;
+app.get('/users', function (req, res) {
+	const scorelist = Object.values(users)
+		.sort((l, r) => r.score - l.score)
+		.map(user => {
+			return {
+				email: user.username,
+				score: user.score,
+			}
+		});
 
-	if (!users[username]) {
-		return res.status(401).end();
-	}
-	if (users[username] !== password) {
-		return res.status(400).end();
-	}
-
-	const id = uuid();
-	ids[id] = username;
-
-	res.cookie('cookie', id, {expires: new Date(Date.now() + 1000 * 60 * 10)});
-	res.json({id});
+	res.json(scorelist);
 });
 
 app.get('/logout', function (req, res) {
