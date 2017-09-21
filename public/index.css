@@ -42,3 +42,13 @@ html, body
 	font-size: 140px;
 	color: rgb(0, 0, 0);
 }
+
+.main-block
+{
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+
+	width: 100%;
+}

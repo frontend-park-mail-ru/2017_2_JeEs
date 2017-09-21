@@ -1,14 +1,44 @@
 import Block from "./blocks/block/block";
 import SoundBlock from "./blocks/soundblock/soundblock";
 import UserBlock from "./blocks/userblock/userblock";
-import MenuBlock from "./blocks/mainmenu/mainmenu"
+import MenuBlock from "./blocks/mainmenu/mainmenu";
+import Form from "./blocks/form/form";
+import * as authFormConfig from "./configs/authformfields";
+import * as registrationFormConfig from "./configs/registrationformfields";
 
 const topBar = new Block(document.getElementsByClassName("top-bar")[0]);
-topBar.append(new SoundBlock());
-topBar.append(new UserBlock());
+topBar.appendChildBlock(new SoundBlock());
+topBar.appendChildBlock(new UserBlock());
 
 const gameNameBlock = new Block(document.getElementsByClassName("game-name-block")[0]);
-gameNameBlock.append(Block.Create("h1", ["game-name-block__game-name"], {}).setText("Quoridor"));
+gameNameBlock.appendChildBlock(Block.Create("h1", ["game-name-block__game-name"], {}).setText("Quoridor"));
 
-const mainMenuBlock = new Block(document.getElementsByClassName("main-menu-block")[0]);
-mainMenuBlock.append(new MenuBlock());
+const mainBlock = new Block(document.getElementsByClassName("main-block")[0]);
+const mainMenu = new MenuBlock();
+const authForm = new Form(authFormConfig.title ,authFormConfig.fieldPrototypes, authFormConfig.refPrototype);
+const registrationForm = new Form(
+	registrationFormConfig.title,
+	registrationFormConfig.fieldPrototypes,
+	registrationFormConfig.refPrototype
+);
+
+mainBlock.switch = (from, to) => {
+	mainBlock.removeChildBlock(from);
+	mainBlock.appendChildBlock(to);
+};
+
+mainMenu.onButtonClicked(0, () => {
+	mainBlock.switch(mainMenu, authForm);
+});
+
+authForm.onRef(() => {
+	mainBlock.switch(authForm, registrationForm);
+});
+
+registrationForm.onRef(() => {
+	mainBlock.switch(registrationForm, authForm);
+});
+
+mainBlock.appendChildBlock(mainMenu);
+
+

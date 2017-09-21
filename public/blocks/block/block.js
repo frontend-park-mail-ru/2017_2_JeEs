@@ -23,12 +23,18 @@ class Block {
 		return this;
 	}
 
-	setHidden(hidden) {
-		this._element.hidden = hidden;
+	setHidden(isHidden) {
+		this._element.style.display = (isHidden) ? "none" : "flex";
 	}
 
-	append(block) {
+
+	appendChildBlock(block) {
 		this._element.appendChild(block._element);
+		return this;
+	}
+
+	removeChildBlock(block) {
+		this._element.removeChild(block._element);
 		return this;
 	}
 
