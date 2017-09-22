@@ -15,8 +15,8 @@ class Form extends Block {
 	}
 
 	onSubmit(callback) {
-		this._element.addEventListener('submit', () => {
-			this._element.preventDefault();
+		this._element.addEventListener('submit', (e) => {
+			e.preventDefault();
 			const formdata = {};
 			const elements = this._element.elements;
 			for (let name in elements) {

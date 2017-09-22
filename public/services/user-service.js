@@ -1,4 +1,5 @@
-const Http = window.Http;
+import Http from "../modules/http"
+
 
 /**
  * Сервис для работы с юзерами
@@ -43,7 +44,7 @@ class UserService {
      * Выход пользователя
      * @param {Function} callback
      */
-    login(callback) {
+    logout(callback) {
         Http.Post('/logout', {}, callback);
     }
 
@@ -69,6 +70,21 @@ class UserService {
             }
 
             callback(null, this.users);
+        }.bind(this));
+    }
+
+    getData(callback, force = false) {
+        if (this.isLoggedIn() && !force) {
+            return callback(null, this.user);
+        }
+
+        Http.Get('/me', function (err, userdata) {
+            if (err) {
+                return callback(err, userdata);
+            }
+
+            this.user = userdata;
+            callback(null, userdata);
         }.bind(this));
     }
 
