@@ -82,9 +82,9 @@ app.get('/users', function (req, res) {
 	res.json(scorelist);
 });
 
-app.get('/logout', function (req, res) {
+app.post('/logout', function (req, res) {
 	res.cookie('cookie', null, {expires: new Date(Date.now() + 1000 * 60 * 10)});
-	res.json(null);
+	res.status(200).json(null);
 });
 
 app.use(express.static('public'));
