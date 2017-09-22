@@ -6,37 +6,48 @@ import Form from "./blocks/form/form";
 import * as authFormConfig from "./configs/authformfields";
 import * as registrationFormConfig from "./configs/registrationformfields";
 
-const topBar = new Block(document.getElementsByClassName("top-bar")[0]);
+const root = new Block(document.getElementById("root"));
+
+const topBar = Block.Create('div', ['top-bar']);
+root.appendChildBlock(topBar);
 topBar.appendChildBlock(new SoundBlock());
 topBar.appendChildBlock(new UserBlock());
 
-const gameNameBlock = new Block(document.getElementsByClassName("game-name-block")[0]);
+
+const gameNameBlock = Block.Create('div', ['game-name-block']);
+root.appendChildBlock(gameNameBlock);
 gameNameBlock.appendChildBlock(Block.Create("h1", ["game-name-block__game-name"], {}).setText("Quoridor"));
 
-const mainBlock = new Block(document.getElementsByClassName("main-block")[0]);
+
+const mainBlock = Block.Create('div', ['main-block']);
+root.appendChildBlock(mainBlock);
 const mainMenu = new MenuBlock();
-const authForm = new Form(authFormConfig.title ,authFormConfig.fieldPrototypes, authFormConfig.refPrototype);
+const authForm = new Form(
+    authFormConfig.title,
+    authFormConfig.fieldPrototypes,
+    authFormConfig.refPrototype);
+
 const registrationForm = new Form(
-	registrationFormConfig.title,
-	registrationFormConfig.fieldPrototypes,
-	registrationFormConfig.refPrototype
+    registrationFormConfig.title,
+    registrationFormConfig.fieldPrototypes,
+    registrationFormConfig.refPrototype
 );
 
 mainBlock.switch = (from, to) => {
-	mainBlock.removeChildBlock(from);
-	mainBlock.appendChildBlock(to);
+    mainBlock.removeChildBlock(from);
+    mainBlock.appendChildBlock(to);
 };
 
 mainMenu.onButtonClicked(0, () => {
-	mainBlock.switch(mainMenu, authForm);
+    mainBlock.switch(mainMenu, authForm);
 });
 
 authForm.onRef(() => {
-	mainBlock.switch(authForm, registrationForm);
+    mainBlock.switch(authForm, registrationForm);
 });
 
 registrationForm.onRef(() => {
-	mainBlock.switch(registrationForm, authForm);
+    mainBlock.switch(registrationForm, authForm);
 });
 
 mainBlock.appendChildBlock(mainMenu);
