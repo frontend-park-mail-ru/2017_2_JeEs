@@ -69,7 +69,6 @@ registrationForm.onRef(() => {
 });
 
 
-
 mainMenu.onButtonClicked(0, () => {
     if (userService.isLoggedIn()) {
         alert("Когда-нибудь тут будет игра");

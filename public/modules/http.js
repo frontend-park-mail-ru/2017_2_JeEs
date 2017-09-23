@@ -5,16 +5,34 @@
 
 const baseUrl = `${window.location.protocol}//${window.location.host}`;
 
+
+//пока что внутренние методы тоже статические, ибо вебпак на нестатические ругается о_О
 class Http {
-	/**
-	 * Выполняет GET-запрос по указанному адресу
-	 * @param {string} address - адрес запроса
-	 * @param {Function} callback - функция-коллбек
-	 * @return {Promise}
-	 */
-	static Get(address) {
+    static Get(address) {
+        const url = (baseUrl) + address;
+        if (typeof window.fetch !== 'undefined') {
+            return this.FetchGet(address, url);
+        }
+        return this.GetXMLHttpRequest(address, url);
+    }
+
+    static Post(address, body) {
+        const url = (Http.BaseUrl || baseUrl) + address;
+        if (typeof window.fetch !== 'undefined') {
+            return this.FetchPost(address, body, url);
+        }
+        return this.PostXMLHttpRequest(address, body, url);
+    }
+
+
+    /**
+     * Выполняет GET-запрос по указанному адресу
+     * @param {string} address - адрес запроса
+     * @param {string} url
+     * @return {Promise}
+     */
+     static GetXMLHttpRequest(address, url) {
         return new Promise(function (resolve, reject) {
-            const url = (Http.BaseUrl || baseUrl) + address;
             const xhr = new XMLHttpRequest();
             xhr.open('GET', url, true);
             xhr.withCredentials = true;
@@ -32,17 +50,17 @@ class Http {
 
             xhr.send();
         });
-	}
+    };
 
-	/**
-	 * Выполняет POST-запрос по указанному адресу
-	 * @param {string} address - адрес запроса
-	 * @param {*} body - тело запроса (объект)
-	 * @return {Promise}
-	 */
-	static Post(address, body) {
+    /**
+     * Выполняет POST-запрос по указанному адресу
+     * @param {string} address - адрес запроса
+     * @param {*} body - тело запроса (объект)
+     * @param {string} url
+     * @return {Promise}
+     */
+    static PostXMLHttpRequest(address, body, url) {
         return new Promise(function (resolve, reject) {
-            const url = (Http.BaseUrl || baseUrl) + address;
             const xhr = new XMLHttpRequest();
             xhr.open('POST', url, true);
             xhr.withCredentials = true;
@@ -61,7 +79,52 @@ class Http {
 
             xhr.send(JSON.stringify(body));
         });
-    }
+    };
+
+    /**
+     * Выполняет GET-запрос по указанному адресу с использованием fetch
+     * @param {string} address - адрес запроса
+     * @return {Promise}
+     */
+    static FetchGet(address, url) {
+        return fetch(url, {
+            method: 'GET',
+            mode: 'cors',
+            credentials: 'include'
+        })
+            .then(function (response) {
+                if (response.status >= 400) {
+                    throw response;
+                }
+
+                return response.json();
+            });
+    };
+
+    /**
+     * Выполняет POST-запрос по указанному адресу с использованием fetch
+     * @param {string} address - адрес запроса
+     * @param {*} body - тело запроса (объект)
+     * @return {Promise}
+     */
+    static FetchPost(address, body, url) {
+        return fetch(url, {
+            method: 'POST',
+            mode: 'cors',
+            credentials: 'include',
+            body: JSON.stringify(body),
+            headers: {
+                'Content-Type': 'application/json; charset=utf-8'
+            }
+        })
+            .then(function (response) {
+                if (response.status >= 400) {
+                    throw response;
+                }
+
+                return response.json();
+            });
+    };
 }
 
 // Http.BaseUrl = null;
