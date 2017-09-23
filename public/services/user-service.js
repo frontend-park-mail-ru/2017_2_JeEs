@@ -1,14 +1,13 @@
 import Http from "../modules/http"
 
-
 /**
- * Сервис для работы с юзерами
+ * Сервис для работы с пользователями
  * @module UserService
  */
 class UserService {
     constructor() {
         this.user = null;
-        this.users = [];
+        this.users = []; //нужен ли?
     }
 
     /**
@@ -16,46 +15,20 @@ class UserService {
      * @param {string} email
      * @param {string} password
      * @param {string} username
-     * @param {Function} callback
+     * @return {Promise}
      */
-    signup(email, username, password, callback) {
-        // Http.Post('/signup', {email, username, password}, callback);
-        return new Promise(function(resolve, reject) {
-            Http.Post('/signup', {email, username, password}, function(err, resp) {
-                if (callback) {
-                    callback(err, resp);
-                }
-
-                if (err) {
-                    reject(err);
-                } else {
-                    resolve(resp);
-                }
-            });
-        });
+    signup(email, username, password) {
+        return Http.Post('/signup', {email, username, password});
     }
 
     /**
      * Авторизация пользователя
      * @param {string} username
      * @param {string} password
-     * @param {Function} callback
+     * @return {Promise}
      */
-    login(username, password, callback) {
-        // Http.Post('/login', {username, password}, callback);
-        return new Promise(function(resolve, reject) {
-            Http.Post('/login', {username, password}, function(err, resp) {
-                if (callback) {
-                    callback(err, resp);
-                }
-
-                if (err) {
-                    reject(err);
-                } else {
-                    resolve(resp);
-                }
-            });
-        });
+    login(username, password) {
+        return Http.Post('/login', {username, password});
     }
 
     /**
@@ -68,50 +41,47 @@ class UserService {
 
     /**
      * Выход пользователя
-     * @param {Function} callback
+     * @return {Promise}
      */
-    logout(callback) {
-        Http.Post('/logout', {}, callback);
+    logout() {
+        return Http.Post('/logout', {});
     }
 
     /**
      * Загружает список всех пользователей
-     * @param callback
      */
-    loadUsersList(callback) {
-        Http.Get('/users', function (err, users) {
-            if (err) {
-                return callback(err, users);
-            }
+    loadUsersList() {
+        return Http.Get('/users')
+            .then(users => {
+                this.users = users;
 
-            this.users = users;
+                if (this.isLoggedIn()) {
+                    this.users = this.users.map(user => {
+                        user.me = user.email === this.user.email;
+                        return user;
+                    });
+                }
 
-            if (this.isLoggedIn()) {
-                this.users = this.users.map(user => {
-                    if (user.email === this.user.email) {
-                        user.me = true;
-                    }
-                    return user;
-                });
-            }
-
-            callback(null, this.users);
-        }.bind(this));
+                return this.users;
+            });
     }
 
-    getData(callback, force = false) {
+
+    /**
+     * Загружает данные о текущем пользователе
+     * @param {boolean} [force=false] - игнорировать ли кэш?
+     * @return {Promise}
+     */
+    getData(force = false) {
         if (this.isLoggedIn() && !force) {
-            return callback(null, this.user);
+            return Promise.resolve(this.user);
         }
 
-        Http.Get('/me', function (err, userdata) {
-            if (err) {
-                return callback(err, userdata);
-            }
-
-            this.user = userdata;
-            callback(null, userdata);
-        }.bind(this));
+        return Http.Get('/me')
+            .then(userdata => {
+                this.user = userdata;
+                return userdata;
+            })
     }
 
 }
