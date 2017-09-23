@@ -37,20 +37,17 @@ const authForm = new Form(
     authFormConfig.fieldPrototypes,
     authFormConfig.refPrototype);
 
+
 authForm.onSubmit(function (formdata) {
-    userService.login(formdata.login, formdata.password, function (err, resp) {
-        if (err) {
-            alert(`Some error ${err.status}: ${err.responseText}`);
-            return
-        }
-        authForm.reset();
-        userService.getData(function (err, resp) {
-            if (err) {
-                return;
-            }
-            mainBlock.switch(registrationForm, mainMenu);
-        }, true);
-    });
+    userService.login(formdata.login, formdata.password)
+        .then(() => authForm.reset())
+        .then(() => mainBlock.switch(authForm, mainMenu))
+        .then(() => userService.getData())
+        .catch((err) => alert(`Some error ${err.status}: ${err.responseText}`))
+});
+
+authForm.onRef(() => {
+    mainBlock.switch(authForm, registrationForm);
 });
 
 const registrationForm = new Form(
@@ -60,20 +57,18 @@ const registrationForm = new Form(
 );
 
 registrationForm.onSubmit(function (formdata) {
-    userService.signup(formdata.email, formdata.login, formdata.password, function (err, resp) {
-        if (err) {
-            alert(`Some error ${err.status}: ${err.responseText}`);
-            return
-        }
-        registrationForm.reset();
-        userService.getData(function (err, resp) {
-            if (err) {
-                return;
-            }
-            mainBlock.switch(registrationForm, mainMenu);
-        }, true);
-    });
+    userService.signup(formdata.email, formdata.login, formdata.password)
+        .then(() => registrationForm.reset())
+        .then(() => mainBlock.switch(registrationForm, mainMenu))
+        .then(() => userService.getData())
+        .catch((err) => alert(`Some error ${err.status}: ${err.responseText}`))
 });
+
+registrationForm.onRef(() => {
+    mainBlock.switch(registrationForm, authForm);
+});
+
+
 
 mainMenu.onButtonClicked(0, () => {
     if (userService.isLoggedIn()) {
@@ -81,14 +76,6 @@ mainMenu.onButtonClicked(0, () => {
         return
     }
     mainBlock.switch(mainMenu, authForm);
-});
-
-authForm.onRef(() => {
-    mainBlock.switch(authForm, registrationForm);
-});
-
-registrationForm.onRef(() => {
-    mainBlock.switch(registrationForm, authForm);
 });
 
 mainBlock.appendChildBlock(mainMenu);

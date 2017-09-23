@@ -19,7 +19,20 @@ class UserService {
      * @param {Function} callback
      */
     signup(email, username, password, callback) {
-        Http.Post('/signup', {email, username, password}, callback);
+        // Http.Post('/signup', {email, username, password}, callback);
+        return new Promise(function(resolve, reject) {
+            Http.Post('/signup', {email, username, password}, function(err, resp) {
+                if (callback) {
+                    callback(err, resp);
+                }
+
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(resp);
+                }
+            });
+        });
     }
 
     /**
@@ -29,7 +42,20 @@ class UserService {
      * @param {Function} callback
      */
     login(username, password, callback) {
-        Http.Post('/login', {username, password}, callback);
+        // Http.Post('/login', {username, password}, callback);
+        return new Promise(function(resolve, reject) {
+            Http.Post('/login', {username, password}, function(err, resp) {
+                if (callback) {
+                    callback(err, resp);
+                }
+
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(resp);
+                }
+            });
+        });
     }
 
     /**
