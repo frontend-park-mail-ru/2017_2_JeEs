@@ -9,7 +9,7 @@ const baseUrl = `${window.location.protocol}//${window.location.host}`;
 //пока что внутренние методы тоже статические, ибо вебпак на нестатические ругается о_О
 class Http {
     static Get(address) {
-        const url = (baseUrl) + address;
+        const url = (Http.BaseUrl || baseUrl) + address;
         if (typeof window.fetch !== 'undefined') {
             return this._FetchGet(address, url);
         }
@@ -125,8 +125,8 @@ class Http {
                 return response.json();
             });
     };
-}
 
-// Http.BaseUrl = null;
+    static BaseUrl = null;
+}
 
 export default Http;

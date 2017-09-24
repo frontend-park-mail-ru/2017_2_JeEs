@@ -59,7 +59,7 @@ app.post('/login', function (req, res) {
 	res.status(201).json({id});
 });
 
-app.get('/me', function (req, res) {
+app.get('/currentUser', function (req, res) {
 	const id = req.cookies['cookie'];
 	const username = ids[id];
 	if (!username || !users[username]) {

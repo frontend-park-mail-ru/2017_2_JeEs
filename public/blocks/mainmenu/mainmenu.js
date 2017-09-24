@@ -21,6 +21,10 @@ const BUTTONS = {
     ABOUT: {
         data_section: "about",
         text: "Об игре"
+    },
+    AUTHORS: {
+        data_section: "authors",
+        text: "Авторы"
     }
 };
 

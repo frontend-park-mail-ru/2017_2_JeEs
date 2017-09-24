@@ -8,6 +8,10 @@ class UserService {
     constructor() {
         this.user = null;
         this.users = []; //нужен ли?
+
+        if (window.location.host === 'jees-quoridor.herokuapp.com' || window.location.host === 'quoridor-jees.herokuapp.com') {
+            Http.BaseUrl = 'https://jees-quoridor-backend.herokuapp.com';
+        }
     }
 
     /**
@@ -77,7 +81,7 @@ class UserService {
             return Promise.resolve(this.user);
         }
 
-        return Http.Get('/me')
+        return Http.Get('/currentUser')
             .then(userdata => {
                 this.user = userdata;
                 return userdata;
