@@ -13,6 +13,7 @@ app.use(cors({
     origin: true,
     credentials: true,
 }));
+
 app.use(morgan('dev'));
 app.use(express.static('public'));
 app.use(body.json());
@@ -23,43 +24,43 @@ const ids = {};
 
 app.post('/signup', function (req, res) {
     const email = req.body.email;
-    const username = req.body.username;
+    const username = req.body.login;
     const password = req.body.password;
     if (
-        !email || !username || !password ||
+        !email || !login || !password ||
         !email.match(/@/) ||
-        !username.match(/^\S{4,}$/) ||
+        !login.match(/^\S{4,}$/) ||
         !password.match(/^\S{4,}$/)
 
     ) {
         return res.status(400).json({error: 'Невалидные данные пользователя'});
     }
-    if (users[username]) {
+    if (users[login]) {
         return res.status(400).json({error: 'Пользователь уже существует'});
     }
 
     const id = uuid();
-    ids[id] = username;
-    users[username] = {password, email, score: 0};
+    ids[id] = login;
+    users[login] = {password, email, score: 0};
 
 
     res.cookie('cookie', id, {expires: new Date(Date.now() + 1000 * 60 * 10)});
     res.json({id});
 });
 
-app.post('/login', function (req, res) {
-    const username = req.body.username;
+app.post('/signin', function (req, res) {
+    const login = req.body.login;
     const password = req.body.password;
 
-    if (!password || !username) {
+    if (!password || !login) {
         return res.status(400).json({error: 'Не указан E-Mail или пароль'});
     }
-    if (!users[username] || users[username].password !== password) {
+    if (!users[login] || users[login].password !== password) {
         return res.status(400).json({error: 'Неверный E-Mail и/или пароль'});
     }
 
     const id = uuid();
-    ids[id] = username;
+    ids[id] = login;
 
     res.cookie('cookie', id, {expires: new Date(Date.now() + 1000 * 60 * 10)});
     res.status(201).json({id});
@@ -67,8 +68,8 @@ app.post('/login', function (req, res) {
 
 app.get('/currentUser', function (req, res) {
     const id = req.cookies['cookie'];
-    const username = ids[id];
-    if (!username || !users[username]) {
+    const login = ids[id];
+    if (!login || !users[login]) {
         return res.status(401).end();
     }
 
@@ -80,14 +81,14 @@ app.get('/users', function (req, res) {
         .sort((l, r) => r.score - l.score)
         .map(user => {
             return {
-                email: user.username
+                email: user.login
             }
         });
 
     res.json(scorelist);
 });
 
-app.post('/logout', function (req, res) {
+app.post('/signout', function (req, res) {
     res.cookie('cookie', null, {expires: new Date(Date.now() + 1000 * 60 * 10)});
     res.status(200).json(null);
 });

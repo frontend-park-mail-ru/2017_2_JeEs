@@ -9,9 +9,9 @@ class UserService {
         this.user = null;
         this.users = []; //нужен ли?
 
-        if (window.location.host === 'jees-quoridor.herokuapp.com' || window.location.host === 'quoridor-jees.herokuapp.com') {
+        // if (window.location.host === 'jees-quoridor.herokuapp.com' || window.location.host === 'quoridor-jees.herokuapp.com') {
             Http.BaseUrl = 'https://jees-quoridor-backend.herokuapp.com';
-        }
+        // }
     }
 
     /**
@@ -21,8 +21,8 @@ class UserService {
      * @param {string} username
      * @return {Promise}
      */
-    signup(email, username, password) {
-        return Http.Post('/signup', {email, username, password});
+    signup(email, login, password) {
+        return Http.Post('/signup', {email, login, password});
     }
 
     /**
@@ -31,8 +31,8 @@ class UserService {
      * @param {string} password
      * @return {Promise}
      */
-    login(username, password) {
-        return Http.Post('/login', {username, password});
+    login(login, password) {
+        return Http.Post('/signin', {login, password});
     }
 
     /**
@@ -48,7 +48,7 @@ class UserService {
      * @return {Promise}
      */
     logout() {
-        return Http.Post('/logout', {});
+        return Http.Post('/signout', {});
     }
 
     /**
@@ -81,7 +81,7 @@ class UserService {
             return Promise.resolve(this.user);
         }
 
-        return Http.Get('/currentUser')
+        return Http.Post('/currentUser')
             .then(userdata => {
                 this.user = userdata;
                 return userdata;
