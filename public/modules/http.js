@@ -126,7 +126,8 @@ class Http {
             });
     };
 
-    static BaseUrl = null;
 }
+
+Http.BaseUrl = null;
 
 export default Http;
