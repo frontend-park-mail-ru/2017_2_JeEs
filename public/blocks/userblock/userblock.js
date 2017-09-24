@@ -8,14 +8,14 @@ class UserBlock extends Block {
 	}
 
 	_createChildren() {
-		this.appendChildBlock(Block.Create(
-			"img",
-			["user-block__avatar"],
-			{
-				src: "/static/images/test-avatar.jpg",
-				alt: "avatar",
-				href: "#"
-			}));
+		// this.appendChildBlock(Block.Create(
+		// 	"img",
+		// 	["user-block__avatar"],
+		// 	{
+		// 		src: "/static/images/test-avatar.jpg",
+		// 		alt: "avatar",
+		// 		href: "#"
+		// 	}));
 
 		let panel = Block.Create("div", ["user-block__panel"], {});
 		panel.appendChildBlock(Block.Create("a", ["user-block__user-name-ref"], { href: "#" }).setText("username"));

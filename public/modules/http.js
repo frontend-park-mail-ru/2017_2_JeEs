@@ -11,17 +11,17 @@ class Http {
     static Get(address) {
         const url = (baseUrl) + address;
         if (typeof window.fetch !== 'undefined') {
-            return this.FetchGet(address, url);
+            return this._FetchGet(address, url);
         }
-        return this.GetXMLHttpRequest(address, url);
+        return this._GetXMLHttpRequest(address, url);
     }
 
     static Post(address, body) {
         const url = (Http.BaseUrl || baseUrl) + address;
         if (typeof window.fetch !== 'undefined') {
-            return this.FetchPost(address, body, url);
+            return this._FetchPost(address, body, url);
         }
-        return this.PostXMLHttpRequest(address, body, url);
+        return this._PostXMLHttpRequest(address, body, url);
     }
 
 
@@ -31,7 +31,7 @@ class Http {
      * @param {string} url
      * @return {Promise}
      */
-     static GetXMLHttpRequest(address, url) {
+     static _GetXMLHttpRequest(address, url) {
         return new Promise(function (resolve, reject) {
             const xhr = new XMLHttpRequest();
             xhr.open('GET', url, true);
@@ -59,7 +59,7 @@ class Http {
      * @param {string} url
      * @return {Promise}
      */
-    static PostXMLHttpRequest(address, body, url) {
+    static _PostXMLHttpRequest(address, body, url) {
         return new Promise(function (resolve, reject) {
             const xhr = new XMLHttpRequest();
             xhr.open('POST', url, true);
@@ -86,7 +86,7 @@ class Http {
      * @param {string} address - адрес запроса
      * @return {Promise}
      */
-    static FetchGet(address, url) {
+    static _FetchGet(address, url) {
         return fetch(url, {
             method: 'GET',
             mode: 'cors',
@@ -107,7 +107,7 @@ class Http {
      * @param {*} body - тело запроса (объект)
      * @return {Promise}
      */
-    static FetchPost(address, body, url) {
+    static _FetchPost(address, body, url) {
         return fetch(url, {
             method: 'POST',
             mode: 'cors',

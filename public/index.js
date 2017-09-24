@@ -1,7 +1,7 @@
 import Block from "./blocks/block/block";
 import SoundBlock from "./blocks/soundblock/soundblock";
 import UserBlock from "./blocks/userblock/userblock";
-import MenuBlock from "./blocks/mainmenu/mainmenu";
+import * as MenuBlock from "./blocks/mainmenu/mainmenu";
 import Form from "./blocks/form/form";
 import UserService from "./services/user-service"
 import * as authFormConfig from "./configs/authformfields";
@@ -28,7 +28,7 @@ mainBlock.switch = (from, to) => {
     mainBlock.appendChildBlock(to);
 };
 
-const mainMenu = new MenuBlock();
+const mainMenu = new MenuBlock.MainMenu();
 
 const userService = new UserService();
 
@@ -69,7 +69,7 @@ registrationForm.onRef(() => {
 });
 
 
-mainMenu.onButtonClicked(0, () => {
+mainMenu.onButtonClicked(MenuBlock.BUTTONS.PLAY, () => {
     if (userService.isLoggedIn()) {
         alert("Когда-нибудь тут будет игра");
         return
