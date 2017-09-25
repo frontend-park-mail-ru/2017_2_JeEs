@@ -18,7 +18,7 @@ class UserService {
      * Регистрирует нового пользователя
      * @param {string} email
      * @param {string} password
-     * @param {string} username
+     * @param {string} login
      * @return {Promise}
      */
     signup(email, login, password) {
@@ -27,7 +27,7 @@ class UserService {
 
     /**
      * Авторизация пользователя
-     * @param {string} username
+     * @param {string} login
      * @param {string} password
      * @return {Promise}
      */

@@ -24,7 +24,7 @@ const ids = {};
 
 app.post('/signup', function (req, res) {
     const email = req.body.email;
-    const username = req.body.login;
+    const login = req.body.login;
     const password = req.body.password;
     if (
         !email || !login || !password ||

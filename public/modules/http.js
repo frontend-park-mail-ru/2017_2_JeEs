@@ -31,7 +31,7 @@ class Http {
      * @param {string} url
      * @return {Promise}
      */
-     static _GetXMLHttpRequest(address, url) {
+    static _GetXMLHttpRequest(address, url) {
         return new Promise(function (resolve, reject) {
             const xhr = new XMLHttpRequest();
             xhr.open('GET', url, true);
@@ -60,6 +60,7 @@ class Http {
      * @return {Promise}
      */
     static _PostXMLHttpRequest(address, body, url) {
+        console.log(JSON.stringify(body));
         return new Promise(function (resolve, reject) {
             const xhr = new XMLHttpRequest();
             xhr.open('POST', url, true);
@@ -96,7 +97,6 @@ class Http {
                 if (response.status >= 400) {
                     throw response;
                 }
-
                 return response.json();
             });
     };
@@ -108,6 +108,7 @@ class Http {
      * @return {Promise}
      */
     static _FetchPost(address, body, url) {
+        console.log(JSON.stringify(body));
         return fetch(url, {
             method: 'POST',
             mode: 'cors',
