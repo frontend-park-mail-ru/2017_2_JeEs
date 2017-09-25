@@ -51,6 +51,13 @@ authForm.onRef(() => {
     mainBlock.switch(registrationForm);
 });
 
+// authForm.onRef()
+//     .then(() => mainBlock.switch(registrationForm));
+//
+// registrationForm.onRef()
+//     .then(() => mainBlock.switch(authForm));
+
+
 const registrationForm = new Form(
     registrationFormConfig.title,
     registrationFormConfig.fieldPrototypes,

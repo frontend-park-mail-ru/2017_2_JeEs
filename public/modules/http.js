@@ -27,11 +27,10 @@ class Http {
 
     /**
      * Выполняет GET-запрос по указанному адресу
-     * @param {string} address - адрес запроса
-     * @param {string} url
+     * @param {string} url - адрес запроса
      * @return {Promise}
      */
-    static _GetXMLHttpRequest(address, url) {
+    static _GetXMLHttpRequest(url) {
         return new Promise(function (resolve, reject) {
             const xhr = new XMLHttpRequest();
             xhr.open('GET', url, true);
@@ -54,12 +53,12 @@ class Http {
 
     /**
      * Выполняет POST-запрос по указанному адресу
-     * @param {string} address - адрес запроса
+     * @param {string} url - адрес запроса
      * @param {*} body - тело запроса (объект)
      * @param {string} url
      * @return {Promise}
      */
-    static _PostXMLHttpRequest(address, body, url) {
+    static _PostXMLHttpRequest(body, url) {
         console.log(JSON.stringify(body));
         return new Promise(function (resolve, reject) {
             const xhr = new XMLHttpRequest();
@@ -84,10 +83,10 @@ class Http {
 
     /**
      * Выполняет GET-запрос по указанному адресу с использованием fetch
-     * @param {string} address - адрес запроса
+     * @param {string} url - адрес запроса
      * @return {Promise}
      */
-    static _FetchGet(address, url) {
+    static _FetchGet(url) {
         return fetch(url, {
             method: 'GET',
             mode: 'cors',
@@ -103,11 +102,11 @@ class Http {
 
     /**
      * Выполняет POST-запрос по указанному адресу с использованием fetch
-     * @param {string} address - адрес запроса
+     * @param {string} url - адрес запроса
      * @param {*} body - тело запроса (объект)
      * @return {Promise}
      */
-    static _FetchPost(address, body, url) {
+    static _FetchPost(body, url) {
         console.log(JSON.stringify(body));
         return fetch(url, {
             method: 'POST',
