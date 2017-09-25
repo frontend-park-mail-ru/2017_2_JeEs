@@ -38,6 +38,12 @@ class Block {
 		return this;
 	}
 
+	removeAllChild() {
+        while (this._element.firstChild) {
+            this._element.removeChild(this._element.firstChild);
+        }
+	}
+
 	on(event, callback) {
 		this._element.addEventListener(event, callback);
 	}

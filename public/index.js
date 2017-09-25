@@ -1,6 +1,6 @@
 import Block from "./blocks/block/block";
 import SoundBlock from "./blocks/soundblock/soundblock";
-import UserBlock from "./blocks/userblock/userblock";
+import * as UserBlock from "./blocks/userblock/userblock";
 import * as MenuBlock from "./blocks/mainmenu/mainmenu";
 import Form from "./blocks/form/form";
 import UserService from "./services/user-service"
@@ -12,8 +12,6 @@ const root = new Block(document.getElementById("root"));
 const topBar = Block.Create('div', ['top-bar']);
 root.appendChildBlock(topBar);
 topBar.appendChildBlock(new SoundBlock());
-topBar.appendChildBlock(new UserBlock());
-
 
 const gameNameBlock = Block.Create('div', ['game-name-block']);
 root.appendChildBlock(gameNameBlock);
@@ -23,14 +21,16 @@ gameNameBlock.appendChildBlock(Block.Create("h1", ["game-name-block__game-name"]
 const mainBlock = Block.Create('div', ['main-block']);
 root.appendChildBlock(mainBlock);
 
-mainBlock.switch = (from, to) => {
-    mainBlock.removeChildBlock(from);
+mainBlock.switch = (to) => {
+    mainBlock.removeAllChild();
     mainBlock.appendChildBlock(to);
 };
 
 const mainMenu = new MenuBlock.MainMenu();
 
 const userService = new UserService();
+
+const userBlock = new UserBlock.UserBlock();
 
 const authForm = new Form(
     authFormConfig.title,
@@ -41,13 +41,14 @@ const authForm = new Form(
 authForm.onSubmit(function (formdata) {
     userService.login(formdata.login, formdata.password)
         .then(() => authForm.reset())
-        .then(() => mainBlock.switch(authForm, mainMenu))
+        .then(() => mainBlock.switch(mainMenu))
         .then(() => userService.getData())
-        .catch((err) => alert(`Some error ${err.status}: ${err.responseText}`))
+        .then(() => userBlock.login(formdata.login))
+        .catch((err) => alert(`Some error ${err.status}: ${err.responseText}`));
 });
 
 authForm.onRef(() => {
-    mainBlock.switch(authForm, registrationForm);
+    mainBlock.switch(registrationForm);
 });
 
 const registrationForm = new Form(
@@ -59,13 +60,14 @@ const registrationForm = new Form(
 registrationForm.onSubmit(function (formdata) {
     userService.signup(formdata.email, formdata.login, formdata.password)
         .then(() => registrationForm.reset())
-        .then(() => mainBlock.switch(registrationForm, mainMenu))
+        .then(() => mainBlock.switch(mainMenu))
         .then(() => userService.getData())
-        .catch((err) => alert(`Some error ${err.status}: ${err.responseText}`))
+        .then(() => userBlock.login(formdata.login))
+        .catch((err) => alert(`Some error ${err.status}: ${err.responseText}`));
 });
 
 registrationForm.onRef(() => {
-    mainBlock.switch(registrationForm, authForm);
+    mainBlock.switch(authForm);
 });
 
 
@@ -74,9 +76,27 @@ mainMenu.onButtonClicked(MenuBlock.BUTTONS.PLAY, () => {
         alert("Когда-нибудь тут будет игра");
         return
     }
-    mainBlock.switch(mainMenu, authForm);
+    mainBlock.switch(authForm);
 });
 
 mainBlock.appendChildBlock(mainMenu);
 
 
+topBar.appendChildBlock(userBlock);
+
+userBlock.onButtonClicked(UserBlock.BUTTONS.LOGIN, () => {
+        mainBlock.switch(authForm);
+    }
+);
+
+userBlock.onButtonClicked(UserBlock.BUTTONS.SIGNUP, () => {
+        mainBlock.switch(registrationForm);
+    }
+);
+
+userBlock.onButtonClicked(UserBlock.BUTTONS.LOGOUT, () => {
+        userService.logout()
+            .then(() => userBlock.logout())
+            .catch((err) => alert(`Some error ${err.status}: ${err.responseText}`))
+    }
+);

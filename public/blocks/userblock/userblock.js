@@ -1,27 +1,59 @@
 import Block from "../block/block"
 
+const BUTTONS = {
+    LOGIN: {
+        data_section: "user-block__login",
+        text: "Войти"
+    },
+    SIGNUP: {
+        data_section: "user-block__signup",
+        text: "Зарегистрироваться"
+    },
+    LOGOUT: {
+        data_section: "user-block__logout",
+        text: "Выйти"
+    }
+};
+
 class UserBlock extends Block {
-	constructor() {
-		super(Block.Create("div", ["user-block"], {})._element);
+    constructor() {
+        super(Block.Create("div", ["user-block"], {})._element);
+        this._createChildren();
+        return this;
+    }
 
-		this._createChildren();
-	}
+    _createChildren() {
+        // let panel = Block.Create("div", ["user-block__panel"], {});
+        // this.appendChildBlock(Block.Create("button", [BUTTONS.LOGIN.data_section], {})
+        //     .setText(BUTTONS.LOGIN.text));
+        // this.appendChildBlock(Block.Create("button", [BUTTONS.SIGNUP.data_section], {})
+        //     .setText(BUTTONS.SIGNUP.text));
+        this.logout()
+    }
 
-	_createChildren() {
-		// this.appendChildBlock(Block.Create(
-		// 	"img",
-		// 	["user-block__avatar"],
-		// 	{
-		// 		src: "/static/images/test-avatar.jpg",
-		// 		alt: "avatar",
-		// 		href: "#"
-		// 	}));
+    login(login) {
+        this.removeAllChild();
 
-		let panel = Block.Create("div", ["user-block__panel"], {});
-		panel.appendChildBlock(Block.Create("a", ["user-block__user-name-ref"], { href: "#" }).setText("username"));
-		panel.appendChildBlock(Block.Create("a", ["user-block__logout"], { href: "#" }).setText("Выйти"));
-		this.appendChildBlock(panel);
-	}
+        this.appendChildBlock(Block.Create("p", [], {}).setText("Привет, " + login));
+        this.appendChildBlock(Block.Create("button", [BUTTONS.LOGOUT.data_section], {})
+            .setText(BUTTONS.LOGOUT.text));
+    }
+
+    logout() {
+        this.removeAllChild();
+
+        // let panel = Block.Create("div", ["user-block__panel"], {});
+        this.appendChildBlock(Block.Create("button", [BUTTONS.LOGIN.data_section], {})
+            .setText(BUTTONS.LOGIN.text));
+        this.appendChildBlock(Block.Create("button", [BUTTONS.SIGNUP.data_section], {})
+            .setText(BUTTONS.SIGNUP.text));
+    }
+
+    onButtonClicked(button, callback) {
+        this._element
+            .getElementsByClassName(button.data_section)[0]
+            .addEventListener("click", callback);
+    }
 }
 
-export default UserBlock;
+export {UserBlock, BUTTONS};

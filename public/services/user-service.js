@@ -9,9 +9,9 @@ class UserService {
         this.user = null;
         this.users = []; //нужен ли?
 
-        // if (window.location.host === 'jees-quoridor.herokuapp.com' || window.location.host === 'quoridor-jees.herokuapp.com') {
+        if (window.location.host === 'jees-quoridor.herokuapp.com' || window.location.host === 'quoridor-jees.herokuapp.com') {
             Http.BaseUrl = 'https://jees-quoridor-backend.herokuapp.com';
-        // }
+        }
     }
 
     /**

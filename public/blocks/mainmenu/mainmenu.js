@@ -3,27 +3,27 @@ import Block from "../block/block"
 
 const BUTTONS = {
     PLAY: {
-        data_section: "play",
+        data_section: "main-menu__play",
         text: "Играть"
     },
     SETTINGS: {
-        data_section: "settings",
+        data_section: "main-menu__settings",
         text: "Настройки"
     },
     RATING: {
-        data_section: "rating",
+        data_section: "main-menu__rating",
         text: "Рейтинг"
     },
     RULES: {
-        data_section: "rules",
+        data_section: "main-menu__rules",
         text: "Правила"
     },
     ABOUT: {
-        data_section: "about",
+        data_section: "main-menu__about",
         text: "Об игре"
     },
     AUTHORS: {
-        data_section: "authors",
+        data_section: "main-menu__authors",
         text: "Авторы"
     }
 };
@@ -35,9 +35,8 @@ class MainMenu extends Block {
         return this;
     }
 
-
     _createChildren() {
-        let buttonsClass = "main-menu__item";
+        const buttonsClass = "main-menu__item";
 
         for (let BUTTON in BUTTONS) {
             this.appendChildBlock(
