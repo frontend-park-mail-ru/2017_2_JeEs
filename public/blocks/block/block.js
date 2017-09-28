@@ -3,19 +3,25 @@
  * @module Block */
 
 class Block {
-	constructor(element) {
-		this._element = element;
-	}
+	constructor(...args) {
+		this._eventsListening = [];
+		this._childBlocks = {};
 
-	static Create(tagName = 'div', classes = [], attrs = {}) {
-		const element = document.createElement(tagName);
-		classes.forEach((className) => {
-			element.classList.add(className);
-		});
-		for (let name in attrs) {
-			element.setAttribute(name, attrs[name]);
+		if (typeof(args[0]) === "string") {
+			let tagName = args[0];
+			let classes = args[1] || [];
+			let attrs = args[2] || {};
+
+            this._element = document.createElement(tagName);
+			classes.forEach((className) => {
+                this._element.classList.add(className);
+            });
+            for (let name in attrs) {
+                this._element.setAttribute(name, attrs[name]);
+            }
+		} else if (args[0] instanceof Node) {
+			this._element = args[0];
 		}
-		return new Block(element);
 	}
 
 	setText(text) {
@@ -28,24 +34,30 @@ class Block {
 	}
 
 
-	appendChildBlock(block) {
+	appendChildBlock(blockName, block) {
 		this._element.appendChild(block._element);
+		this._childBlocks[blockName] = block;
 		return this;
 	}
 
-	removeChildBlock(block) {
-		this._element.removeChild(block._element);
+	removeChildBlock(blockName) {
+		this._element.removeChild(this._childBlocks[blockName]._element);
+		delete this._childBlocks[blockName];
 		return this;
 	}
 
-	removeAllChild() {
-        while (this._element.firstChild) {
-            this._element.removeChild(this._element.firstChild);
-        }
+	removeAllChildren() {
+		for (let blockName in this._childBlocks) {
+        	this._element.removeChild(this._childBlocks[blockName]._element);
+        	delete this._childBlocks[blockName];
+		}
 	}
 
 	on(event, callback) {
-		this._element.addEventListener(event, callback);
+		if (this._eventsListening.indexOf(event) === -1) {
+            this._element.addEventListener(event, callback);
+            this._eventsListening.push(event);
+        }
 	}
 
 	hasAttribute(attribute) {
@@ -62,6 +74,18 @@ class Block {
 
 	removeAttribute(attribute) {
 		this._element.removeAttribute(attribute);
+	}
+
+	removeListener(event, callback) {
+		let index = this._eventsListening.indexOf(event);
+        if (index > -1) {
+            this._element.removeEventListener(event, callback);
+            this._eventsListening.splice(index, 1);
+        }
+	}
+
+	getChildBlock(blockName) {
+		return this._childBlocks[blockName];
 	}
 }
 

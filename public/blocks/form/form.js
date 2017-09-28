@@ -4,27 +4,26 @@ import Validation from "./validation/validation"
 
 class Form extends Block {
     constructor(title = "", fieldPrototypes = [], refPrototype = {}) {
-        super(Block.Create("form", ["form"])._element);
+        super("form", ["form"]);
 
-        this.appendChildBlock(Block.Create("h4", ["form__title"], {}).setText(title));
+        this.appendChildBlock("title", new Block("h4", ["form__title"]).setText(title));
 
         fieldPrototypes.forEach((fieldPrototype) => {
-            this.appendChildBlock(Input.Create(fieldPrototype.type, ["form__field"], fieldPrototype.attributes));
+            this.appendChildBlock(fieldPrototype.attributes.name,
+                new Input(fieldPrototype.type, ["form__field"], fieldPrototype.attributes));
         });
 
-        this._ref = Block.Create("a", ["form__ref"], refPrototype.attributes);
-        this.appendChildBlock(this._ref.setText(refPrototype.text));
-
+        this.appendChildBlock("ref", new Block("a", ["form__ref"], refPrototype.attributes).setText(refPrototype.text));
         this._message = Block.Create("p", ["form__message"]);
-        this.appendChildBlock(this._message);
+        this.appendChildBlock("message", this._message);
 
         Validation.loginValidation(this._element.getElementsByClassName("form__field")[0],(message) => this.message(message))
     };
 
 
     onSubmit(callback) {
-        this._element.addEventListener('submit', (e) => {
-            e.preventDefault();
+        this.on('submit', (event) => {
+            event.preventDefault();
             const formdata = {};
             const elements = this._element.elements;
             for (let name in elements) {
@@ -38,15 +37,6 @@ class Form extends Block {
     reset() {
         this._element.reset();
     }
-
-    onRef(callback) {
-        this._element.getElementsByClassName("form__ref")[0]
-            .addEventListener("click", (event) => {
-                event.preventDefault();
-                callback();
-            });
-    }
-
 
     message(errorText) {
         this._message.setText(errorText)

@@ -1,56 +1,52 @@
 import Block from "../block/block"
 
-
-const BUTTONS = {
-    PLAY: {
-        data_section: "main-menu__play",
+const buttons = [
+    {
+        name: "play",
         text: "Играть"
     },
-    SETTINGS: {
-        data_section: "main-menu__settings",
+    {
+        name: "settings",
         text: "Настройки"
     },
-    RATING: {
-        data_section: "main-menu__rating",
+    {
+        name: "rating",
         text: "Рейтинг"
     },
-    RULES: {
-        data_section: "main-menu__rules",
+    {
+        name: "rules",
         text: "Правила"
     },
-    ABOUT: {
-        data_section: "main-menu__about",
+    {
+        name: "about",
         text: "Об игре"
     },
-    AUTHORS: {
-        data_section: "main-menu__authors",
+    {
+        name: "authors",
         text: "Авторы"
     }
-};
+];
+
+const blockClass = "main-menu__";
 
 class MainMenu extends Block {
     constructor() {
-        super(Block.Create("div", ["main-menu"], {})._element);
+        super("div", ["main-menu"], {});
         this._createChildren();
         return this;
     }
 
     _createChildren() {
-        const buttonsClass = "main-menu__item";
-
-        for (let BUTTON in BUTTONS) {
-            this.appendChildBlock(
-                Block.Create("button", [buttonsClass, BUTTONS[BUTTON].data_section], {})
-                    .setText(BUTTONS[BUTTON].text));
-        }
+        buttons.forEach((button) => {
+            this.appendChildBlock(button.name,
+                new Block("button", [blockClass + button.name]).setText(button.text));
+        })
     }
 
-    onButtonClicked(button, callback) {
-        this._element
-            .getElementsByClassName(button.data_section)[0]
-            .addEventListener("click", callback);
+    onButtonClicked(buttonName, callback) {
+        this._childBlocks[buttonName].on("click", callback);
     }
 }
 
-export {MainMenu, BUTTONS};
+export default MainMenu;
 

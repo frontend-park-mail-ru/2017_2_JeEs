@@ -1,60 +1,30 @@
 import Block from "../block/block"
 
-const BUTTONS = {
-    LOGIN: {
-        data_section: "user-block__login",
-        text: "Войти"
-    },
-    SIGNUP: {
-        data_section: "user-block__signup",
-        text: "Зарегистрироваться"
-    },
-    LOGOUT: {
-        data_section: "user-block__logout",
-        text: "Выйти"
-    }
-};
-
 class UserBlock extends Block {
     constructor() {
-        super(Block.Create("div", ["user-block"], {})._element);
-        this._createChildren();
+        super("div", ["user-block"], {});
+        this.logout();
         return this;
     }
 
-    _createChildren() {
-        // let panel = Block.Create("div", ["user-block__panel"], {});
-        // this.appendChildBlock(Block.Create("button", [BUTTONS.LOGIN.data_section], {})
-        //     .setText(BUTTONS.LOGIN.text));
-        // this.appendChildBlock(Block.Create("button", [BUTTONS.SIGNUP.data_section], {})
-        //     .setText(BUTTONS.SIGNUP.text));
-        this.logout()
-    }
-
     login(login) {
-        this.removeAllChild();
+        this.removeAllChildren();
 
-        this.appendChildBlock(Block.Create("p", [], {}).setText("Привет, " + login));
-        this.appendChildBlock(Block.Create("button", [BUTTONS.LOGOUT.data_section], {})
-            .setText(BUTTONS.LOGOUT.text));
+        this.appendChildBlock("user-name", new Block("a", ["user-block__user-name"]).setText("Привет, " + login));
+        this.appendChildBlock("logout", new Block("button", ["user-block__logout"]).setText("Выйти"));
     }
 
     logout() {
-        this.removeAllChild();
+        this.removeAllChildren();
 
-        // let panel = Block.Create("div", ["user-block__panel"], {});
-        this.appendChildBlock(Block.Create("button", [BUTTONS.LOGIN.data_section], {})
-            .setText(BUTTONS.LOGIN.text));
-        this.appendChildBlock(Block.Create("button", [BUTTONS.SIGNUP.data_section], {})
-            .setText(BUTTONS.SIGNUP.text));
+        this.appendChildBlock("login", new Block("button", ["user-block__login"]).setText("Войти"));
+        this.appendChildBlock("signup", new Block("button", ["user-block__signup"]).setText("Зарегистрироваться"));
     }
 
-    onButtonClicked(button, callback) {
-        this._element
-            .getElementsByClassName(button.data_section)[0]
-            .addEventListener("click", callback);
+    onButtonClicked(buttonName, callback) {
+        this._childBlocks[buttonName].on("click", callback);
     }
 
 }
 
-export {UserBlock, BUTTONS};
+export default UserBlock;
