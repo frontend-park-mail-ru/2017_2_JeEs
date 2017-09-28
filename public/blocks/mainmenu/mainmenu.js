@@ -30,7 +30,7 @@ const BUTTONS = {
 
 class MainMenu extends Block {
     constructor() {
-        super(Block.Create("div", ["main-menu"], {})._element);
+        super("div", ["main-menu"], {});
         this._createChildren();
         return this;
     }
@@ -40,7 +40,7 @@ class MainMenu extends Block {
 
         for (let BUTTON in BUTTONS) {
             this.appendChildBlock(
-                Block.Create("button", [buttonsClass, BUTTONS[BUTTON].data_section], {})
+                new Block("button", [BUTTONS[BUTTON].data_section], {})
                     .setText(BUTTONS[BUTTON].text));
         }
     }

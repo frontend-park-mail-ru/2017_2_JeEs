@@ -17,35 +17,25 @@ const BUTTONS = {
 
 class UserBlock extends Block {
     constructor() {
-        super(Block.Create("div", ["user-block"], {})._element);
-        this._createChildren();
+        super("div", ["user-block"], {});
+        this.logout();
         return this;
     }
 
-    _createChildren() {
-        // let panel = Block.Create("div", ["user-block__panel"], {});
-        // this.appendChildBlock(Block.Create("button", [BUTTONS.LOGIN.data_section], {})
-        //     .setText(BUTTONS.LOGIN.text));
-        // this.appendChildBlock(Block.Create("button", [BUTTONS.SIGNUP.data_section], {})
-        //     .setText(BUTTONS.SIGNUP.text));
-        this.logout()
-    }
-
     login(login) {
-        this.removeAllChild();
+        this.removeAllChildren();
 
-        this.appendChildBlock(Block.Create("p", [], {}).setText("Привет, " + login));
-        this.appendChildBlock(Block.Create("button", [BUTTONS.LOGOUT.data_section], {})
+        this.appendChildBlock(new Block("p").setText("Привет, " + login));
+        this.appendChildBlock(new Block("button", [BUTTONS.LOGOUT.data_section])
             .setText(BUTTONS.LOGOUT.text));
     }
 
     logout() {
-        this.removeAllChild();
+        this.removeAllChildren();
 
-        // let panel = Block.Create("div", ["user-block__panel"], {});
-        this.appendChildBlock(Block.Create("button", [BUTTONS.LOGIN.data_section], {})
+        this.appendChildBlock(new Block("button", [BUTTONS.LOGIN.data_section])
             .setText(BUTTONS.LOGIN.text));
-        this.appendChildBlock(Block.Create("button", [BUTTONS.SIGNUP.data_section], {})
+        this.appendChildBlock(new Block("button", [BUTTONS.SIGNUP.data_section])
             .setText(BUTTONS.SIGNUP.text));
     }
 

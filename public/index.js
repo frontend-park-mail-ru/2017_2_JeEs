@@ -9,20 +9,20 @@ import * as registrationFormConfig from "./configs/registrationformfields";
 
 const root = new Block(document.getElementById("root"));
 
-const topBar = Block.Create('div', ['top-bar']);
+const topBar = new Block('div', ['top-bar']);
 root.appendChildBlock(topBar);
 topBar.appendChildBlock(new SoundBlock());
 
-const gameNameBlock = Block.Create('div', ['game-name-block']);
+const gameNameBlock = new Block('div', ['game-name-block']);
 root.appendChildBlock(gameNameBlock);
-gameNameBlock.appendChildBlock(Block.Create("h1", ["game-name-block__game-name"], {}).setText("Quoridor"));
+gameNameBlock.appendChildBlock(new Block("h1", ["game-name-block__game-name"]).setText("Quoridor"));
 
 
-const mainBlock = Block.Create('div', ['main-block']);
+const mainBlock = new Block('div', ['main-block']);
 root.appendChildBlock(mainBlock);
 
 mainBlock.switch = (to) => {
-    mainBlock.removeAllChild();
+    mainBlock.removeAllChildren();
     mainBlock.appendChildBlock(to);
 };
 

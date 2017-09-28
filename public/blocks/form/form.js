@@ -3,15 +3,15 @@ import Input from "../input/input"
 
 class Form extends Block {
     constructor(title = "", fieldPrototypes = [], refPrototype = {}) {
-        super(Block.Create("form", ["form"])._element);
+        super("form", ["form"]);
 
-        this.appendChildBlock(Block.Create("h4", ["form__title"], {}).setText(title));
+        this.appendChildBlock(new Block("h4", ["form__title"]).setText(title));
 
         fieldPrototypes.forEach((fieldPrototype) => {
-            this.appendChildBlock(Input.Create(fieldPrototype.type, ["form__field"], fieldPrototype.attributes));
+            this.appendChildBlock(new Input(fieldPrototype.type, ["form__field"], fieldPrototype.attributes));
         });
 
-        this.appendChildBlock(Block.Create("a", ["form__ref"], refPrototype.attributes).setText(refPrototype.text));
+        this.appendChildBlock(new Block("a", ["form__ref"], refPrototype.attributes).setText(refPrototype.text));
     }
 
     onSubmit(callback) {
