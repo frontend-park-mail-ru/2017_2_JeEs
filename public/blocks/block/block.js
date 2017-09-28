@@ -1,7 +1,7 @@
 /**
  * Модуль, реализующий общее поведение для каждого блока
- * @module Block */
-
+ * @module Block
+ */
 class Block {
 	constructor(...args) {
 		this._eventsListening = [];

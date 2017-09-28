@@ -1,7 +1,8 @@
 import Validation from "../form/validation/validation"
 
 /**
- * @return {string}
+ * @function LoginValidate
+ * @return {string || null} возвращает null если ошибок нет
  */
 function LoginValidate(login, password) {
     let errors = [];

@@ -1,10 +1,9 @@
-/**
- * Модуль, предоставляющий методы для выполнения HTTP-запросов
- * @module Http
- */
-
 const baseUrl = `${window.location.protocol}//${window.location.host}`;
 
+/**
+ * Класс, предоставляющий методы для выполнения HTTP-запросов
+ * @class Http
+ */
 class Http {
     /**
      * Выполняет GET-запрос с использованием fetch (по возможности) или XMLHttpRequest

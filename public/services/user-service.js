@@ -2,7 +2,7 @@ import Http from "../modules/http"
 
 /**
  * Сервис для работы с пользователями
- * @module UserService
+ * @class UserService
  */
 class UserService {
     constructor() {

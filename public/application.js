@@ -1,5 +1,8 @@
 'use strict';
 
+/**
+ * подключает модули/статику/css и тд для сборки webpack-ом
+ */
 function requireAll(r) { r.keys().forEach(r); }
 
 require("./index.js");

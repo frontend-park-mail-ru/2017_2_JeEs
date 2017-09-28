@@ -13,9 +13,11 @@ const MIN_PASSWORD_LENGTH = 4;
 
 /**
  * Класс для валидации полей
- * @module Validate
+ * методы возвращают true если валидация прошла или строку с текстом ошибки
+ * @class Validate
  */
 class Validate {
+
     static validatePassword(password) {
         if ((password.length < MIN_PASSWORD_LENGTH) || (password.length > MAX_PASSWORD_LENGTH)) {
             return 'Пароль должен быть от ' + MIN_PASSWORD_LENGTH + ' до ' + MAX_PASSWORD_LENGTH + ' символов.';
