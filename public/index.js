@@ -34,6 +34,10 @@ mainBlock.switch = (toName, to) => {
 
 const mainMenu = new MainMenu();
 
+gameNameBlock.getChildBlock("game-name").on("click", () => {
+    mainBlock.switch("main-block", mainMenu);
+});
+
 const userService = new UserService();
 
 const authForm = new Form(
