@@ -5,18 +5,19 @@ class Form extends Block {
     constructor(title = "", fieldPrototypes = [], refPrototype = {}) {
         super("form", ["form"]);
 
-        this.appendChildBlock(new Block("h4", ["form__title"]).setText(title));
+        this.appendChildBlock("title", new Block("h4", ["form__title"]).setText(title));
 
         fieldPrototypes.forEach((fieldPrototype) => {
-            this.appendChildBlock(new Input(fieldPrototype.type, ["form__field"], fieldPrototype.attributes));
+            this.appendChildBlock(fieldPrototype.attributes.name,
+                new Input(fieldPrototype.type, ["form__field"], fieldPrototype.attributes));
         });
 
-        this.appendChildBlock(new Block("a", ["form__ref"], refPrototype.attributes).setText(refPrototype.text));
+        this.appendChildBlock("ref", new Block("a", ["form__ref"], refPrototype.attributes).setText(refPrototype.text));
     }
 
     onSubmit(callback) {
-        this._element.addEventListener('submit', (e) => {
-            e.preventDefault();
+        this.on('submit', (event) => {
+            event.preventDefault();
             const formdata = {};
             const elements = this._element.elements;
             for (let name in elements) {
@@ -29,14 +30,6 @@ class Form extends Block {
 
     reset() {
         this._element.reset();
-    }
-
-    onRef(callback) {
-        this._element.getElementsByClassName("form__ref")[0]
-            .addEventListener("click", (event) => {
-                event.preventDefault();
-                callback();
-            });
     }
     //
     // onRef() {

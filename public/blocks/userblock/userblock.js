@@ -1,20 +1,5 @@
 import Block from "../block/block"
 
-const BUTTONS = {
-    LOGIN: {
-        data_section: "user-block__login",
-        text: "Войти"
-    },
-    SIGNUP: {
-        data_section: "user-block__signup",
-        text: "Зарегистрироваться"
-    },
-    LOGOUT: {
-        data_section: "user-block__logout",
-        text: "Выйти"
-    }
-};
-
 class UserBlock extends Block {
     constructor() {
         super("div", ["user-block"], {});
@@ -25,25 +10,20 @@ class UserBlock extends Block {
     login(login) {
         this.removeAllChildren();
 
-        this.appendChildBlock(new Block("p").setText("Привет, " + login));
-        this.appendChildBlock(new Block("button", [BUTTONS.LOGOUT.data_section])
-            .setText(BUTTONS.LOGOUT.text));
+        this.appendChildBlock("user-name", new Block("a", ["user-block__user-name"]).setText("Привет, " + login));
+        this.appendChildBlock("logout", new Block("button", ["user-block__logout"]).setText("Выйти"));
     }
 
     logout() {
         this.removeAllChildren();
 
-        this.appendChildBlock(new Block("button", [BUTTONS.LOGIN.data_section])
-            .setText(BUTTONS.LOGIN.text));
-        this.appendChildBlock(new Block("button", [BUTTONS.SIGNUP.data_section])
-            .setText(BUTTONS.SIGNUP.text));
+        this.appendChildBlock("login", new Block("button", ["user-block__login"]).setText("Войти"));
+        this.appendChildBlock("signup", new Block("button", ["user-block__signup"]).setText("Зарегистрироваться"));
     }
 
-    onButtonClicked(button, callback) {
-        this._element
-            .getElementsByClassName(button.data_section)[0]
-            .addEventListener("click", callback);
+    onButtonClicked(buttonName, callback) {
+        this._childBlocks[buttonName].on("click", callback);
     }
 }
 
-export {UserBlock, BUTTONS};
+export default UserBlock;

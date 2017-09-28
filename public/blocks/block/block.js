@@ -5,6 +5,7 @@
 class Block {
 	constructor(...args) {
 		this._eventsListening = [];
+		this._childBlocks = {};
 
 		if (typeof(args[0]) === "string") {
 			let tagName = args[0];
@@ -33,20 +34,23 @@ class Block {
 	}
 
 
-	appendChildBlock(block) {
+	appendChildBlock(blockName, block) {
 		this._element.appendChild(block._element);
+		this._childBlocks[blockName] = block;
 		return this;
 	}
 
-	removeChildBlock(block) {
-		this._element.removeChild(block._element);
+	removeChildBlock(blockName) {
+		this._element.removeChild(this._childBlocks[blockName]._element);
+		delete this._childBlocks[blockName];
 		return this;
 	}
 
 	removeAllChildren() {
-        while (this._element.firstChild) {
-            this._element.removeChild(this._element.firstChild);
-        }
+		for (let blockName in this._childBlocks) {
+        	this._element.removeChild(this._childBlocks[blockName]._element);
+        	delete this._childBlocks[blockName];
+		}
 	}
 
 	on(event, callback) {
@@ -78,6 +82,10 @@ class Block {
             this._element.removeEventListener(event, callback);
             this._eventsListening.splice(index, 1);
         }
+	}
+
+	getChildBlock(blockName) {
+		return this._childBlocks[blockName];
 	}
 }
 
