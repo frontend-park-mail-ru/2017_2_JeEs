@@ -54,6 +54,31 @@ class UserBlock extends Block {
             .getElementsByClassName(button.data_section)[0]
             .addEventListener("click", callback);
     }
+
+    // onSubmit(callback) {
+    //     this._element.addEventListener('submit', (e) => {
+    //         e.preventDefault();
+    //         const formdata = {};
+    //         const elements = this._element.elements;
+    //         for (let name in elements) {
+    //             formdata[name] = elements[name].value;
+    //         }
+    //
+    //         callback(formdata);
+    //     });
+    // }
+
+    // onButtonClicked(button) {
+    //     return new Promise((resolve, reject) => {
+    //         this._element
+    //             .getElementsByClassName(button.data_section)[0]
+    //             .addEventListener("click", (event) => {
+    //                 event.preventDefault();
+    //                 resolve();
+    //             });
+    //         debugger;
+    //     });
+    // }
 }
 
 export {UserBlock, BUTTONS};

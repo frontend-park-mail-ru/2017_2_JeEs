@@ -21,7 +21,7 @@ gameNameBlock.appendChildBlock(Block.Create("h1", ["game-name-block__game-name"]
 const mainBlock = Block.Create('div', ['main-block']);
 root.appendChildBlock(mainBlock);
 
-mainBlock.switch = (to) => {
+mainBlock.switch = to => {
     mainBlock.removeAllChild();
     mainBlock.appendChildBlock(to);
 };
@@ -44,19 +44,14 @@ authForm.onSubmit(function (formdata) {
         .then(() => mainBlock.switch(mainMenu))
         .then(() => userService.getData())
         .then(() => userBlock.login(formdata.login))
-        .catch((err) => alert(`Some error ${err.status}: ${err.responseText}`));
+        // .catch((err) => authForm.message(`Some error ${err.status}: ${err.responseText}`));
+        .catch((err) => {authForm.message(err.error)});
+
 });
 
-authForm.onRef(() => {
-    mainBlock.switch(registrationForm);
-});
-
-// authForm.onRef()
-//     .then(() => mainBlock.switch(registrationForm));
-//
-// registrationForm.onRef()
-//     .then(() => mainBlock.switch(authForm));
-
+// authForm.onRef(() => {
+//     mainBlock.switch(registrationForm);
+// });
 
 const registrationForm = new Form(
     registrationFormConfig.title,
@@ -66,16 +61,24 @@ const registrationForm = new Form(
 
 registrationForm.onSubmit(function (formdata) {
     userService.signup(formdata.email, formdata.login, formdata.password)
-        .then(() => registrationForm.reset())
+        .then(() => {registrationForm.reset()})
         .then(() => mainBlock.switch(mainMenu))
         .then(() => userService.getData())
         .then(() => userBlock.login(formdata.login))
-        .catch((err) => alert(`Some error ${err.status}: ${err.responseText}`));
+        // .catch((err) => registrationForm.message(`Some error ${err.status}: ${err.responseText}`));
+        .catch((err) => {registrationForm.message(err.error)});
 });
 
-registrationForm.onRef(() => {
-    mainBlock.switch(authForm);
-});
+
+authForm.onRef()
+    .then(() => mainBlock.switch(registrationForm));
+
+registrationForm.onRef()
+    .then(() => mainBlock.switch(authForm));
+
+// registrationForm.onRef(() => {
+//     mainBlock.switch(authForm);
+// });
 
 
 mainMenu.onButtonClicked(MenuBlock.BUTTONS.PLAY, () => {
@@ -91,19 +94,17 @@ mainBlock.appendChildBlock(mainMenu);
 
 topBar.appendChildBlock(userBlock);
 
-userBlock.onButtonClicked(UserBlock.BUTTONS.LOGIN, () => {
-        mainBlock.switch(authForm);
-    }
+
+userBlock.onButtonClicked(UserBlock.BUTTONS.LOGIN, () =>
+    mainBlock.switch(authForm)
 );
 
-userBlock.onButtonClicked(UserBlock.BUTTONS.SIGNUP, () => {
-        mainBlock.switch(registrationForm);
-    }
+userBlock.onButtonClicked(UserBlock.BUTTONS.SIGNUP, () =>
+    mainBlock.switch(registrationForm)
 );
 
 userBlock.onButtonClicked(UserBlock.BUTTONS.LOGOUT, () => {
-        userService.logout()
-            .then(() => userBlock.logout())
-            .catch((err) => alert(`Some error ${err.status}: ${err.responseText}`))
-    }
-);
+    userService.logout()
+        .then(() => userBlock.logout())
+        .catch((err) => alert(err.error))
+});

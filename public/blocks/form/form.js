@@ -1,5 +1,6 @@
 import Block from "../block/block"
 import Input from "../input/input"
+import Validation from "./validation/validation"
 
 class Form extends Block {
     constructor(title = "", fieldPrototypes = [], refPrototype = {}) {
@@ -11,8 +12,16 @@ class Form extends Block {
             this.appendChildBlock(Input.Create(fieldPrototype.type, ["form__field"], fieldPrototype.attributes));
         });
 
-        this.appendChildBlock(Block.Create("a", ["form__ref"], refPrototype.attributes).setText(refPrototype.text));
-    }
+        this._ref = Block.Create("a", ["form__ref"], refPrototype.attributes);
+        this.appendChildBlock(this._ref.setText(refPrototype.text));
+
+        this._message = Block.Create("p", ["form__message"]);
+        this.appendChildBlock(this._message);
+
+        Validation.loginValidation(this._element.getElementsByClassName("form__field")[0])
+            .then((err) => this.message(err))
+    };
+
 
     onSubmit(callback) {
         this._element.addEventListener('submit', (e) => {
@@ -31,23 +40,26 @@ class Form extends Block {
         this._element.reset();
     }
 
-    onRef(callback) {
-        this._element.getElementsByClassName("form__ref")[0]
-            .addEventListener("click", (event) => {
-                event.preventDefault();
-                callback();
-            });
-    }
-    //
-    // onRef() {
-    //     return new Promise((resolve, reject) => {
-    //         this._element.getElementsByClassName("form__ref")[0]
-    //             .addEventListener("click", (event) => {
-    //                 event.preventDefault();
-    //                 resolve()
-    //             });
-    //     });
+    // onRef(callback) {
+    //     this._element.getElementsByClassName("form__ref")[0]
+    //         .addEventListener("click", (event) => {
+    //             event.preventDefault();
+    //             callback();
+    //         });
     // }
+
+    onRef() {
+        return new Promise((resolve, reject) => {
+            this._ref._element.addEventListener("click", (event) => {
+                event.preventDefault();
+                resolve();
+            });
+        });
+    }
+
+    message(errorText) {
+        this._message.setText(errorText)
+    }
 }
 
 export default Form;

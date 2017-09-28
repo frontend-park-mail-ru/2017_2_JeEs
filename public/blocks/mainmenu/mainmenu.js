@@ -50,6 +50,17 @@ class MainMenu extends Block {
             .getElementsByClassName(button.data_section)[0]
             .addEventListener("click", callback);
     }
+
+    // onButtonClicked(button) {
+    //     return new Promise((resolve, reject) => {
+    //         this._element
+    //             .getElementsByClassName(button.data_section)[0]
+    //             .addEventListener("click", (event) => {
+    //                 event.preventDefault();
+    //                 resolve();
+    //             });
+    //     });
+    // }
 }
 
 export {MainMenu, BUTTONS};
