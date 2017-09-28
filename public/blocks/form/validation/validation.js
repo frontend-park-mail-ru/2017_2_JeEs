@@ -1,66 +1,46 @@
-// const authForm = document.getElementById('auth-form');
-//
-// const password = authForm.elements['password'];
-// const repeatPassword = authForm.elements['repeat-password'];
-// password.addEventListener('focusout', event => {
-//     if (password.value.length < 8) {
-//         alert("Слишком короткий пароль! Введите не менее 8 символов")
-//     }
-//     if (password.value && repeatPassword.value && password.value !== repeatPassword.value) {
-//         alert("Пароли не совпадают");
-//     }
-// });
-// repeatPassword.addEventListener('focusout', event => {
-//     if (repeatPassword.value.length < 8) {
-//         alert("Слишком короткий пароль! Введите не менее 8 символов")
-//     }
-//     if (password.value && repeatPassword.value && password.value !== repeatPassword.value) {
-//         alert("Пароли не совпадают");
-//     }
-// });
-//
-// const username = authForm.elements['username'];
-// username.addEventListener('focusout', event => {
-//     if (username.value.length < 6) {
-//         alert("Логин должен быть не менее 6 символов")
-//     }
-// });
-//
-// const email = authForm.elements['email'];
-// email.addEventListener('focusout', event => {
-//
-// });
-class Validation {
+/**
+ * Константы для проверки размеров полей
+ */
+const MAX_LOGIN_LENGTH = 30;
+const MIN_LOGIN_LENGTH = 3;
 
-    static emailValidation(emailField, callback) {
+const MAX_EMAIL_LENGTH = 30;
+const MIN_EMAIL_LENGTH = 3;
 
-        emailField.addEventListener('focusout', event => {
-            if (!emailField.value.match(/@/)) {
-                callback('Wrong email format');
-                return
-            }
-            callback("")
-        });
+const MAX_PASSWORD_LENGTH = 30;
+const MIN_PASSWORD_LENGTH = 4;
+
+
+/**
+ * Класс для валидации полей
+ * @module Validate
+ */
+class Validate {
+    static validatePassword(password) {
+        if ((password.length < MIN_PASSWORD_LENGTH) || (password.length > MAX_PASSWORD_LENGTH)) {
+            return 'Пароль должен быть от ' + MIN_PASSWORD_LENGTH + ' до ' + MAX_PASSWORD_LENGTH + ' символов.';
+        }
+        return true;
     }
 
-    static loginValidation(loginField, callback) {
-        loginField.addEventListener('focusout', event => {
-            if (loginField.value.length < 6) {
-                callback("Логин должен быть не менее 6 символов")
-                return
-            }
-            callback("")
-        });
+    static validateEmail(email) {
+        if (!email.match(/@/)) {
+            return 'Неправильный формат email-а';
+        }
+
+        if ((email.length < MIN_EMAIL_LENGTH) || (email.length > MAX_EMAIL_LENGTH)) {
+            return 'Email должен быть от ' + MIN_EMAIL_LENGTH + ' до ' + MAX_EMAIL_LENGTH + ' символов.';
+        }
+        return true;
     }
 
-    static passwordValidation(passwordField) {
+    static validateLogin(login) {
+        if ((login.length < MIN_LOGIN_LENGTH) || (login.length > MAX_LOGIN_LENGTH)) {
+            return 'Логин должен быть от ' + MIN_LOGIN_LENGTH + ' до ' + MAX_LOGIN_LENGTH + ' символов.';
+        }
 
-    }
-
-    static repeatPasswordValidation(passwordField, repeatPasswordField) {
-
+        return true;
     }
 }
 
-
-export default Validation;
+export default Validate

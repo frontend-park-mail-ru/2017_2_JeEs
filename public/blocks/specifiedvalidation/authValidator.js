@@ -1,7 +1,10 @@
-import Validation from "../utils/validations"
+import Validation from "../form/validation/validation"
 
+/**
+ * @return {string}
+ */
 function AuthValidate(email, login, password, password_confirm) {
-
+    let errors = [];
     const emailValidation = Validation.validateEmail(email);
     if (emailValidation !== true) {
         errors.push({field: 'email', error: emailValidation});
@@ -18,8 +21,18 @@ function AuthValidate(email, login, password, password_confirm) {
     }
 
     if (password !== password_confirm) {
-        errors.push({field: 'password-confirm', error: "Пароли не совпадают"});
+        errors.push({field: 'passwordConfirm', error: "Пароли не совпадают"});
     }
+
+    if (errors.length === 0) {
+        return null
+    }
+
+    let result = "";
+    errors.forEach((item) => {
+        result += '\n' + item.error
+    });
+    return result
 }
 
 export default AuthValidate

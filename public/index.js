@@ -7,6 +7,8 @@ import UserService from "./services/user-service"
 import * as authFormConfig from "./configs/authformfields";
 import * as registrationFormConfig from "./configs/registrationformfields";
 import RatingBlock from "./blocks/ratingblock/rating"
+import AuthValidate from "./blocks/specifiedvalidation/authValidator"
+import loginValidate from "./blocks/specifiedvalidation/loginValidator"
 
 const root = new Block(document.getElementById("root"));
 
@@ -47,11 +49,20 @@ const authForm = new Form(
 
 
 authForm.onSubmit((formdata) => {
+    const resultValidation = loginValidate(formdata.login, formdata.password);
+    if (resultValidation !== null) {
+        authForm.message(resultValidation);
+        return
+    }
     userService.login(formdata.login, formdata.password)
         .then(() => authForm.reset())
-        .then(() => mainBlock.switch(mainMenu))
+        .then(() => mainBlock.switch("main-menu", mainMenu))
         .then(() => userService.getData())
         .then(() => userBlock.login(formdata.login))
+        .then(() => userBlock.getChildBlock("logout").on("click", () => {
+            userService.logout()
+                .then(() => userBlock.logout())
+        }))
         .catch((err) => authForm.message(err.error));
 
 });
@@ -68,12 +79,23 @@ const registrationForm = new Form(
 );
 
 registrationForm.onSubmit((formdata) => {
+    const authValidation = AuthValidate(formdata.email, formdata.login, formdata.password, formdata.passwordConfirm);
+    if (authValidation !== null) {
+        registrationForm.message(authValidation);
+        return
+    }
     userService.signup(formdata.email, formdata.login, formdata.password)
         .then(() => registrationForm.reset())
-        .then(() => mainBlock.switch(mainMenu))
+        .then(() => mainBlock.switch("main-menu", mainMenu))
         .then(() => userService.getData())
         .then(() => userBlock.login(formdata.login))
-        .catch((err) => {registrationForm.message(err.error)});
+        .then(() => userBlock.getChildBlock("logout").on("click", () => {
+            userService.logout()
+                .then(() => userBlock.logout())
+        }))
+        .catch((err) => {
+            registrationForm.message(err.error)
+        });
 });
 
 registrationForm.getChildBlock("ref").on("click", (event) => {
@@ -83,15 +105,14 @@ registrationForm.getChildBlock("ref").on("click", (event) => {
 });
 
 mainMenu.getChildBlock("play").on("click", () => {
-    if (userService.isLoggedIn()) {
-        alert("Когда-нибудь тут будет игра");
-        return;
-    }
-    mainBlock.switch("auth-form", authForm);
+    userService.isLoggedIn()
+        .then(() => alert("Когда-нибудь тут будет игра"))
+        .catch((err) => mainBlock.switch("auth-form", authForm))
 
 });
 
 mainBlock.appendChildBlock("main-menu", mainMenu);
+
 
 userBlock.getChildBlock("login").on("click", () => {
     mainBlock.switch("auth-form", authForm);
@@ -100,12 +121,6 @@ userBlock.getChildBlock("login").on("click", () => {
 userBlock.getChildBlock("signup").on("click", () => {
     mainBlock.switch("registration-form", registrationForm);
 });
-
-// userBlock.onButtonClicked("logout", () => {
-//         userService.logout()
-//             .then(() => userBlock.logout())
-//             .catch((err) => alert(`Some error ${err.status}: ${err.responseText}`))
-// });
 
 mainMenu.getChildBlock("rating").on("click", () => {
     mainBlock.switch("rating-block", ratingBlock);
