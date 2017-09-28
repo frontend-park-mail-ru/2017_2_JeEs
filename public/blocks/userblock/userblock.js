@@ -24,6 +24,7 @@ class UserBlock extends Block {
     onButtonClicked(buttonName, callback) {
         this._childBlocks[buttonName].on("click", callback);
     }
+
 }
 
 export default UserBlock;

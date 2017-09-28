@@ -1,12 +1,17 @@
-const loginForm = document.getElementById('login-form');
+import Validation from "../utils/validations"
 
+function LoginValidate(login, password) {
 
-const password = loginForm.elements['password'];
-password.addEventListener('focusout', event => {
+    const loginValidation = Validation.validateLogin(login);
+    if (loginValidation !== true) {
+        errors.push({field: 'password', error: loginValidation});
+    }
 
-});
+    const passwordValidation = Validation.validatePassword(password);
+    if (passwordValidation !== true) {
+        errors.push({field: 'password', error: passwordValidation});
+    }
 
-const username = loginForm.elements['username'];
-username.addEventListener('focusout', event => {
-	
-});
+}
+
+export default LoginValidate

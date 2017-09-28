@@ -6,22 +6,21 @@
 const baseUrl = `${window.location.protocol}//${window.location.host}`;
 
 
-//пока что внутренние методы тоже статические, ибо вебпак на нестатические ругается о_О
 class Http {
     static Get(address) {
         const url = (Http.BaseUrl || baseUrl) + address;
         if (typeof window.fetch !== 'undefined') {
-            return this._FetchGet(address, url);
+            return this._FetchGet(url);
         }
-        return this._GetXMLHttpRequest(address, url);
+        return this._GetXMLHttpRequest(url);
     }
 
     static Post(address, body) {
         const url = (Http.BaseUrl || baseUrl) + address;
         if (typeof window.fetch !== 'undefined') {
-            return this._FetchPost(address, body, url);
+            return this._FetchPost(body, url);
         }
-        return this._PostXMLHttpRequest(address, body, url);
+        return this._PostXMLHttpRequest(body, url);
     }
 
 
@@ -39,6 +38,7 @@ class Http {
             xhr.onreadystatechange = function () {
                 if (xhr.readyState !== 4) return;
                 if (+xhr.status >= 400) {
+                    alert(xhr.responseText);
                     reject(xhr);
                     return;
                 }
@@ -69,6 +69,7 @@ class Http {
             xhr.onreadystatechange = function () {
                 if (xhr.readyState !== 4) return;
                 if (+xhr.status >= 400) {
+                    debugger;
                     reject(xhr);
                     return;
                 }
@@ -93,11 +94,12 @@ class Http {
             credentials: 'include'
         })
             .then(function (response) {
+                let json = response.json();
                 if (response.status >= 400) {
-                    throw response;
+                    return json.then(response => {throw response;});
                 }
-                return response.json();
-            });
+                return json;
+            })
     };
 
     /**
@@ -118,12 +120,12 @@ class Http {
             }
         })
             .then(function (response) {
+                let json = response.json();
                 if (response.status >= 400) {
-                    throw response;
+                    return json.then(response => {throw response;});
                 }
-
-                return response.json();
-            });
+                return json;
+            })
     };
 
 }

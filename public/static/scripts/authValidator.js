@@ -1,32 +1,25 @@
-const authForm = document.getElementById('auth-form');
+import Validation from "../utils/validations"
 
-const password = authForm.elements['password'];
-const repeatPassword = authForm.elements['repeat-password'];
-password.addEventListener('focusout', event => {
-	if (password.value.length < 8) {
-		alert("Слишком короткий пароль! Введите не менее 8 символов")
-	}
-	if (password.value && repeatPassword.value && password.value !== repeatPassword.value) {
-		alert("Пароли не совпадают");
-	}
-});
-repeatPassword.addEventListener('focusout', event => {
-	if (repeatPassword.value.length < 8) {
-		alert("Слишком короткий пароль! Введите не менее 8 символов")
-	}
-	if (password.value && repeatPassword.value && password.value !== repeatPassword.value) {
-		alert("Пароли не совпадают");
-	}
-});
+function AuthValidate(email, login, password, password_confirm) {
 
-const username = authForm.elements['username'];
-username.addEventListener('focusout', event => {
-	if (username.value.length < 6) {
-		alert("Логин должен быть не менее 6 символов")
-	}
-});
+    const emailValidation = Validation.validateEmail(email);
+    if (emailValidation !== true) {
+        errors.push({field: 'email', error: emailValidation});
+    }
 
-const email = authForm.elements['email'];
-email.addEventListener('focusout', event => {
+    const loginValidation = Validation.validateLogin(login);
+    if (loginValidation !== true) {
+        errors.push({field: 'password', error: loginValidation});
+    }
 
-});
+    const passwordValidation = Validation.validatePassword(password);
+    if (passwordValidation !== true) {
+        errors.push({field: 'password', error: passwordValidation});
+    }
+
+    if (password !== password_confirm) {
+        errors.push({field: 'password-confirm', error: "Пароли не совпадают"});
+    }
+}
+
+export default AuthValidate

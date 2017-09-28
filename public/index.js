@@ -27,6 +27,7 @@ root.appendChildBlock("main-block", mainBlock);
 mainBlock.switch = (toName, to) => {
     mainBlock.removeAllChildren();
     mainBlock.appendChildBlock(toName, to);
+
 };
 
 const mainMenu = new MainMenu();
@@ -45,7 +46,8 @@ authForm.onSubmit((formdata) => {
         .then(() => mainBlock.switch(mainMenu))
         .then(() => userService.getData())
         .then(() => userBlock.login(formdata.login))
-        .catch((err) => alert(`Some error ${err.status}: ${err.responseText}`));
+        .catch((err) => authForm.message(err.error));
+
 });
 
 authForm.getChildBlock("ref").on("click", (event) => {
@@ -65,12 +67,13 @@ registrationForm.onSubmit((formdata) => {
         .then(() => mainBlock.switch(mainMenu))
         .then(() => userService.getData())
         .then(() => userBlock.login(formdata.login))
-        .catch((err) => alert(`Some error ${err.status}: ${err.responseText}`));
+        .catch((err) => {registrationForm.message(err.error)});
 });
 
 registrationForm.getChildBlock("ref").on("click", (event) => {
     event.preventDefault();
     mainBlock.switch("auth-form", authForm);
+
 });
 
 mainMenu.getChildBlock("play").on("click", () => {
@@ -97,3 +100,4 @@ userBlock.getChildBlock("signup").on("click", () => {
 //             .then(() => userBlock.logout())
 //             .catch((err) => alert(`Some error ${err.status}: ${err.responseText}`))
 // });
+
