@@ -5,8 +5,12 @@
 
 const baseUrl = `${window.location.protocol}//${window.location.host}`;
 
-
 class Http {
+    /**
+     * Выполняет GET-запрос с использованием fetch (по возможности) или XMLHttpRequest
+     * @param {string} address - "ручка"
+     * @return {Promise}
+     */
     static Get(address) {
         const url = (Http.BaseUrl || baseUrl) + address;
         if (typeof window.fetch !== 'undefined') {
@@ -15,6 +19,12 @@ class Http {
         return this._GetXMLHttpRequest(url);
     }
 
+    /**
+     * Выполняет POST-запрос с использованием fetch (по возможности) или XMLHttpRequest
+     * @param {string} address - "ручка"
+     * @param {*} body - тело запроса (объект)
+     * @return {Promise}
+     */
     static Post(address, body) {
         const url = (Http.BaseUrl || baseUrl) + address;
         if (typeof window.fetch !== 'undefined') {
@@ -25,7 +35,7 @@ class Http {
 
 
     /**
-     * Выполняет GET-запрос по указанному адресу
+     * Выполняет GET-запрос по указанному адресу с использованием XMLHttpRequest
      * @param {string} url - адрес запроса
      * @return {Promise}
      */
@@ -52,10 +62,9 @@ class Http {
     };
 
     /**
-     * Выполняет POST-запрос по указанному адресу
+     * Выполняет POST-запрос по указанному адресу с использованием XMLHttpRequest
      * @param {string} url - адрес запроса
      * @param {*} body - тело запроса (объект)
-     * @param {string} url
      * @return {Promise}
      */
     static _PostXMLHttpRequest(body, url) {

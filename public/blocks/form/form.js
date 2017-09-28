@@ -1,6 +1,6 @@
 import Block from "../block/block"
 import Input from "../input/input"
-import Validation from "./validation/validation"
+// import Validation from "./validation/validation"
 
 class Form extends Block {
     constructor(title = "", fieldPrototypes = [], refPrototype = {}) {
@@ -14,10 +14,10 @@ class Form extends Block {
         });
 
         this.appendChildBlock("ref", new Block("a", ["form__ref"], refPrototype.attributes).setText(refPrototype.text));
-        this._message = Block.Create("p", ["form__message"]);
+        this._message = new Block("span", ["form__message"]);
         this.appendChildBlock("message", this._message);
 
-        Validation.loginValidation(this._element.getElementsByClassName("form__field")[0],(message) => this.message(message))
+        // Validation.loginValidation(this._element.getElementsByClassName("form__field")[0],(message) => this.message(message))
     };
 
 

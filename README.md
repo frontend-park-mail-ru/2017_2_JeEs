@@ -20,3 +20,13 @@
 
 * [@vileven](https://github.com/vileven)
 * [@8coon](https://github.com/8coon)
+
+
+## API
+
+| Действие | Метод | url | Тело запроса | Тело ответа |
+| --- | --- | --- | --- | --- |
+| Зарегистрироваться | Post | /signup | {"login":"user", "email":"user@mail.ru", "password":"12345"} | {"login":"user", "email":"user@mail.ru"} |
+| Авторизоваться | Post | /signin | {"login":"user", "password":"12345"} | {"login":"user", "email":"user@mail.ru"} |
+| Разлогиниться | Post | /signout |  | {"info":"Successful logout"} |
+| Запросить пользователя текущей сессии | Post | /currentUser |  | {"login":"user", "email":"user@mail.ru"} |

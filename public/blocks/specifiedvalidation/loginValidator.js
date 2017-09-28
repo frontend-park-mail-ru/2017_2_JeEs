@@ -1,7 +1,10 @@
-import Validation from "../utils/validations"
+import Validation from "../form/validation/validation"
 
+/**
+ * @return {string}
+ */
 function LoginValidate(login, password) {
-
+    let errors = [];
     const loginValidation = Validation.validateLogin(login);
     if (loginValidation !== true) {
         errors.push({field: 'password', error: loginValidation});
@@ -11,6 +14,17 @@ function LoginValidate(login, password) {
     if (passwordValidation !== true) {
         errors.push({field: 'password', error: passwordValidation});
     }
+
+
+    if (errors.length === 0) {
+        return null
+    }
+
+    let result = "";
+    errors.forEach((item) => {
+        result += '\n' + item.error
+    });
+    return result
 
 }
 

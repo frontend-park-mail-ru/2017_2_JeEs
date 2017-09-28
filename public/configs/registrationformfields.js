@@ -9,7 +9,7 @@ const fieldPrototypes = [
 		}
 	},
 	{
-		type: "email",
+		type: "text",
 		attributes: {
 			name: "email",
 			placeholder: "Email",
@@ -25,7 +25,7 @@ const fieldPrototypes = [
 	{
 		type: "password",
 		attributes: {
-			name: "password-confirm",
+			name: "passwordConfirm",
 			placeholder: "Подтверждение пароля"
 		}
 	},
