@@ -6,6 +6,7 @@ import Form from "./blocks/form/form";
 import UserService from "./services/user-service"
 import * as authFormConfig from "./configs/authformfields";
 import * as registrationFormConfig from "./configs/registrationformfields";
+import RatingBlock from "./blocks/ratingblock/rating"
 
 const root = new Block(document.getElementById("root"));
 
@@ -20,9 +21,10 @@ const gameNameBlock = new Block('div', ['game-name-block']);
 root.appendChildBlock("game-name-block", gameNameBlock);
 gameNameBlock.appendChildBlock("game-name", new Block("h1", ["game-name-block__game-name"]).setText("Quoridor"));
 
-
 const mainBlock = new Block('div', ['main-block']);
 root.appendChildBlock("main-block", mainBlock);
+
+const ratingBlock = new RatingBlock(["user1", "user2", "user3", "user4"]);
 
 mainBlock.switch = (toName, to) => {
     mainBlock.removeAllChildren();
@@ -101,3 +103,6 @@ userBlock.getChildBlock("signup").on("click", () => {
 //             .catch((err) => alert(`Some error ${err.status}: ${err.responseText}`))
 // });
 
+mainMenu.getChildBlock("rating").on("click", () => {
+    mainBlock.switch("rating-block", ratingBlock);
+});

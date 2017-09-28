@@ -14,7 +14,7 @@ class Form extends Block {
         });
 
         this.appendChildBlock("ref", new Block("a", ["form__ref"], refPrototype.attributes).setText(refPrototype.text));
-        this._message = Block.Create("p", ["form__message"]);
+        this._message = new Block("p", ["form__message"]);
         this.appendChildBlock("message", this._message);
 
         Validation.loginValidation(this._element.getElementsByClassName("form__field")[0],(message) => this.message(message))
