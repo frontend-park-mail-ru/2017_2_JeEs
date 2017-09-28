@@ -1,3 +1,6 @@
+/**
+ * Константы для проверки размеров полей
+ */
 const MAX_LOGIN_LENGTH = 30;
 const MIN_LOGIN_LENGTH = 3;
 
@@ -7,6 +10,11 @@ const MIN_EMAIL_LENGTH = 3;
 const MAX_PASSWORD_LENGTH = 30;
 const MIN_PASSWORD_LENGTH = 4;
 
+
+/**
+ * Класс для валидации полей
+ * @module Validate
+ */
 class Validate {
     static validatePassword(password) {
         if ((password.length < MIN_PASSWORD_LENGTH) || (password.length > MAX_PASSWORD_LENGTH)) {
