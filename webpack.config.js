@@ -26,7 +26,11 @@ module.exports = {
                 use: {
                     loader: 'babel-loader'
                 }
-            }],
+            }, {
+                test: /\.(pug|jade)$/,
+                loader: 'pug-loader'
+            }
+        ],
     },
     plugins: [
         new ExtractTextPlugin('./bundle.css')

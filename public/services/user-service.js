@@ -2,16 +2,14 @@ import Http from "../modules/http"
 
 /**
  * Сервис для работы с пользователями
- * @module UserService
+ * @class UserService
  */
 class UserService {
     constructor() {
-        this.user = null;
-        this.users = []; //нужен ли?
-
-        // if (window.location.host === 'jees-quoridor.herokuapp.com' || window.location.host === 'quoridor-jees.herokuapp.com') {
-            Http.BaseUrl = 'https://jees-quoridor-backend.herokuapp.com';
-        // }
+        /**
+         * Закомментить для обращения к серверу
+         */
+        Http.BaseUrl = 'https://jees-quoridor-backend.herokuapp.com';
     }
 
     /**
@@ -40,7 +38,7 @@ class UserService {
      * @return {boolean}
      */
     isLoggedIn() {
-        return !!this.user;
+        return Http.Post('/currentUser')
     }
 
     /**
@@ -51,44 +49,18 @@ class UserService {
         return Http.Post('/signout', {});
     }
 
-    /**
-     * Загружает список всех пользователей
-     */
-    loadUsersList() {
-        return Http.Get('/users')
-            .then(users => {
-                this.users = users;
-
-                if (this.isLoggedIn()) {
-                    this.users = this.users.map(user => {
-                        user.me = user.email === this.user.email;
-                        return user;
-                    });
-                }
-
-                return this.users;
-            });
-    }
-
 
     /**
      * Загружает данные о текущем пользователе
-     * @param {boolean} [force=false] - игнорировать ли кэш?
      * @return {Promise}
      */
-    getData(force = false) {
-        if (this.isLoggedIn() && !force) {
-            return Promise.resolve(this.user);
-        }
-
+    getData() {
         return Http.Post('/currentUser')
             .then(userdata => {
-                this.user = userdata;
                 return userdata;
             })
     }
 
 }
-
 
 export default UserService;

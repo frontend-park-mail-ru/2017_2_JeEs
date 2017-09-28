@@ -6,7 +6,7 @@ const fieldPrototypes = [
 		attributes: {
 			name: "login",
 			placeholder: "Логин"
-		}
+		},
 	},
 	{
 		type: "password",

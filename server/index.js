@@ -66,14 +66,15 @@ app.post('/signin', function (req, res) {
     res.status(201).json({id});
 });
 
-app.get('/currentUser', function (req, res) {
+app.post('/currentUser', function (req, res) {
     const id = req.cookies['cookie'];
     const login = ids[id];
     if (!login || !users[login]) {
         return res.status(401).end();
     }
 
-    res.json({id});
+    res.json({id}); //или не id?
+    res.status(200)
 });
 
 app.get('/users', function (req, res) {

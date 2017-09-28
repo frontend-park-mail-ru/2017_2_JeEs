@@ -3,7 +3,7 @@ import Input from "../input/input";
 
 class SoundBlock extends Block {
 	constructor() {
-		super(Block.Create("div", ["sound-block"], {})._element);
+		super("div", ["sound-block"]);
 
 		this._createChildren();
 		this._setEventsForThis();
@@ -12,17 +12,17 @@ class SoundBlock extends Block {
 	}
 
 	_createChildren() {
-		this.mute = Block.Create(
+		this.mute = new Block(
 			"img",
 			["sound-block__mute"],
 			{
 				src: "static/images/soundon.png"
 			});
-		this.appendChildBlock(this.mute);
+		this.appendChildBlock("mute", this.mute);
 
 		this._previousSoundValue = 1;
 
-		this.soundRange = Input.Create(
+		this.soundRange = new Input(
 			"range",
 			["sound-block__range"],
 			{
@@ -32,7 +32,7 @@ class SoundBlock extends Block {
 				value: "50"
 			});
 		this.soundRange.setHidden(true);
-		this.appendChildBlock(this.soundRange);
+		this.appendChildBlock("sound-range", this.soundRange);
 	}
 
 	_setEventsForThis() {

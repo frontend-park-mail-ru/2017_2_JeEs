@@ -1,27 +1,30 @@
 import Block from "../block/block"
 
 class UserBlock extends Block {
-	constructor() {
-		super(Block.Create("div", ["user-block"], {})._element);
+    constructor() {
+        super("div", ["user-block"], {});
+        this._login = new Block("button", ["user-block__login"]).setText("Войти");
+        this._logout = new Block("button", ["user-block__logout"]).setText("Выйти");
+        this._signup = new Block("button", ["user-block__signup"]).setText("Зарегистрироваться");
+        this.logout();
+        return this;
+    }
 
-		this._createChildren();
-	}
+    login(login) {
+        this.removeAllChildren();
+        this.appendChildBlock("user-name", new Block("a", ["user-block__user-name"]).setText("Привет, " + login));
+        this.appendChildBlock("logout", this._logout);
+    }
 
-	_createChildren() {
-		// this.appendChildBlock(Block.Create(
-		// 	"img",
-		// 	["user-block__avatar"],
-		// 	{
-		// 		src: "/static/images/test-avatar.jpg",
-		// 		alt: "avatar",
-		// 		href: "#"
-		// 	}));
+    logout() {
+        this.removeAllChildren();
+        this.appendChildBlock("login", this._login);
+        this.appendChildBlock("signup", this._signup);
+    }
 
-		let panel = Block.Create("div", ["user-block__panel"], {});
-		panel.appendChildBlock(Block.Create("a", ["user-block__user-name-ref"], { href: "#" }).setText("username"));
-		panel.appendChildBlock(Block.Create("a", ["user-block__logout"], { href: "#" }).setText("Выйти"));
-		this.appendChildBlock(panel);
-	}
+    onButtonClicked(buttonName, callback) {
+        this._childBlocks[buttonName].on("click", callback);
+    }
 }
 
 export default UserBlock;
