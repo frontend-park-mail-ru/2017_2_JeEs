@@ -7,7 +7,7 @@ class Block {
 		this._eventsListening = [];
 		this._childBlocks = {};
 
-		if (typeof(args[0]) === "string") {
+		if (typeof args[0] === "string") {
 			let tagName = args[0];
 			let classes = args[1] || [];
 			let attrs = args[2] || {};
@@ -33,7 +33,6 @@ class Block {
 		this._element.style.display = (isHidden) ? "none" : "flex";
 	}
 
-
 	appendChildBlock(blockName, block) {
 		this._element.appendChild(block._element);
 		this._childBlocks[blockName] = block;
@@ -48,8 +47,8 @@ class Block {
 
 	removeAllChildren() {
 		for (let blockName in this._childBlocks) {
-        	this._element.removeChild(this._childBlocks[blockName]._element);
-        	delete this._childBlocks[blockName];
+			this._element.removeChild(this._childBlocks[blockName]._element);
+			delete this._childBlocks[blockName];
 		}
 	}
 

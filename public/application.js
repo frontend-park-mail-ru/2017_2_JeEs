@@ -9,3 +9,4 @@ requireAll(require.context('./static/images/', true, /\.(png)$/));
 requireAll(require.context('./blocks/', true, /\.(js)$/));
 requireAll(require.context('./blocks/', true, /\.(css)$/));
 requireAll(require.context('./modules/', true, /\.(js)$/));
+requireAll(require.context('./blocks/', true, /\.(pug|jade)$/));
