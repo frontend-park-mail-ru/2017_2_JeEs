@@ -1,6 +1,6 @@
 import Block from "../block/block"
 import Input from "../input/input"
-// import Validation from "./validation/validation"
+import Validation from "./validation/validation"
 
 class Form extends Block {
     constructor(title = "", fieldPrototypes = [], refPrototype = {}) {
@@ -18,8 +18,7 @@ class Form extends Block {
         this._message = Block.Create("p", ["form__message"]);
         this.appendChildBlock(this._message);
 
-        // Validation.loginValidation(this._element.getElementsByClassName("form__field")[0])
-        //     .then((err) => this.message(err))
+        Validation.loginValidation(this._element.getElementsByClassName("form__field")[0],(message) => this.message(message))
     };
 
 

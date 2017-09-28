@@ -10,7 +10,7 @@ class UserService {
         this.users = []; //нужен ли?
 
         // if (window.location.host === 'jees-quoridor.herokuapp.com' || window.location.host === 'quoridor-jees.herokuapp.com') {
-        //     Http.BaseUrl = 'https://jees-quoridor-backend.herokuapp.com';
+        //      Http.BaseUrl = 'https://jees-quoridor-backend.herokuapp.com';
         // }
     }
 

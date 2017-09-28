@@ -6,7 +6,6 @@
 const baseUrl = `${window.location.protocol}//${window.location.host}`;
 
 
-//пока что внутренние методы тоже статические, ибо вебпак на нестатические ругается о_О
 class Http {
     static Get(address) {
         const url = (Http.BaseUrl || baseUrl) + address;
@@ -128,8 +127,6 @@ class Http {
                 return json;
             })
     };
-
-
 
 }
 

@@ -30,40 +30,37 @@
 // email.addEventListener('focusout', event => {
 //
 // });
+class Validation {
 
-function emailValidation(emailField) {
-    return new Promise((resolve, reject) => {
+    static emailValidation(emailField, callback) {
+
         emailField.addEventListener('focusout', event => {
             if (!emailField.value.match(/@/)) {
-                resolve("Введите корректный email")
+                callback('Wrong email format');
+                return
             }
-            resolve(" ");
+            callback("")
         });
-    });
-}
+    }
 
-function loginValidation(loginField) {
-    return new Promise((resolve, reject) => {
+    static loginValidation(loginField, callback) {
         loginField.addEventListener('focusout', event => {
             if (loginField.value.length < 6) {
-                resolve("Логин должен быть не менее 6 символов")
+                callback("Логин должен быть не менее 6 символов")
+                return
             }
-            resolve(" ");
+            callback("")
         });
-    });
+    }
+
+    static passwordValidation(passwordField) {
+
+    }
+
+    static repeatPasswordValidation(passwordField, repeatPasswordField) {
+
+    }
 }
 
-function passwordValidation(passwordField) {
-
-}
-
-function repeatPasswordValidation(passwordField, repeatPasswordField) {
-
-}
-
-module.exports = {
-    validatePassword,
-    validateEmail
-};
 
 export default Validation;

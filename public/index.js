@@ -100,3 +100,4 @@ userBlock.onButtonClicked(UserBlock.BUTTONS.LOGOUT, () => {
         .then(() => userBlock.logout())
         .catch((err) => alert(err.error))
 });
+

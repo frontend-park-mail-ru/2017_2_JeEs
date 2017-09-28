@@ -12,7 +12,7 @@ const fieldPrototypes = [
 		type: "email",
 		attributes: {
 			name: "email",
-			placeholder: "Email"
+			placeholder: "Email",
 		}
 	},
 	{
