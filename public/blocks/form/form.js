@@ -1,6 +1,6 @@
 import Block from "../block/block"
 import Input from "../input/input"
-import Validation from "./validation/validation"
+// import Validation from "./validation/validation"
 
 class Form extends Block {
     constructor(title = "", fieldPrototypes = [], refPrototype = {}) {
@@ -18,8 +18,8 @@ class Form extends Block {
         this._message = Block.Create("p", ["form__message"]);
         this.appendChildBlock(this._message);
 
-        Validation.loginValidation(this._element.getElementsByClassName("form__field")[0])
-            .then((err) => this.message(err))
+        // Validation.loginValidation(this._element.getElementsByClassName("form__field")[0])
+        //     .then((err) => this.message(err))
     };
 
 
@@ -40,22 +40,14 @@ class Form extends Block {
         this._element.reset();
     }
 
-    // onRef(callback) {
-    //     this._element.getElementsByClassName("form__ref")[0]
-    //         .addEventListener("click", (event) => {
-    //             event.preventDefault();
-    //             callback();
-    //         });
-    // }
-
-    onRef() {
-        return new Promise((resolve, reject) => {
-            this._ref._element.addEventListener("click", (event) => {
+    onRef(callback) {
+        this._element.getElementsByClassName("form__ref")[0]
+            .addEventListener("click", (event) => {
                 event.preventDefault();
-                resolve();
+                callback();
             });
-        });
     }
+
 
     message(errorText) {
         this._message.setText(errorText)

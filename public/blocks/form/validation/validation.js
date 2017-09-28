@@ -31,37 +31,39 @@
 //
 // });
 
-
-class Validation {
-    static emailValidation(emailField) {
-        return new Promise((resolve, reject) => {
-            emailField.addEventListener('focusout', event => {
-                if (!emailField.value.match(/@/)) {
-                    resolve("Введите корректный email")
-                }
-                resolve(" ");
-            });
+function emailValidation(emailField) {
+    return new Promise((resolve, reject) => {
+        emailField.addEventListener('focusout', event => {
+            if (!emailField.value.match(/@/)) {
+                resolve("Введите корректный email")
+            }
+            resolve(" ");
         });
-    }
-
-    static loginValidation(loginField) {
-        return new Promise((resolve, reject) => {
-            loginField.addEventListener('focusout', event => {
-                if (loginField.value.length < 6) {
-                    resolve("Логин должен быть не менее 6 символов")
-                }
-                resolve(" ");
-            });
-        });
-    }
-
-    static passwordValidation(passwordField) {
-
-    }
-
-    static repeatPasswordValidation(passwordField, repeatPasswordField) {
-
-    }
+    });
 }
+
+function loginValidation(loginField) {
+    return new Promise((resolve, reject) => {
+        loginField.addEventListener('focusout', event => {
+            if (loginField.value.length < 6) {
+                resolve("Логин должен быть не менее 6 символов")
+            }
+            resolve(" ");
+        });
+    });
+}
+
+function passwordValidation(passwordField) {
+
+}
+
+function repeatPasswordValidation(passwordField, repeatPasswordField) {
+
+}
+
+module.exports = {
+    validatePassword,
+    validateEmail
+};
 
 export default Validation;

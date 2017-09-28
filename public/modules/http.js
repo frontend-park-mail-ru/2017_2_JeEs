@@ -99,7 +99,7 @@ class Http {
                 if (response.status >= 400) {
                     return json.then(response => {throw response;});
                 }
-                return json();
+                return json;
             })
     };
 
@@ -125,7 +125,7 @@ class Http {
                 if (response.status >= 400) {
                     return json.then(response => {throw response;});
                 }
-                return json();
+                return json;
             })
     };
 

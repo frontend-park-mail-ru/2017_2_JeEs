@@ -44,14 +44,13 @@ authForm.onSubmit(function (formdata) {
         .then(() => mainBlock.switch(mainMenu))
         .then(() => userService.getData())
         .then(() => userBlock.login(formdata.login))
-        // .catch((err) => authForm.message(`Some error ${err.status}: ${err.responseText}`));
-        .catch((err) => {authForm.message(err.error)});
+        .catch((err) => authForm.message(err.error));
 
 });
 
-// authForm.onRef(() => {
-//     mainBlock.switch(registrationForm);
-// });
+authForm.onRef(() => {
+    mainBlock.switch(registrationForm);
+});
 
 const registrationForm = new Form(
     registrationFormConfig.title,
@@ -61,24 +60,17 @@ const registrationForm = new Form(
 
 registrationForm.onSubmit(function (formdata) {
     userService.signup(formdata.email, formdata.login, formdata.password)
-        .then(() => {registrationForm.reset()})
+        .then(() => registrationForm.reset())
         .then(() => mainBlock.switch(mainMenu))
         .then(() => userService.getData())
         .then(() => userBlock.login(formdata.login))
-        // .catch((err) => registrationForm.message(`Some error ${err.status}: ${err.responseText}`));
         .catch((err) => {registrationForm.message(err.error)});
 });
 
 
-authForm.onRef()
-    .then(() => mainBlock.switch(registrationForm));
-
-registrationForm.onRef()
-    .then(() => mainBlock.switch(authForm));
-
-// registrationForm.onRef(() => {
-//     mainBlock.switch(authForm);
-// });
+registrationForm.onRef(() => {
+    mainBlock.switch(authForm);
+});
 
 
 mainMenu.onButtonClicked(MenuBlock.BUTTONS.PLAY, () => {
