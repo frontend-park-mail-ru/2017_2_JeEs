@@ -21,11 +21,9 @@ function LoginValidate(login, password) {
         return null
     }
 
-    let result = "";
-    errors.forEach((item) => {
-        result += '\n' + item.error
-    });
-    return result
+    return errors
+        .map(item => item.error)
+        .join('\n')
 
 }
 
