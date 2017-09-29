@@ -1,0 +1,18 @@
+.main-menu
+{
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+
+	background-color: greenyellow;
+	padding: 1% 3%;
+}
+
+.main-menu__play, .main-menu__settings, .main-menu__rating,
+.main-menu__rules, .main-menu__about, .main-menu__authors
+{
+	width: 150%;
+	height: 125%;
+	margin: 10%;
+}
