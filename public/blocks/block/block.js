@@ -3,89 +3,89 @@
  * @module Block
  */
 class Block {
-	constructor(...args) {
-		this._eventsListening = [];
-		this._childBlocks = {};
+    constructor(...args) {
+        this._eventsListening = [];
+        this._childBlocks = {};
 
-		if (typeof args[0] === "string") {
-			let tagName = args[0];
-			let classes = args[1] || [];
-			let attrs = args[2] || {};
+        if (typeof args[0] === 'string') {
+            let tagName = args[0];
+            let classes = args[1] || [];
+            let attrs = args[2] || {};
 
             this._element = document.createElement(tagName);
-			classes.forEach((className) => {
+            classes.forEach((className) => {
                 this._element.classList.add(className);
             });
             for (let name in attrs) {
                 this._element.setAttribute(name, attrs[name]);
             }
-		} else if (args[0] instanceof Node) {
-			this._element = args[0];
-		}
-	}
+        } else if (args[0] instanceof Node) {
+            this._element = args[0];
+        }
+    }
 
-	setText(text) {
-		this._element.textContent = text;
-		return this;
-	}
+    setText(text) {
+        this._element.textContent = text;
+        return this;
+    }
 
-	setHidden(isHidden) {
-		this._element.style.display = (isHidden) ? "none" : "flex";
-	}
+    setHidden(isHidden) {
+        this._element.style.display = (isHidden) ? 'none' : 'flex';
+    }
 
-	appendChildBlock(blockName, block) {
-		this._element.appendChild(block._element);
-		this._childBlocks[blockName] = block;
-		return this;
-	}
+    appendChildBlock(blockName, block) {
+        this._element.appendChild(block._element);
+        this._childBlocks[blockName] = block;
+        return this;
+    }
 
-	removeChildBlock(blockName) {
-		this._element.removeChild(this._childBlocks[blockName]._element);
-		delete this._childBlocks[blockName];
-		return this;
-	}
+    removeChildBlock(blockName) {
+        this._element.removeChild(this._childBlocks[blockName]._element);
+        delete this._childBlocks[blockName];
+        return this;
+    }
 
-	removeAllChildren() {
-		for (let blockName in this._childBlocks) {
-			this._element.removeChild(this._childBlocks[blockName]._element);
-			delete this._childBlocks[blockName];
-		}
-	}
+    removeAllChildren() {
+        for (let blockName in this._childBlocks) {
+            this._element.removeChild(this._childBlocks[blockName]._element);
+            delete this._childBlocks[blockName];
+        }
+    }
 
-	on(event, callback) {
-		if (this._eventsListening.indexOf(event) === -1) {
+    on(event, callback) {
+        if (this._eventsListening.indexOf(event) === -1) {
             this._element.addEventListener(event, callback);
             this._eventsListening.push(event);
         }
-	}
+    }
 
-	hasAttribute(attribute) {
-		return this._element.hasAttribute(attribute);
-	}
+    hasAttribute(attribute) {
+        return this._element.hasAttribute(attribute);
+    }
 
-	setAttribute(attribute, value) {
-		this._element.setAttribute(attribute, value);
-	}
+    setAttribute(attribute, value) {
+        this._element.setAttribute(attribute, value);
+    }
 
-	getAttribute(attribute) {
-		return +this._element.getAttribute(attribute);
-	}
+    getAttribute(attribute) {
+        return +this._element.getAttribute(attribute);
+    }
 
-	removeAttribute(attribute) {
-		this._element.removeAttribute(attribute);
-	}
+    removeAttribute(attribute) {
+        this._element.removeAttribute(attribute);
+    }
 
-	removeListener(event, callback) {
-		let index = this._eventsListening.indexOf(event);
+    removeListener(event, callback) {
+        let index = this._eventsListening.indexOf(event);
         if (index > -1) {
             this._element.removeEventListener(event, callback);
             this._eventsListening.splice(index, 1);
         }
-	}
+    }
 
-	getChildBlock(blockName) {
-		return this._childBlocks[blockName];
-	}
+    getChildBlock(blockName) {
+        return this._childBlocks[blockName];
+    }
 }
 
 export default Block;

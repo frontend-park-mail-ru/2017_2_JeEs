@@ -1,4 +1,4 @@
-import Validation from "../form/validation/validation"
+import Validation from '../form/validation/validation';
 
 /**
  * @function AuthValidate
@@ -22,16 +22,16 @@ function AuthValidate(email, login, password, password_confirm) {
     }
 
     if (password !== password_confirm) {
-        errors.push({field: 'passwordConfirm', error: "Пароли не совпадают"});
+        errors.push({field: 'passwordConfirm', error: 'Пароли не совпадают'});
     }
 
     if (errors.length === 0) {
-        return null
+        return null;
     }
 
     return errors
         .map(item => item.error)
-        .join('\n')
+        .join('\n');
 }
 
-export default AuthValidate
+export default AuthValidate;

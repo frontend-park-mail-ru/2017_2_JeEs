@@ -74,7 +74,7 @@ app.post('/currentUser', function (req, res) {
     }
 
     res.json({id}); //или не id?
-    res.status(200)
+    res.status(200);
 });
 
 app.get('/users', function (req, res) {
@@ -83,7 +83,7 @@ app.get('/users', function (req, res) {
         .map(user => {
             return {
                 email: user.login
-            }
+            };
         });
 
     res.json(scorelist);

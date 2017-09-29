@@ -5,8 +5,8 @@
  */
 function requireAll(r) { r.keys().forEach(r); }
 
-require("./index.js");
-require("./index.css");
+require('./index.js');
+require('./index.css');
 requireAll(require.context('./static/fonts/', true, /\.(ttf)$/));
 requireAll(require.context('./static/images/', true, /\.(png)$/));
 requireAll(require.context('./blocks/', true, /\.(js)$/));
