@@ -1,37 +1,37 @@
-import Block from "../block/block"
+import Block from '../block/block';
 
 const buttons = [
     {
-        name: "play",
-        text: "Играть"
+        name: 'play',
+        text: 'Играть'
     },
     {
-        name: "settings",
-        text: "Настройки"
+        name: 'settings',
+        text: 'Настройки'
     },
     {
-        name: "rating",
-        text: "Рейтинг"
+        name: 'rating',
+        text: 'Рейтинг'
     },
     {
-        name: "rules",
-        text: "Правила"
+        name: 'rules',
+        text: 'Правила'
     },
     {
-        name: "about",
-        text: "Об игре"
+        name: 'about',
+        text: 'Об игре'
     },
     {
-        name: "authors",
-        text: "Авторы"
+        name: 'authors',
+        text: 'Авторы'
     }
 ];
 
-const blockClass = "main-menu__";
+const blockClass = 'main-menu__';
 
 class MainMenu extends Block {
     constructor() {
-        super("div", ["main-menu"], {});
+        super('div', ['main-menu'], {});
         this._createChildren();
         return this;
     }
@@ -39,12 +39,12 @@ class MainMenu extends Block {
     _createChildren() {
         buttons.forEach((button) => {
             this.appendChildBlock(button.name,
-                new Block("button", [blockClass + button.name]).setText(button.text));
-        })
+                new Block('button', [blockClass + button.name]).setText(button.text));
+        });
     }
 
     onButtonClicked(buttonName, callback) {
-        this._childBlocks[buttonName].on("click", callback);
+        this._childBlocks[buttonName].on('click', callback);
     }
 }
 

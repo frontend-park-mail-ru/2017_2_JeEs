@@ -1,4 +1,4 @@
-import Validation from "../form/validation/validation"
+import Validation from '../form/validation/validation';
 
 /**
  * @function LoginValidate
@@ -18,15 +18,13 @@ function LoginValidate(login, password) {
 
 
     if (errors.length === 0) {
-        return null
+        return null;
     }
 
-    let result = "";
-    errors.forEach((item) => {
-        result += '\n' + item.error
-    });
-    return result
+    return errors
+        .map(item => item.error)
+        .join('\n');
 
 }
 
-export default LoginValidate
+export default LoginValidate;
