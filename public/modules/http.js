@@ -58,7 +58,7 @@ class Http {
 
             xhr.send();
         });
-    };
+    }
 
     /**
      * Выполняет POST-запрос по указанному адресу с использованием XMLHttpRequest
@@ -67,7 +67,6 @@ class Http {
      * @return {Promise}
      */
     static _PostXMLHttpRequest(body, url) {
-        console.log(JSON.stringify(body));
         return new Promise(function (resolve, reject) {
             const xhr = new XMLHttpRequest();
             xhr.open('POST', url, true);
@@ -77,7 +76,7 @@ class Http {
             xhr.onreadystatechange = function () {
                 if (xhr.readyState !== 4) return;
                 if (+xhr.status >= 400) {
-                    debugger;
+                    
                     reject(xhr);
                     return;
                 }
@@ -88,7 +87,7 @@ class Http {
 
             xhr.send(JSON.stringify(body));
         });
-    };
+    }
 
     /**
      * Выполняет GET-запрос по указанному адресу с использованием fetch
@@ -107,8 +106,8 @@ class Http {
                     return json.then(response => {throw response;});
                 }
                 return json;
-            })
-    };
+            });
+    }
 
     /**
      * Выполняет POST-запрос по указанному адресу с использованием fetch
@@ -117,7 +116,6 @@ class Http {
      * @return {Promise}
      */
     static _FetchPost(body, url) {
-        console.log(JSON.stringify(body));
         return fetch(url, {
             method: 'POST',
             mode: 'cors',
@@ -133,8 +131,8 @@ class Http {
                     return json.then(response => {throw response;});
                 }
                 return json;
-            })
-    };
+            });
+    }
 
 }
 

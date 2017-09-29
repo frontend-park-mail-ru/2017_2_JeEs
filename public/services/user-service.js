@@ -1,4 +1,4 @@
-import Http from "../modules/http"
+import Http from '../modules/http';
 
 /**
  * Сервис для работы с пользователями
@@ -7,7 +7,7 @@ import Http from "../modules/http"
 class UserService {
     constructor() {
         /**
-         * Закомментить для обращения к серверу
+         * Закомментить для обращения к серверу node.js
          */
         Http.BaseUrl = 'https://jees-quoridor-backend.herokuapp.com';
     }
@@ -38,7 +38,7 @@ class UserService {
      * @return {boolean}
      */
     isLoggedIn() {
-        return Http.Post('/currentUser')
+        return Http.Post('/currentUser');
     }
 
     /**
@@ -58,7 +58,7 @@ class UserService {
         return Http.Post('/currentUser')
             .then(userdata => {
                 return userdata;
-            })
+            });
     }
 
 }
