@@ -26,7 +26,7 @@ topBar.appendChildBlock('user-block', userBlock);
 
 const gameNameBlock = new Block('div', ['game-name-block']);
 root.appendChildBlock('game-name-block', gameNameBlock);
-gameNameBlock.appendChildBlock('game-name', new Block('h1', ['game-name-block__game-name']).setText('JQuerydor'));
+gameNameBlock.appendChildBlock('game-name', new Block('h1', ['game-name-block__game-name']).setText('Querydor'));
 
 const mainBlock = new Block('div', ['main-block']);
 root.appendChildBlock('main-block', mainBlock);

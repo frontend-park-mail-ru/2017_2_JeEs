@@ -1,6 +1,6 @@
 @font-face {
 	font-family: Lombardia Regular;
-	src: url("static/fonts/lombardia.ttf");
+	src: url("../public/static/fonts/lombardia.ttf");
 	font-weight: normal;
 	font-style: normal;
 }

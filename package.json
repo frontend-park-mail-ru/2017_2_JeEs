@@ -6,7 +6,7 @@
   "scripts": {
     "start": "npm run build && node server/index.js",
     "build": "webpack",
-    "linker": "eslint ./server/* ./public/"
+    "linker": "eslint ./app/*"
   },
   "repository": {
     "type": "git",

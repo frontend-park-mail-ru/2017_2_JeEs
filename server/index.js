@@ -16,6 +16,7 @@ app.use(cors({
 
 app.use(morgan('dev'));
 app.use(express.static('public'));
+app.use(express.static('dist'));
 app.use(body.json());
 app.use(cookie());
 
@@ -93,8 +94,6 @@ app.post('/signout', function (req, res) {
     res.cookie('cookie', null, {expires: new Date(Date.now() + 1000 * 60 * 10)});
     res.status(200).json(null);
 });
-
-app.use(express.static('public'));
 
 app.get('*', (req, res) => {
     res.send('404');
