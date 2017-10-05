@@ -7,7 +7,7 @@ import Http from '../modules/http';
 class UserService {
     constructor() {
         /**
-         * Закомментить для обращения к серверу node.js
+         * Закомментить для обращения к серверу на node.js
          */
         Http.BaseUrl = 'https://jees-quoridor-backend.herokuapp.com';
     }

@@ -42,10 +42,6 @@ class MainMenu extends Block {
                 new Block('button', [blockClass + button.name]).setText(button.text));
         });
     }
-
-    onButtonClicked(buttonName, callback) {
-        this._childBlocks[buttonName].on('click', callback);
-    }
 }
 
 export default MainMenu;

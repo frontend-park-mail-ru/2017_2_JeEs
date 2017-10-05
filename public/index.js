@@ -7,8 +7,8 @@ import UserService from './services/user-service';
 import * as authFormConfig from './configs/authformfields';
 import * as registrationFormConfig from './configs/registrationformfields';
 import RatingBlock from './blocks/ratingblock/rating';
-import AuthValidate from './blocks/specifiedvalidation/authValidator';
-import loginValidate from './blocks/specifiedvalidation/loginValidator';
+import AuthValidate from './services/specifiedvalidation/authValidator';
+import loginValidate from './services/specifiedvalidation/loginValidator';
 
 const userService = new UserService();
 
@@ -26,7 +26,7 @@ topBar.appendChildBlock('user-block', userBlock);
 
 const gameNameBlock = new Block('div', ['game-name-block']);
 root.appendChildBlock('game-name-block', gameNameBlock);
-gameNameBlock.appendChildBlock('game-name', new Block('h1', ['game-name-block__game-name']).setText('Quoridor'));
+gameNameBlock.appendChildBlock('game-name', new Block('h1', ['game-name-block__game-name']).setText('JQuerydor'));
 
 const mainBlock = new Block('div', ['main-block']);
 root.appendChildBlock('main-block', mainBlock);

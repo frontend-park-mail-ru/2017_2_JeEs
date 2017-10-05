@@ -21,10 +21,6 @@ class UserBlock extends Block {
         this.appendChildBlock('login', this._login);
         this.appendChildBlock('signup', this._signup);
     }
-
-    onButtonClicked(buttonName, callback) {
-        this._childBlocks[buttonName].on('click', callback);
-    }
 }
 
 export default UserBlock;

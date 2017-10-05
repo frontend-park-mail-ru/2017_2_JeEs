@@ -1,4 +1,4 @@
-import Validation from '../form/validation/validation';
+import Validation from '../../blocks/form/validation/validation';
 
 /**
  * @function AuthValidate
