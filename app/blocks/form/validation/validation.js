@@ -26,7 +26,7 @@ class Validate {
     }
 
     static validateEmail(email) {
-        if (!email.match(/@/)) {
+        if (!email.match(/\w*@\w*\.\w*/)) {
             return 'Неправильный формат email-а';
         }
 
