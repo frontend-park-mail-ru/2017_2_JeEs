@@ -1,0 +1,20 @@
+'use strict';
+
+import EventBus from '../modules/event-bus'
+import UserService from '../services/user-service';
+
+export default class BaseView {
+    constructor(parent) {
+        this.parent = parent;
+        this.userService = UserService();
+        this.eventBus = new EventBus();
+    }
+
+    create() {
+
+    }
+
+    destroy() {
+
+    }
+}
