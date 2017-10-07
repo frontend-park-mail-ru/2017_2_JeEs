@@ -12,7 +12,7 @@ export default class EventBus {
     }
 
     on(eventName, callback) {
-        event = this.channels.get(eventName);
+        const event = this.channels.get(eventName);
         if (!event) {
             this.channels.set(eventName, []);
         }
@@ -20,7 +20,7 @@ export default class EventBus {
     }
 
     off(eventName, callback) {
-        event = this.channels.get(eventName);
+        const event = this.channels.get(eventName);
         if (!event) {
             return;
         }
@@ -28,7 +28,7 @@ export default class EventBus {
     }
 
     emit(eventName, eventData) {
-        event = this.channels.get(eventName);
+        const event = this.channels.get(eventName);
         if (!event) {
             return;
         }
