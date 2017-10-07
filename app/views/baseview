@@ -11,11 +11,11 @@ export default class BaseView {
         this.eventBus = new EventBus();
     }
 
-    create() {
-
-    }
+    // create() {
+    //
+    // }
 
     destroy() {
-
+        this.parent.removeAllChildren(); // надо удалять только этот элемент
     }
 }

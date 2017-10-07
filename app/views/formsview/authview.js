@@ -18,9 +18,20 @@ export default class AuthView extends BaseView {
             authFormConfig.refPrototype
         );
         this.parent.appendChildBlock('main-block', form);
+
+
+        form.getChildBlock('ref').on('click', (event) => {
+            this._onRef(event)
+        });
     }
 
-    destroy() {
-        this.parent.removeAllChildren();
+    _onRef(event) {
+        event.preventDefault();
+        this.destroy();
+        this.eventBus.emit('main-block:registration-form')
     }
+
+    // destroy() {
+    //     this.parent.removeAllChildren();
+    // }
 }

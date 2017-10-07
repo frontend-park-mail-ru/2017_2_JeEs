@@ -3,6 +3,8 @@ import SoundBlock from './blocks/soundblock/soundblock';
 import UserBlock from './blocks/userblock/userblock';
 import MenuView from './views/menuview/menuview';
 import AuthView from './views/formsview/authview';
+import RegistrationView from './views/formsview/registrationview';
+
 import UserService from './services/user-service';
 import * as authFormConfig from './configs/authformfields';
 import * as registrationFormConfig from './configs/registrationformfields';
@@ -43,6 +45,10 @@ const ratingBlock = new RatingBlock(['user1', 'user2', 'user3', 'user4']);
 
 const menuView = new MenuView(mainBlock);
 const authView = new AuthView(mainBlock);
+const registrationView = new RegistrationView(mainBlock);
+
+menuView.create();
+
 
 // gameNameBlock.getChildBlock('game-name').on('click', () => {
 //     mainBlock.switch('main-block', mainMenu);

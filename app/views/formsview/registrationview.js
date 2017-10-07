@@ -1,13 +1,14 @@
 import BaseView from '../baseview';
 import Form from '../../blocks/form/form';
-import * as registrationFormConfig from '../../configs/authformfields';
-
+import * as registrationFormConfig from '../../configs/registrationformfields';
 
 
 export default class RegistrationView extends BaseView {
     constructor(parent) {
         super(parent);
-        this.eventBus.on('main-block:registration-form', this.create());
+        this.eventBus.on('main-block:registration-form', () => {
+            this.create()
+        });
     }
 
     create() {
@@ -17,9 +18,20 @@ export default class RegistrationView extends BaseView {
             registrationFormConfig.refPrototype
         );
         this.parent.appendChildBlock('main-block', form);
+
+
+        form.getChildBlock('ref').on('click', (event) => {
+            this._onRef(event)
+        });
     }
 
-    destroy() {
-        this.parent.removeAllChildren();
+    _onRef() {
+        event.preventDefault();
+        this.destroy();
+        this.eventBus.emit('main-block:auth-form')
     }
+
+    // destroy() {
+    //     this.parent.removeAllChildren();
+    // }
 }

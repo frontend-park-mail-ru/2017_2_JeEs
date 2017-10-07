@@ -5,7 +5,9 @@ import MainMenu from '../../blocks/mainmenu/mainmenu';
 export default class MenuView extends BaseView {
     constructor(parent) {
         super(parent);
-        this.eventBus.on('main-block:main-menu', this.create());
+        this.eventBus.on('main-block:main-menu', () => {
+            this.create()
+        });
     }
 
     create() {
@@ -17,9 +19,9 @@ export default class MenuView extends BaseView {
         });
     }
 
-    destroy() {
-        this.parent.removeAllChildren(); // надо удалять только этот элемент
-    }
+    // destroy() {
+    //     this.parent.removeAllChildren(); // надо удалять только этот элемент
+    // }
 
     _play() {
         this.userService.isLoggedIn()
