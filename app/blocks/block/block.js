@@ -86,6 +86,10 @@ class Block {
     getChildBlock(blockName) {
         return this._childBlocks[blockName];
     }
+
+    removeAllBrothersAndSisters() {
+
+    }
 }
 
 export default Block;

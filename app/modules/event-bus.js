@@ -12,9 +12,10 @@ export default class EventBus {
     }
 
     on(eventName, callback) {
-        const event = this.channels.get(eventName);
+        let event = this.channels.get(eventName);
         if (!event) {
             this.channels.set(eventName, []);
+            event = this.channels.get(eventName);
         }
         event.push(callback);
     }
@@ -24,16 +25,16 @@ export default class EventBus {
         if (!event) {
             return;
         }
-        event.splice(event.indexOf(f), 1);
+        event.splice(event.indexOf(callback), 1);
     }
 
-    emit(eventName, eventData) {
+    emit(eventName) {
         const event = this.channels.get(eventName);
         if (!event) {
             return;
         }
         event.forEach(callback => {
-            callback(eventData);
+            callback();
         });
     }
 }

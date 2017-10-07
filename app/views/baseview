@@ -2,11 +2,12 @@
 
 import EventBus from '../modules/event-bus'
 import UserService from '../services/user-service';
+// import Block from '../blocks/block/block';
 
 export default class BaseView {
     constructor(parent) {
         this.parent = parent;
-        this.userService = UserService();
+        this.userService = new UserService();
         this.eventBus = new EventBus();
     }
 

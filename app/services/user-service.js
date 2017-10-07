@@ -9,7 +9,7 @@ class UserService {
         /**
          * Закомментить для обращения к серверу на node.js
          */
-        Http.BaseUrl = 'https://jees-quoridor-backend.herokuapp.com';
+        // Http.BaseUrl = 'https://jees-quoridor-backend.herokuapp.com';
     }
 
     /**
