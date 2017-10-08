@@ -28,7 +28,7 @@ export default class RegistrationView extends BaseView {
     }
 
     create() {
-        this.parent.appendChildBlock('main-block', form);
+        this.parent.appendChildBlock('main-block', this.block);
     }
 
     _onRef() {
@@ -45,7 +45,10 @@ export default class RegistrationView extends BaseView {
         }
         this.userService.signup(formdata.email, formdata.login, formdata.password)
             .then(() => this.block.reset())
-            .then(() => this.eventBus.emit('main-block:main-menu'))
+            .then(() => {
+                this.destroy();
+                this.eventBus.emit('main-block:main-menu')
+            })
             .then(() => this.userService.getData())
             // .then(() => userBlock.login(formdata.login))
             // .then(() => userBlock.getChildBlock('logout').on('click', () => {

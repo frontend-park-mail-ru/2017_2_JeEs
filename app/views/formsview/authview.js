@@ -27,21 +27,7 @@ export default class AuthView extends BaseView {
     }
 
     create() {
-        // const form = new Form(
-        //     authFormConfig.title,
-        //     authFormConfig.fieldPrototypes,
-        //     authFormConfig.refPrototype
-        // );
         this.parent.appendChildBlock('main-block', this.block);
-
-
-        // form.getChildBlock('ref').on('click', (event) => {
-        //     this._onRef(event)
-        // });
-        //
-        // form.onSubmit((formdata) => {
-        //     this._onSubmit(formdata);
-        // });
     }
 
     _onRef(event) {
@@ -58,8 +44,10 @@ export default class AuthView extends BaseView {
         }
         this.userService.login(formdata.login, formdata.password)
             .then(() => this.block.reset())
-            .then(() => this.eventBus.emit('main-block:main-menu'))
-            .then(() => this.userService.getData())
+            .then(() => {
+                this.destroy();
+                this.eventBus.emit('main-block:main-menu')
+            })            .then(() => this.userService.getData())
             // .then(() => userBlock.login(formdata.login))
             // .then(() => userBlock.getChildBlock('logout').on('click', () => {
             //     this.userService.logout()
