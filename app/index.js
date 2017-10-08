@@ -9,8 +9,8 @@ import UserService from './services/user-service';
 import * as authFormConfig from './configs/authformfields';
 import * as registrationFormConfig from './configs/registrationformfields';
 import RatingBlock from './blocks/ratingblock/rating';
-import AuthValidate from './services/specifiedvalidation/authValidator';
-import loginValidate from './services/specifiedvalidation/loginValidator';
+import AuthValidate from './services/specifiedvalidation/registrationvalidator';
+import loginValidate from './services/specifiedvalidation/authvalidator';
 
 const userService = new UserService();
 

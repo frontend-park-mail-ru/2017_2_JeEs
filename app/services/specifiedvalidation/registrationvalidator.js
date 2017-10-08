@@ -1,10 +1,10 @@
 import Validation from '../../blocks/form/validation/validation';
 
 /**
- * @function AuthValidate
+ * @function RegistrationValidate
  * @return {string || null} возвращает null если ошибок нет
  */
-function AuthValidate(email, login, password, password_confirm) {
+function RegistrationValidate(email, login, password, password_confirm) {
     let errors = [];
     const emailValidation = Validation.validateEmail(email);
     if (emailValidation !== true) {
@@ -34,4 +34,4 @@ function AuthValidate(email, login, password, password_confirm) {
         .join('\n');
 }
 
-export default AuthValidate;
+export default RegistrationValidate;

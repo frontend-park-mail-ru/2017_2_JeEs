@@ -2,21 +2,23 @@ import BaseView from '../baseview';
 import MainMenu from '../../blocks/mainmenu/mainmenu';
 
 
+
 export default class MenuView extends BaseView {
     constructor(parent) {
         super(parent);
+        this.block = new MainMenu();
+
+        this.block.getChildBlock('play').on('click', () => {
+            this._play()
+        });
+
         this.eventBus.on('main-block:main-menu', () => {
             this.create()
         });
     }
 
     create() {
-        const mainMenu = new MainMenu();
-        this.parent.appendChildBlock('main-block', mainMenu);
-
-        mainMenu.getChildBlock('play').on('click', () => {
-            this._play()
-        });
+        this.parent.appendChildBlock('main-menu', this.block);
     }
 
     // destroy() {

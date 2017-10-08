@@ -4,7 +4,7 @@ import Validation from '../../blocks/form/validation/validation';
  * @function LoginValidate
  * @return {string || null} возвращает null если ошибок нет
  */
-function LoginValidate(login, password) {
+function AuthValidate(login, password) {
     let errors = [];
     const loginValidation = Validation.validateLogin(login);
     if (loginValidation !== true) {
@@ -27,4 +27,4 @@ function LoginValidate(login, password) {
 
 }
 
-export default LoginValidate;
+export default AuthValidate;

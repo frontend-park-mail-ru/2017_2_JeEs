@@ -9,6 +9,7 @@ export default class BaseView {
         this.parent = parent;
         this.userService = new UserService();
         this.eventBus = new EventBus();
+        this.block = null;
     }
 
     // create() {
