@@ -18,13 +18,8 @@ const userService = new UserService();
 const root = new Block(document.getElementById('root'));
 
 const topBar = new Block('div', ['top-bar']);
-const userBlock = new Block('div', ['user-block']);
-const soundBlock = new Block('div', ['sound-block']);
 
 root.appendChildBlock('topbar', topBar);
-
-topBar.appendChildBlock('user-block', soundBlock);
-topBar.appendChildBlock('user-block', userBlock);
 
 
 const gameNameBlock = new Block('div', ['game-name-block']);
@@ -35,10 +30,7 @@ const mainBlock = new Block('div', ['main-block']);
 root.appendChildBlock('main-block', mainBlock);
 
 
-
-//наверное не лучшая идея, надо бы добавить еще какой-нибудь промежуточный блок,
-// а то пока destroy удаляет все элементы блока немного грустно работает
-const soundView = new SoundView(soundBlock);
+const soundView = new SoundView(topBar);
 soundView.create();
 
 const menuView = new MenuView(mainBlock);
@@ -46,8 +38,10 @@ const ratingView = new RatingView(mainBlock);
 const authView = new AuthView(mainBlock);
 const registrationView = new RegistrationView(mainBlock);
 
-const authUserView = new AuthUserView(userBlock);
-const unauthUserView = new UnauthUserView(userBlock);
+const authUserView = new AuthUserView(topBar);
+const unauthUserView = new UnauthUserView(topBar);
+
+//наверное хорошо бы не трогать userService в index.js, но пока так
 userService.getData()
     .then(() => authUserView.create())
     .catch(() => unauthUserView.create());

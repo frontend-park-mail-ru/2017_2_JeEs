@@ -7,6 +7,7 @@ import validate from '../../services/specifiedvalidation/authvalidator';
 export default class AuthView extends BaseView {
     constructor(parent) {
         super(parent);
+        this.blockName = 'auth-form';
         this.block = new Form(
             authFormConfig.title,
             authFormConfig.fieldPrototypes,
@@ -22,13 +23,13 @@ export default class AuthView extends BaseView {
         });
 
         this.eventBus.on('main-block:auth-form', () => {
-            this.destroy();
             this.create()
         });
-    }
 
-    create() {
-        this.parent.appendChildBlock('main-block', this.block);
+        this.eventBus.on('main-block:auth-form-rm', () => {
+            this.destroyAll();
+            this.create()
+        });
     }
 
     _onRef(event) {
@@ -46,6 +47,7 @@ export default class AuthView extends BaseView {
         this.userService.login(formdata.login, formdata.password)
             .then(() => this.block.reset())
             .then(() => {
+                this.destroy();
                 this.eventBus.emit('main-block:main-menu')
             })
             .then(() => this.userService.getData())

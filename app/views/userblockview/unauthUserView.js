@@ -6,6 +6,8 @@ import UserBlock from '../../blocks/userblock/unauthUserBlock';
 export default class UnauthUserView extends BaseView {
     constructor(parent) {
         super(parent);
+
+        this.blockName = 'auth';
         this.block = new UserBlock();
 
 
@@ -18,20 +20,19 @@ export default class UnauthUserView extends BaseView {
         });
 
         this.eventBus.on('user-block:unauth', () => {
-            this.destroy();
             this.create()
+        });
+
+        this.eventBus.on('user-block:auth', () => {
+            this.destroy();
         });
     }
 
-    create() {
-        this.parent.appendChildBlock('user-block', this.block);
-    }
-
     _auth() {
-        this.eventBus.emit('main-block:auth-form')
+        this.eventBus.emit('main-block:auth-form-rm')
     }
 
     _registration() {
-        this.eventBus.emit('main-block:registration-form')
+        this.eventBus.emit('main-block:registration-form-rm')
     }
 }

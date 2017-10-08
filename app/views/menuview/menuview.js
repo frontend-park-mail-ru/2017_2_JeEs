@@ -6,6 +6,7 @@ export default class MenuView extends BaseView {
     constructor(parent) {
         super(parent);
         this.block = new MainMenu();
+        this.blockName = 'main-menu';
 
         this.block.getChildBlock('play').on('click', () => {
             this._play()
@@ -16,18 +17,10 @@ export default class MenuView extends BaseView {
         });
 
         this.eventBus.on('main-block:main-menu', () => {
-            this.destroy();
             this.create()
         });
     }
 
-    create() {
-        this.parent.appendChildBlock('main-menu', this.block);
-    }
-
-    // destroy() {
-    //     this.parent.removeAllChildren(); // надо удалять только этот элемент
-    // }
 
     _play() {
         this.userService.isLoggedIn()
@@ -35,11 +28,13 @@ export default class MenuView extends BaseView {
                 alert('Когда-нибудь тут будет игра')
             })
             .catch(() => {
+                this.destroy();
                 this.eventBus.emit('main-block:auth-form')
             });
     }
 
     _rating() {
+        this.destroy();
         this.eventBus.emit('main-block:rating')
     }
 }

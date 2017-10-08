@@ -8,6 +8,7 @@ export default class RegistrationView extends BaseView {
     constructor(parent) {
         super(parent);
 
+        this.blockName = 'registration-form';
         this.block = new Form(
             registrationFormConfig.title,
             registrationFormConfig.fieldPrototypes,
@@ -23,13 +24,13 @@ export default class RegistrationView extends BaseView {
         });
 
         this.eventBus.on('main-block:registration-form', () => {
-            this.destroy();
             this.create()
         });
-    }
 
-    create() {
-        this.parent.appendChildBlock('main-block', this.block);
+        this.eventBus.on('main-block:registration-form-rm', () => {
+            this.destroyAll();
+            this.create()
+        });
     }
 
     _onRef() {
@@ -47,6 +48,7 @@ export default class RegistrationView extends BaseView {
         this.userService.signup(formdata.email, formdata.login, formdata.password)
             .then(() => this.block.reset())
             .then(() => {
+                this.destroy();
                 this.eventBus.emit('main-block:main-menu')
             })
             .then(() => this.userService.getData())

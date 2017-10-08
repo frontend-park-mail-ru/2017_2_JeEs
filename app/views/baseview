@@ -10,13 +10,18 @@ export default class BaseView {
         this.userService = new UserService();
         this.eventBus = new EventBus();
         this.block = null;
+        this.blockName = null;
     }
 
-    // create() {
-    //
-    // }
+    create() {
+        this.parent.appendChildBlock(this.blockName, this.block);
+    }
 
     destroy() {
-        this.parent.removeAllChildren(); // надо удалять только этот элемент
+        this.parent.removeChildBlock(this.blockName);
+    }
+
+    destroyAll() {
+        this.parent.removeAllChildren();
     }
 }
