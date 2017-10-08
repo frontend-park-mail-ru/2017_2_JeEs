@@ -23,6 +23,7 @@ export default class RegistrationView extends BaseView {
         });
 
         this.eventBus.on('main-block:registration-form', () => {
+            this.destroy();
             this.create()
         });
     }
@@ -46,15 +47,13 @@ export default class RegistrationView extends BaseView {
         this.userService.signup(formdata.email, formdata.login, formdata.password)
             .then(() => this.block.reset())
             .then(() => {
-                this.destroy();
                 this.eventBus.emit('main-block:main-menu')
             })
             .then(() => this.userService.getData())
-            // .then(() => userBlock.login(formdata.login))
-            // .then(() => userBlock.getChildBlock('logout').on('click', () => {
-            //     userService.logout()
-            //         .then(() => userBlock.logout());
-            // }))
+            .then(() => {
+                this.eventBus.emit('user-block:auth')
+            })
+
             .catch((err) => {
                 this.block.message(err.error);
             });

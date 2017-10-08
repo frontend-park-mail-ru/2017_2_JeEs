@@ -1,0 +1,19 @@
+import BaseView from '../baseview';
+import RatingBlock from '../../blocks/ratingblock/rating';
+
+
+export default class RatingView extends BaseView {
+    constructor(parent) {
+        super(parent);
+        this.block = new RatingBlock(['user1', 'user2', 'user3', 'user4']);
+
+        this.eventBus.on('main-block:rating', () => {
+            this.destroy();
+            this.create()
+        });
+    }
+
+    create() {
+        this.parent.appendChildBlock('rating', this.block);
+    }
+}
