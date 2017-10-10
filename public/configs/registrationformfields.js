@@ -3,6 +3,7 @@ const title = 'Регистрация';
 const fieldPrototypes = [
     {
         type: 'text',
+        styleClass: 'form__field',
         attributes: {
             name: 'login',
             placeholder: 'Логин'
@@ -10,6 +11,7 @@ const fieldPrototypes = [
     },
     {
         type: 'text',
+        styleClass: 'form__field',
         attributes: {
             name: 'email',
             placeholder: 'Email',
@@ -17,6 +19,7 @@ const fieldPrototypes = [
     },
     {
         type: 'password',
+        styleClass: 'form__field',
         attributes: {
             name: 'password',
             placeholder: 'Пароль'
@@ -24,6 +27,7 @@ const fieldPrototypes = [
     },
     {
         type: 'password',
+        styleClass: 'form__field',
         attributes: {
             name: 'passwordConfirm',
             placeholder: 'Подтверждение пароля'
@@ -31,6 +35,7 @@ const fieldPrototypes = [
     },
     {
         type: 'submit',
+        styleClass: 'big-green-but',
         attributes: {
             value: 'Регистрация'
         }
@@ -38,6 +43,7 @@ const fieldPrototypes = [
 ];
 
 const refPrototype = {
+
     text: 'У меня уже есть аккаунт',
     attributes: {
         href: '',
