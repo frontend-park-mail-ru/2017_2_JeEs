@@ -24,9 +24,9 @@
 
 ## API
 
-| Действие | url | Тело запроса | Тело ответа |
-| --- | --- | --- | --- |
-| Зарегистрироваться | /signup | {"login":"user", "email":"user@mail.ru", "password":"12345"} | {"login":"user", "email":"user@mail.ru"} |
-| Авторизоваться | /signin | {"login":"user", "password":"12345"} | {"login":"user", "email":"user@mail.ru"} |
-| Разлогиниться | /signout |  | {"info":"Successful logout"} |
-| Запросить пользователя текущей сессии | /currentUser |  | {"login":"user", "email":"user@mail.ru"} |
+| Действие | Метод | url | Тело запроса | Тело ответа |
+| --- | --- | --- | --- | --- |
+| Зарегистрироваться | Post | /signup | {"login":"user", "email":"user@mail.ru", "password":"12345"} | {"login":"user", "email":"user@mail.ru"} |
+| Авторизоваться | Post | /signin | {"login":"user", "password":"12345"} | {"login":"user", "email":"user@mail.ru"} |
+| Разлогиниться | Delete | /signout |  | {"info":"Successful logout"} |
+| Запросить пользователя текущей сессии | Get | /currentUser |  | {"login":"user", "email":"user@mail.ru"} |
