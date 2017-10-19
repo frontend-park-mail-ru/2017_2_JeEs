@@ -3,6 +3,7 @@ const title = 'Вход';
 const fieldPrototypes = [
     {
         type: 'text',
+        styleClass: 'form__field',
         attributes: {
             name: 'login',
             placeholder: 'Логин'
@@ -10,6 +11,7 @@ const fieldPrototypes = [
     },
     {
         type: 'password',
+        styleClass: 'form__field',
         attributes: {
             name: 'password',
             placeholder: 'Пароль'
@@ -17,6 +19,7 @@ const fieldPrototypes = [
     },
     {
         type: 'submit',
+        styleClass: 'big-green-but',
         attributes: {
             value: 'Вход'
         }
