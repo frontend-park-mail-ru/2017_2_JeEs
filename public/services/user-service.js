@@ -1,4 +1,4 @@
-import Http from '../modules/http';
+import HttpSend from '../modules/http';
 
 /**
  * Сервис для работы с пользователями
@@ -6,10 +6,9 @@ import Http from '../modules/http';
  */
 class UserService {
     constructor() {
-        /**
-         * Закомментить для обращения к серверу node.js
-         */
-        Http.BaseUrl = 'https://jees-quoridor-backend.herokuapp.com';
+        this.baseUrl = 'https://jees-quoridor-backend.herokuapp.com';
+        // this.baseUrl = `${window.location.protocol}//${window.location.host}`;
+
     }
 
     /**
@@ -20,7 +19,7 @@ class UserService {
      * @return {Promise}
      */
     signup(email, login, password) {
-        return Http.Post('/signup', {email, login, password});
+        return HttpSend(`${this.baseUrl}/signup`, 'POST', {email, login, password});
     }
 
     /**
@@ -30,15 +29,15 @@ class UserService {
      * @return {Promise}
      */
     login(login, password) {
-        return Http.Post('/signin', {login, password});
+        return HttpSend(`${this.baseUrl}/signin`, 'POST', {login, password});
     }
 
     /**
      * Проверяет, авторизован ли пользователь
-     * @return {boolean}
+     * @return {Promise}
      */
     isLoggedIn() {
-        return Http.Post('/currentUser');
+        return HttpSend(`${this.baseUrl}/currentUser`, 'GET', {});
     }
 
     /**
@@ -46,7 +45,7 @@ class UserService {
      * @return {Promise}
      */
     logout() {
-        return Http.Post('/signout', {});
+        return HttpSend(`${this.baseUrl}/signout`, 'DELETE', {});
     }
 
 
@@ -55,7 +54,7 @@ class UserService {
      * @return {Promise}
      */
     getData() {
-        return Http.Post('/currentUser')
+        return HttpSend(`${this.baseUrl}/currentUser`, 'GET', {})
             .then(userdata => {
                 return userdata;
             });

@@ -14,7 +14,9 @@ html, body, #root
 	align-items: center;
 	justify-content: flex-start;
 
-	background-color:  #333333
+	background-image: url('../public/styles/wall.jpg');
+	background-repeat: no-repeat;
+	background-size: cover;
 }
 
 .top-bar
@@ -38,9 +40,10 @@ html, body, #root
 .game-name-block__game-name
 {
 	font-family: "Lombardia Regular", sans-serif;
-	text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white, 0 0 1em red;
+	text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white, 0 0 1em #116B55;
 	font-size: 140px;
-	color: rgb(0, 0, 0);
+	color: #116B55;
+	margin-bottom: 30px;
 }
 
 .main-block

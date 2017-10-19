@@ -1,0 +1,29 @@
+.light-green-but {
+    height: 55px;
+    width: 216px;
+    font-size: 24px;
+    font-family: cursive;
+    color: #116B55;
+    background-color: #C3EB78;
+    margin-top: 10px;
+}
+
+.little-green-but {
+    height: 40px;
+    width: 121px;
+    font-size: 18px;
+    font-family: cursive;
+    color: #C3EB78;
+    background-color: #306B34;
+    margin-top: 10px;
+}
+
+.big-green-but {
+    height: 55px;
+    width: 216px;
+    font-size: 18px;
+    font-family: cursive;
+    color: #C3EB78;
+    background-color: #306B34;
+    margin-top: 10px;
+}
