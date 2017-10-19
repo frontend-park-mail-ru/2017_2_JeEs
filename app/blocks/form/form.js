@@ -9,10 +9,10 @@ class Form extends Block {
 
         fieldPrototypes.forEach((fieldPrototype) => {
             this.appendChildBlock(fieldPrototype.attributes.name,
-                new Input(fieldPrototype.type, ['form__field'], fieldPrototype.attributes));
+                new Input(fieldPrototype.type, fieldPrototype.styleClass, fieldPrototype.attributes));
         });
 
-        this.appendChildBlock('ref', new Block('a', ['form__ref'], refPrototype.attributes).setText(refPrototype.text));
+        this.appendChildBlock('ref', new Block('a', refPrototype.styleClass, refPrototype.attributes).setText(refPrototype.text));
         this._message = new Block('span', ['form__message']);
         this.appendChildBlock('message', this._message);
     }
