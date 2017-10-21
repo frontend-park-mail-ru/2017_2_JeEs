@@ -1,37 +1,45 @@
+'use strict';
+
 export default class Router {
-    constructor() {
+    constructor(rootElement) {
         if (Router.__instance) {
             return Router.__instance;
         }
 
         this.routes = new Map();
-        this.history = window.history;
-        this.page404 = () => {
-            alert("404"); //сделать вьюшку под это
-        };
-        this.steps = 0;
+        this.rootElement = rootElement;
 
         Router.__instance = this;
     }
 
     register(path, view) {
         this.routes[path] = view;
+
+    }
+
+    setNotFoundPage(view) {
+        this.page404 = view;
     }
 
     start() {
+        window.onpopstate = event => {
+            this.go(window.location.pathname);
+        };
 
-    }      // запустить роутер
-    go(path) {
-        // по идее 1 аргумент объект состояния, а второй заголовок состояния
-        this.history.pushState(null, '', path);
-        this.navigate(path);
-        this.currentUrl = path;
-        return this;
+        this.rootElement.addEventListener('click', event => {
+            event.preventDefault();
+            const pathname = event.target.pathname;
+            this.go(pathname);
+        });
+
+        this.go(window.location.pathname);
     }
 
-    back() {
-
-    }       // переход назад по истории браузера
-    forward() {
-    }    // переход вперёд по истории браузера
+    go(path) {
+        let view = this.routes.get(path);
+        if (!view) {
+            view = this.page404
+        }
+        view.create()
+    }
 }
