@@ -5,6 +5,10 @@
     font-style: normal;
 }
 
+.button__big-lightgreen, .button__little-darkgreen, .button__big-darkgreen {
+    transition: border-radius .3s ease-in-out;
+}
+
 
 .button__big-lightgreen {
     height: 55px;
@@ -14,6 +18,14 @@
     color: #116B55;
     background-color: #C3EB78;
     margin-top: 10px;
+    border-radius: 2px;
+}
+
+.button__big-lightgreen:hover {
+    /* темизация цвета */
+    border-color: #116B55;
+    background-color: #BEEC63;
+    border-radius: 8px;
 }
 
 .button__little-darkgreen {
@@ -26,6 +38,12 @@
     margin-top: 10px;
 }
 
+.button__little-darkgreen:hover {
+    background-color: #428D47;
+    border-color: #C3EB78;
+}
+
+
 .button__big-darkgreen {
     height: 55px;
     width: 216px;
@@ -35,3 +53,10 @@
     background-color: #306B34;
     margin-top: 10px;
 }
+
+.button__big-darkgreen:hover {
+    background-color: #428D47;
+    border-color: #C3EB78;
+    border-radius: 8px;
+}
+
