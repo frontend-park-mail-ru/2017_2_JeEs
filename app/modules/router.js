@@ -13,8 +13,8 @@ export default class Router {
     }
 
     register(path, view) {
-        this.routes[path] = view;
-
+        this.routes.set(path, view);
+        return this
     }
 
     setNotFoundPage(view) {
@@ -22,11 +22,14 @@ export default class Router {
     }
 
     start() {
-        window.onpopstate = event => {
-            this.go(window.location.pathname);
-        };
+        // window.onpopstate = event => {
+        //     this.go(window.location.pathname);
+        // };
 
         this.rootElement.addEventListener('click', event => {
+            if (event.target.tagName !== 'a') {
+                return;
+            }
             event.preventDefault();
             const pathname = event.target.pathname;
             this.go(pathname);
@@ -40,6 +43,16 @@ export default class Router {
         if (!view) {
             view = this.page404
         }
-        view.create()
+
+        if (window.location.pathname !== path) {
+            window.history.pushState({}, '', path);
+        }
+
+        if (this.current) {
+            this.current.destroy();
+        }
+
+        view.create();
+        this.current = view
     }
 }

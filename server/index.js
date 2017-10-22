@@ -1,5 +1,6 @@
 'use strict';
 
+const fallback = require('express-history-api-fallback');
 const express = require('express');
 const body = require('body-parser');
 const cors = require('cors');
@@ -17,6 +18,7 @@ app.use(cors({
 app.use(morgan('dev'));
 app.use(express.static('public'));
 app.use(express.static('dist'));
+app.use(fallback('index.html', { root: 'public' }));
 app.use(body.json());
 app.use(cookie());
 
@@ -95,9 +97,9 @@ app.post('/signout', function (req, res) {
     res.status(200).json(null);
 });
 
-app.get('*', (req, res) => {
-    res.send('404');
-});
+// app.get('*', (req, res) => {
+//     res.send('404');
+// });
 
 const port = process.env.PORT || 8080;
 

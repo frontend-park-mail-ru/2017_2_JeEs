@@ -2,26 +2,41 @@
 
 import EventBus from '../modules/event-bus'
 import UserService from '../services/user-service';
-// import Block from '../blocks/block/block';
+
 
 export default class BaseView {
-    constructor(parent) {
+    constructor(parent) { //делать через инъекцию
         this.parent = parent;
+        this.element = document.createElement('div');
+        parent.appendChild(this.element);
         this.userService = new UserService();
         this.eventBus = new EventBus();
-        this.block = null;
-        this.blockName = null;
+
+        this.isCreated = false;
+        this.template = null;
     }
 
     create() {
-        this.parent.appendChildBlock(this.blockName, this.block);
+        this.element.innerHTML = this.template({});
+
+        if (!this.isCreated) {
+            this._createFirst();
+            this.isCreated = true
+        }
+    }
+
+    _createFirst() {
     }
 
     destroy() {
-        this.parent.removeChildBlock(this.blockName);
+        this.parent.removeChild(this.element);
     }
 
     destroyAll() {
         this.parent.removeAllChildren();
+    }
+
+    getElement() {
+        return this.el;
     }
 }

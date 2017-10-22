@@ -1,0 +1,11 @@
+mixin item(title, href)
+    a.main-menu__menu-item(href=href)= title
+
+
+.main-block__main-menu
+    +item('Войти', '/signin')
+    +item('Зарегистрироваться', '/signup')
+    +item('Играть', '/game')
+    +item('Рейтинг', '/rating')
+    +item('Правила', '/rules')
+    +item('Авторы', '/creators')

@@ -1,5 +1,4 @@
 import BaseView from '../baseview';
-import Form from '../../blocks/form/form';
 import * as registrationFormConfig from '../../configs/registrationformfields';
 import validate from '../../services/specifiedvalidation/registrationvalidator';
 
