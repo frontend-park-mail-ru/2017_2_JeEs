@@ -1,7 +1,7 @@
 import ApplicationView from './views/applicationview/applicationview';
 
-import AuthUserView from './views/userblockview/authUserView';
-import UnauthUserView from './views/userblockview/unauthUserView';
+import AuthUserView from './views/userblockview/auth/authview';
+import UnauthUserView from './views/userblockview/unauth/unauthview';
 import MenuView from './views/menuview/menuview';
 import RatingView from './views/ratingview/ratingview';
 import AuthView from './views/authview/authview';
@@ -24,24 +24,24 @@ const topBar = root.getTopBar();
 // soundView.create();
 
 const menuView = new MenuView(mainBlock);
-// const ratingView = new RatingView(mainBlock);
+const ratingView = new RatingView(mainBlock);
 const authView = new AuthView(mainBlock);
-// const registrationView = new RegistrationView(mainBlock);
-// const authUserView = new AuthUserView(topBar);
-// const unauthUserView = new UnauthUserView(topBar);
+const registrationView = new RegistrationView(mainBlock);
+const authUserView = new AuthUserView(topBar);
+const unauthUserView = new UnauthUserView(topBar);
 
 const router = new Router(mainBlock);
 
 router.setNotFoundPage();
 
 router.register('/', menuView)
-// .register('/rating', ratingView)
+    .register('/rating', ratingView)
     .register('/signin', authView)
-    // .register('/signup', registrationView)
+    .register('/signup', registrationView)
     .start();
 
-// userService.getData()
-//     .then(() => authUserView.create())
-//     .catch(() => unauthUserView.create());
+userService.getData()
+    .then(() => authUserView.create())
+    .catch(() => unauthUserView.create());
 
 

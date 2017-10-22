@@ -29,6 +29,7 @@ export default class EventBus {
     }
 
     emit(eventName) {
+        debugger;
         const event = this.channels.get(eventName);
         if (!event) {
             return;

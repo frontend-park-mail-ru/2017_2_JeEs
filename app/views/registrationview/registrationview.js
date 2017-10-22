@@ -1,62 +1,61 @@
 import BaseView from '../baseview';
-import * as registrationFormConfig from '../../configs/registrationformfields';
 import validate from '../../services/specifiedvalidation/registrationvalidator';
 
 
 export default class RegistrationView extends BaseView {
     constructor(parent) {
         super(parent);
+        this.template = require('./registration.pug');
 
-        this.blockName = 'registration-form';
-        this.block = new Form(
-            registrationFormConfig.title,
-            registrationFormConfig.fieldPrototypes,
-            registrationFormConfig.refPrototype
-        );
+        this.form = null;
+        this.formErrorTextString = null;
 
-        this.block.getChildBlock('ref').on('click', (event) => {
-            this._onRef(event)
-        });
+        this.formfields = ['email', 'login', 'password', 'passwordConfirm'];
+    }
 
-        this.block.onSubmit((formdata) => {
-            this._onSubmit(formdata);
-        });
+    formReset() {
+        this.form.reset();
+    }
 
-        this.eventBus.on('main-block:registration-form', () => {
-            this.create()
-        });
+    formError(errorText) {
+        this.formErrorTextString.textContent = errorText;
+    }
 
-        this.eventBus.on('main-block:registration-form-rm', () => {
-            this.destroyAll();
-            this.create()
+
+    _createFirst() {
+        this.form = this.element.querySelector('.registration-form__form');
+        this.formErrorTextString = this.element.querySelector('.form__message');
+
+        this.form.addEventListener('submit', (formdata) => {
+            event.preventDefault();
+            this._onSubmit();
         });
     }
 
-    _onRef() {
-        event.preventDefault();
-        this.destroy();
-        this.eventBus.emit('main-block:auth-form')
-    }
+    _onSubmit() {
+        debugger;
+        const formdata = {};
+        const elements = this.form.elements;
+        for (let name in elements) {
+            formdata[name] = elements[name].value;
+        }
 
-    _onSubmit(formdata) {
         const authValidation = validate(formdata.email, formdata.login, formdata.password, formdata.passwordConfirm);
         if (authValidation !== null) {
-            this.block.message(authValidation);
+            this.formError(authValidation);
             return;
         }
         this.userService.signup(formdata.email, formdata.login, formdata.password)
-            .then(() => this.block.reset())
-            .then(() => {
-                this.destroy();
-                this.eventBus.emit('main-block:main-menu')
-            })
+            .then(() => this.formReset())
             .then(() => this.userService.getData())
             .then(() => {
                 this.eventBus.emit('user-block:auth')
             })
+            .then(() => {
+                debugger;
+                (new Router()).go('/'); //костыль
+            })
 
-            .catch((err) => {
-                this.block.message(err.error);
-            });
+            .catch((err) => this.formError(err.error));
     }
 }

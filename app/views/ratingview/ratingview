@@ -6,12 +6,11 @@ export default class RatingView extends BaseView {
     constructor(parent) {
         super(parent);
 
-        this.blockName = 'rating';
-        this.block = new RatingBlock(['user1', 'user2', 'user3', 'user4']);
+        this.template = require('./rating.pug');
+    }
 
-        this.eventBus.on('main-block:rating', () => {
-            this.create()
-        });
+    _createFirst() {
+        // this.element.innerHTML = this.template({dataList: ['user1', 'user2', 'user3', 'user4']});
     }
 
 }

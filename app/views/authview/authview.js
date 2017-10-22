@@ -48,13 +48,13 @@ export default class AuthView extends BaseView {
         }
         this.userService.login(formdata.login, formdata.password)
             .then(() => this.formReset())
-            .then(() => {
-                debugger;
-                (new Router()).go('/'); //костыль
-            })
             .then(() => this.userService.getData())
             .then(() => {
                 this.eventBus.emit('user-block:auth')
+            })
+            .then(() => {
+                debugger;
+                (new Router()).go('/'); //костыль
             })
 
             .catch((err) => this.formError(err.error));

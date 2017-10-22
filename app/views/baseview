@@ -5,7 +5,7 @@ import UserService from '../services/user-service';
 
 
 export default class BaseView {
-    constructor(parent) { //делать через инъекцию
+    constructor(parent) { //кидать синглтоны через инъекцию
         this.parent = parent;
         this.element = document.createElement('div');
         parent.appendChild(this.element);
@@ -26,17 +26,10 @@ export default class BaseView {
     }
 
     _createFirst() {
+
     }
 
     destroy() {
         this.parent.removeChild(this.element);
-    }
-
-    destroyAll() {
-        this.parent.removeAllChildren();
-    }
-
-    getElement() {
-        return this.el;
     }
 }

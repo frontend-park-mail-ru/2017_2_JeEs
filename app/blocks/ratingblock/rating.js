@@ -4,7 +4,7 @@ class RatingBlock extends Block {
     constructor(dataList) {
         super('div', ['rating-block']);
 
-        let ratingTemplate = require('./rating.pug');
+        let ratingTemplate = require('../../views/ratingview/rating.pug');
         this._element.innerHTML = ratingTemplate({dataList: dataList});
     }
 }
