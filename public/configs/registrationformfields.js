@@ -35,20 +35,21 @@ const fieldPrototypes = [
     },
     {
         type: 'submit',
-        styleClass: 'big-green-but',
+        styleClass: 'button__big-darkgreen',
         attributes: {
             value: 'Регистрация'
         }
     }
 ];
 
-const refPrototype = {
+// const refPrototype = {
+//
+//     text: 'У меня уже есть аккаунт',
+//     attributes: {
+//         href: '',
+//     }
+// };
 
-    text: 'У меня уже есть аккаунт',
-    attributes: {
-        href: '',
-    }
-};
 
-
-export {title, fieldPrototypes, refPrototype};
+//export {title, fieldPrototypes, refPrototype};
+export {title, fieldPrototypes};

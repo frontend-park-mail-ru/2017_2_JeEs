@@ -1,28 +1,36 @@
-.light-green-but {
+@font-face {
+    font-family: Neucha Regular;
+    src: url(../static/fonts/Neucha.ttf);
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+.button__big-lightgreen {
     height: 55px;
     width: 216px;
     font-size: 24px;
-    font-family: cursive;
+    font-family: "Neucha Regular", sans-serif;
     color: #116B55;
     background-color: #C3EB78;
     margin-top: 10px;
 }
 
-.little-green-but {
+.button__little-darkgreen {
     height: 40px;
     width: 121px;
     font-size: 18px;
-    font-family: cursive;
+    font-family: "Neucha Regular", sans-serif;
     color: #C3EB78;
     background-color: #306B34;
     margin-top: 10px;
 }
 
-.big-green-but {
+.button__big-darkgreen {
     height: 55px;
     width: 216px;
     font-size: 18px;
-    font-family: cursive;
+    font-family: "Neucha Regular", sans-serif;
     color: #C3EB78;
     background-color: #306B34;
     margin-top: 10px;

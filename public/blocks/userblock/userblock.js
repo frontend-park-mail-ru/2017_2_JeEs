@@ -3,9 +3,9 @@ import Block from '../block/block';
 class UserBlock extends Block {
     constructor() {
         super('div', ['user-block'], {});
-        this._login = new Block('button', ['user-block__login', 'little-green-but']).setText('Вход');
-        this._logout = new Block('button', ['user-block__logout', 'little-green-but']).setText('Выход');
-        this._signup = new Block('button', ['user-block__signup', 'little-green-but']).setText('Регистрация');
+        this._login = new Block('button', ['user-block__login', 'button__little-darkgreen']).setText('Вход');
+        this._logout = new Block('button', ['user-block__logout', 'button__little-darkgreen']).setText('Выход');
+        this._signup = new Block('button', ['user-block__signup', 'button__little-darkgreen']).setText('Регистрация');
         this.logout();
         return this;
     }

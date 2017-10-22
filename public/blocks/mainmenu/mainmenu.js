@@ -31,7 +31,7 @@ class MainMenu extends Block {
     _createChildren() {
         buttons.forEach((button) => {
             this.appendChildBlock(button.name,
-                new Block('button',  [blockClass + button.name, 'light-green-but']).setText(button.text));
+                new Block('button',  [blockClass + button.name, 'button__big-lightgreen']).setText(button.text));
         });
     }
 
