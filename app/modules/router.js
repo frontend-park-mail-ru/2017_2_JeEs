@@ -1,13 +1,12 @@
 'use strict';
 
 export default class Router {
-    constructor(rootElement) {
+    constructor() {
         if (Router.__instance) {
             return Router.__instance;
         }
 
         this.routes = new Map();
-        this.rootElement = rootElement;
 
         Router.__instance = this;
     }
@@ -22,12 +21,12 @@ export default class Router {
     }
 
     start() {
-        // window.onpopstate = event => {
-        //     this.go(window.location.pathname);
-        // };
+        window.onpopstate = event => {
+            this.go(window.location.pathname);
+        };
 
-        this.rootElement.addEventListener('click', event => {
-            if (event.target.tagName !== 'a') {
+        document.body.addEventListener('click', event => {
+            if (event.target.tagName.toLowerCase() !== 'a') {
                 return;
             }
             event.preventDefault();
