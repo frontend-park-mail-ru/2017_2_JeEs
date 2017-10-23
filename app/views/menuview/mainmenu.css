@@ -1,0 +1,18 @@
+.main-menu__menu-button {
+    height: 55px;
+    width: 216px;
+    font-size: 24px;
+    font-family: "Neucha Regular", sans-serif;
+    color: #116B55;
+    background-color: #C3EB78;
+    margin-top: 10px;
+    border-radius: 2px;
+}
+
+.main-menu__menu-button:hover {
+    /* темизация цвета */
+    border-color: #116B55;
+    background-color: #BEEC63;
+    border-radius: 8px;
+}
+

@@ -1,0 +1,59 @@
+@font-face {
+    font-family: Lombardia Regular;
+    src: url("../../../public/static/fonts/lombardia.ttf");
+    font-weight: normal;
+    font-style: normal;
+}
+
+html, body, .root
+{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+
+
+    background-image: url('../../../public/static/images/wall.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.top-bar
+{
+    width: 90%;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.game-name-block
+{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.game-name-block__game-name
+{
+    font-family: "Lombardia Regular", sans-serif;
+    text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white, 0 0 1em #116B55;
+    font-size: 140px;
+    color: #116B55;
+    margin-bottom: 30px;
+}
+
+.main-block
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+}
+

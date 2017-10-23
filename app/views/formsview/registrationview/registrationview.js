@@ -1,5 +1,6 @@
-import BaseView from '../baseview';
-import validate from '../../services/specifiedvalidation/registrationvalidator';
+import BaseView from '../../baseview';
+import validate from '../../../services/validation/registrationvalidator';
+import Router from '../../../modules/router'
 
 
 export default class RegistrationView extends BaseView {
@@ -22,7 +23,8 @@ export default class RegistrationView extends BaseView {
     }
 
 
-    _createFirst() {
+    create() {
+        this.element.innerHTML = this.template({});
         this.form = this.element.querySelector('.registration-form__form');
         this.formErrorTextString = this.element.querySelector('.form__message');
 
@@ -33,7 +35,6 @@ export default class RegistrationView extends BaseView {
     }
 
     _onSubmit() {
-        debugger;
         const formdata = {};
         const elements = this.form.elements;
         for (let name in elements) {
@@ -45,15 +46,12 @@ export default class RegistrationView extends BaseView {
             this.formError(authValidation);
             return;
         }
+
         this.userService.signup(formdata.email, formdata.login, formdata.password)
-            .then(() => this.formReset())
-            .then(() => this.userService.getData())
             .then(() => {
-                this.eventBus.emit('user-block:auth')
-            })
-            .then(() => {
-                debugger;
-                (new Router()).go('/'); //костыль
+                this.formReset();
+                this.eventBus.emit('user-block:auth');
+                (new Router()).go('/')
             })
 
             .catch((err) => this.formError(err.error));

@@ -1,141 +1,20 @@
-const baseUrl = `${window.location.protocol}//${window.location.host}`;
-
-/**
- * Класс, предоставляющий методы для выполнения HTTP-запросов
- * @class Http
- */
-class Http {
-    /**
-     * Выполняет GET-запрос с использованием fetch (по возможности) или XMLHttpRequest
-     * @param {string} address - "ручка"
-     * @return {Promise}
-     */
-    static Get(address) {
-        const url = (Http.BaseUrl || baseUrl) + address;
-        if (typeof window.fetch !== 'undefined') {
-            return this._FetchGet(url);
+export default function Send(address, method, body = {}) {
+    return fetch(address, {
+        method: method,
+        mode: 'cors',
+        credentials: 'include',
+        body: Object.keys(body).length === 0 ? {} : JSON.stringify(body),
+        headers: {
+            'Content-Type': 'application/json; charset=utf-8'
         }
-        return this._GetXMLHttpRequest(url);
-    }
-
-    /**
-     * Выполняет POST-запрос с использованием fetch (по возможности) или XMLHttpRequest
-     * @param {string} address - "ручка"
-     * @param {*} body - тело запроса (объект)
-     * @return {Promise}
-     */
-    static Post(address, body) {
-        const url = (Http.BaseUrl || baseUrl) + address;
-        if (typeof window.fetch !== 'undefined') {
-            return this._FetchPost(body, url);
-        }
-        return this._PostXMLHttpRequest(body, url);
-    }
-
-
-    /**
-     * Выполняет GET-запрос по указанному адресу с использованием XMLHttpRequest
-     * @param {string} url - адрес запроса
-     * @return {Promise}
-     */
-    static _GetXMLHttpRequest(url) {
-        return new Promise(function (resolve, reject) {
-            const xhr = new XMLHttpRequest();
-            xhr.open('GET', url, true);
-            xhr.withCredentials = true;
-
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState !== 4) return;
-                if (+xhr.status >= 400) {
-                    alert(xhr.responseText);
-                    reject(xhr);
-                    return;
-                }
-
-                const response = JSON.parse(xhr.responseText);
-                resolve(response);
-            };
-
-            xhr.send();
-        });
-    }
-
-    /**
-     * Выполняет POST-запрос по указанному адресу с использованием XMLHttpRequest
-     * @param {string} url - адрес запроса
-     * @param {*} body - тело запроса (объект)
-     * @return {Promise}
-     */
-    static _PostXMLHttpRequest(body, url) {
-        return new Promise(function (resolve, reject) {
-            const xhr = new XMLHttpRequest();
-            xhr.open('POST', url, true);
-            xhr.withCredentials = true;
-            xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
-
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState !== 4) return;
-                if (+xhr.status >= 400) {
-                    
-                    reject(xhr);
-                    return;
-                }
-
-                const response = JSON.parse(xhr.responseText);
-                resolve(response);
-            };
-
-            xhr.send(JSON.stringify(body));
-        });
-    }
-
-    /**
-     * Выполняет GET-запрос по указанному адресу с использованием fetch
-     * @param {string} url - адрес запроса
-     * @return {Promise}
-     */
-    static _FetchGet(url) {
-        return fetch(url, {
-            method: 'GET',
-            mode: 'cors',
-            credentials: 'include'
-        })
-            .then(function (response) {
-                let json = response.json();
-                if (response.status >= 400) {
-                    return json.then(response => {throw response;});
-                }
-                return json;
-            });
-    }
-
-    /**
-     * Выполняет POST-запрос по указанному адресу с использованием fetch
-     * @param {string} url - адрес запроса
-     * @param {*} body - тело запроса (объект)
-     * @return {Promise}
-     */
-    static _FetchPost(body, url) {
-        return fetch(url, {
-            method: 'POST',
-            mode: 'cors',
-            credentials: 'include',
-            body: JSON.stringify(body),
-            headers: {
-                'Content-Type': 'application/json; charset=utf-8'
+    })
+        .then(function (response) {
+            let json = response.json();
+            if (response.status >= 400) {
+                return json.then(response => {
+                    throw response;
+                });
             }
-        })
-            .then(function (response) {
-                let json = response.json();
-                if (response.status >= 400) {
-                    return json.then(response => {throw response;});
-                }
-                return json;
-            });
-    }
-
+            return json;
+        });
 }
-
-Http.BaseUrl = null;
-
-export default Http;

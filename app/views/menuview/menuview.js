@@ -7,6 +7,7 @@ export default class MenuView extends BaseView {
         this.template = require('./menu.pug');
     }
 
-    _createFirst() {
+    create() {
+        this.element.innerHTML = this.template({});
     }
 }

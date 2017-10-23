@@ -12,7 +12,8 @@ export default class AuthUserView extends BaseView {
         });
     }
 
-    _createFirst() {
+    create() {
+        this.element.innerHTML = this.template({});
         this.authBlockText = this.element.querySelector('.user-block__user-name');
         this.logout = this.element.querySelector('.user-block__button');
 
@@ -30,7 +31,6 @@ export default class AuthUserView extends BaseView {
         this.userService.logout()
             .then(() => {
                 this.eventBus.emit('user-block:unauth');
-                this.destroy();
             });
     }
 }

@@ -26,11 +26,11 @@ export default class Router {
         };
 
         document.body.addEventListener('click', event => {
-            if (event.target.tagName.toLowerCase() !== 'a') {
+            if (event.target.tagName.toLowerCase() !== 'button') {
                 return;
             }
             event.preventDefault();
-            const pathname = event.target.pathname;
+            const pathname = event.target.value;
             this.go(pathname);
         });
 

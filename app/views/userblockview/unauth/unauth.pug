@@ -1,7 +1,5 @@
 mixin item(title, href)
-    a.user-block__button(href=href)= title
-
-
+    button.user-block__button(value=href)= title
 
 .top-bar__user-block
     +item('Вход', '/signin')

@@ -1,6 +1,4 @@
 import BaseView from '../baseview';
-import RatingBlock from '../../blocks/ratingblock/rating';
-
 
 export default class RatingView extends BaseView {
     constructor(parent) {
@@ -9,7 +7,8 @@ export default class RatingView extends BaseView {
         this.template = require('./rating.pug');
     }
 
-    _createFirst() {
+    create() {
+        this.element.innerHTML = this.template({dataList: ['user1', 'user2', 'user3', 'user4']});
         // this.element.innerHTML = this.template({dataList: ['user1', 'user2', 'user3', 'user4']});
     }
 

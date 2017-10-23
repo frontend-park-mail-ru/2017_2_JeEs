@@ -69,15 +69,14 @@ app.post('/signin', function (req, res) {
     res.status(201).json({id});
 });
 
-app.post('/currentUser', function (req, res) {
+app.get('/currentUser', function (req, res) {
     const id = req.cookies['cookie'];
     const login = ids[id];
     if (!login || !users[login]) {
         return res.status(401).end();
     }
 
-    res.json({id}); //или не id?
-    res.status(200);
+    res.json({id});
 });
 
 app.get('/users', function (req, res) {
@@ -86,13 +85,13 @@ app.get('/users', function (req, res) {
         .map(user => {
             return {
                 email: user.login
-            };
+            }
         });
 
     res.json(scorelist);
 });
 
-app.post('/signout', function (req, res) {
+app.delete('/signout', function (req, res) {
     res.cookie('cookie', null, {expires: new Date(Date.now() + 1000 * 60 * 10)});
     res.status(200).json(null);
 });

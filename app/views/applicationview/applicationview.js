@@ -1,4 +1,6 @@
 import BaseView from '../baseview';
+import Router from '../../modules/router'
+
 
 export default class ApplicationView extends BaseView {
     constructor(parent) {
@@ -6,8 +8,17 @@ export default class ApplicationView extends BaseView {
         this.template = require('./application.pug');
     }
 
-    _createFirst() {
+    create() {
+        this.element.innerHTML = this.template({});
+
+        this.gameName = this.element.querySelector('.game-name-block__game-name');
+
+        this.gameName.addEventListener('click', (formdata) => {
+            (new Router()).go('/');
+        });
     }
+
+
 
     getTopBar() {
         return document.querySelector(".top-bar");

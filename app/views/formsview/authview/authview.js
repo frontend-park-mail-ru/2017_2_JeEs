@@ -1,6 +1,6 @@
-import BaseView from '../baseview';
-import validate from '../../services/specifiedvalidation/authvalidator';
-import Router from '../../modules/router'
+import BaseView from '../../baseview';
+import validate from '../../../services/validation/authvalidator';
+import Router from '../../../modules/router'
 
 
 export default class AuthView extends BaseView {
@@ -23,7 +23,8 @@ export default class AuthView extends BaseView {
     }
 
 
-    _createFirst() {
+    create() {
+        this.element.innerHTML = this.template({});
         this.form = this.element.querySelector('.auth-form__form');
         this.formErrorTextString = this.element.querySelector('.form__message');
 
@@ -34,7 +35,6 @@ export default class AuthView extends BaseView {
     }
 
     _onSubmit() {
-        debugger;
         const formdata = {};
         const elements = this.form.elements;
         for (let name in elements) {
@@ -47,14 +47,10 @@ export default class AuthView extends BaseView {
             return;
         }
         this.userService.login(formdata.login, formdata.password)
-            .then(() => this.formReset())
-            .then(() => this.userService.getData())
             .then(() => {
-                this.eventBus.emit('user-block:auth')
-            })
-            .then(() => {
-                debugger;
-                (new Router()).go('/'); //костыль
+                this.formReset();
+                this.eventBus.emit('user-block:auth');
+                (new Router()).go('/')
             })
 
             .catch((err) => this.formError(err.error));
