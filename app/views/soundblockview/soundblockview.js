@@ -10,7 +10,7 @@ export default class MenuView extends BaseView {
         this.block = new SoundBlock();
 
         this.eventBus.on('topbar:sound-block', () => {
-            this.create()
+            this.create();
         });
     }
 }

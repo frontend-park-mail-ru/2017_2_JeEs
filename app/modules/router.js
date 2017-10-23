@@ -13,7 +13,7 @@ export default class Router {
 
     register(path, view) {
         this.routes.set(path, view);
-        return this
+        return this;
     }
 
     setNotFoundPage(view) {
@@ -40,7 +40,7 @@ export default class Router {
     go(path) {
         let view = this.routes.get(path);
         if (!view) {
-            view = this.page404
+            view = this.page404;
         }
 
         if (window.location.pathname !== path) {
@@ -52,6 +52,6 @@ export default class Router {
         }
 
         view.create();
-        this.current = view
+        this.current = view;
     }
 }

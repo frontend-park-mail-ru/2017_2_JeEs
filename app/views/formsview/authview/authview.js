@@ -1,6 +1,6 @@
 import BaseView from '../../baseview';
 import validate from '../../../services/validation/authvalidator';
-import Router from '../../../modules/router'
+import Router from '../../../modules/router';
 
 
 export default class AuthView extends BaseView {
@@ -50,7 +50,7 @@ export default class AuthView extends BaseView {
             .then(() => {
                 this.formReset();
                 this.eventBus.emit('user-block:auth');
-                (new Router()).go('/')
+                (new Router()).go('/');
             })
 
             .catch((err) => this.formError(err.error));

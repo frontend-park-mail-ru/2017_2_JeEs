@@ -8,7 +8,7 @@ export default class AuthUserView extends BaseView {
 
 
         this.eventBus.on('user-block:auth', () => {
-            this.create()
+            this.create();
         });
     }
 

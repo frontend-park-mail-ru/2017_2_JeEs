@@ -1,5 +1,5 @@
 import BaseView from '../baseview';
-import Router from '../../modules/router'
+import Router from '../../modules/router';
 
 
 export default class ApplicationView extends BaseView {
@@ -21,10 +21,10 @@ export default class ApplicationView extends BaseView {
 
 
     getTopBar() {
-        return document.querySelector(".top-bar");
+        return document.querySelector('.top-bar');
     }
 
     getMainBlock() {
-        return document.querySelector(".main-block");
+        return document.querySelector('.main-block');
     }
 }

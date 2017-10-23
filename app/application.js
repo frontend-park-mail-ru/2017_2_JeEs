@@ -16,14 +16,14 @@ import MenuView from './views/menuview/menuview';
 import RatingView from './views/ratingview/ratingview';
 import AuthView from './views/formsview/authview/authview';
 import RegistrationView from './views/formsview/registrationview/registrationview';
-import NotFoundView from  './views/notfoundview/notfoundview'
-import CreatorsView from './views/authorsview/authorsview'
-import GameView from  './views/gameview/gameview'
-import RulesView from  './views/rulesview/rulesview'
+import NotFoundView from  './views/notfoundview/notfoundview';
+import CreatorsView from './views/authorsview/authorsview';
+import GameView from  './views/gameview/gameview';
+import RulesView from  './views/rulesview/rulesview';
 
 
 
-import Router from './modules/router'
+import Router from './modules/router';
 
 import UserService from './services/user-service';
 

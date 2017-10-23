@@ -6,7 +6,7 @@ export default class UnauthUserView extends BaseView {
         this.template = require('./unauth.pug');
 
         this.eventBus.on('user-block:unauth', () => {
-            this.create()
+            this.create();
         });
     }
 
