@@ -48,11 +48,10 @@ html, body, #root
 }
 
 .game-name-block__game-name:hover {
-	color: #246B2B;
+	color: #C3EB78;
 }
 
-.main-block
-{
+.main-block {
 	display: flex;
 	flex-direction: row;
 	justify-content: center;

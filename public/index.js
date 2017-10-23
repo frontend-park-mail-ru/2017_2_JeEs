@@ -31,7 +31,7 @@ gameNameBlock.appendChildBlock('game-name', new Block('h1', ['game-name-block__g
 const mainBlock = new Block('div', ['main-block']);
 root.appendChildBlock('main-block', mainBlock);
 
-const ratingBlock = new RatingBlock(['user1', 'user2', 'user3', 'user4']);
+const ratingBlock = new RatingBlock(['user1', 'user2wdwefwef', 'user3', 'user4']);
 
 mainBlock.switch = (toName, to) => {
     mainBlock.removeAllChildren();
