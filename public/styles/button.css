@@ -17,12 +17,12 @@
     font-family: "Neucha Regular", sans-serif;
     color: #116B55;
     background-color: #C3EB78;
+    border-color: #C3EB78;
     margin-top: 10px;
     border-radius: 2px;
 }
 
 .button__big-lightgreen:hover {
-    /* темизация цвета */
     border-color: #116B55;
     background-color: #BEEC63;
     border-radius: 8px;
@@ -35,6 +35,7 @@
     font-family: "Neucha Regular", sans-serif;
     color: #C3EB78;
     background-color: #306B34;
+    border-color: #306B34;
     margin-top: 10px;
 }
 
@@ -51,6 +52,7 @@
     font-family: "Neucha Regular", sans-serif;
     color: #C3EB78;
     background-color: #306B34;
+    border-color: #306B34;
     margin-top: 10px;
 }
 
@@ -59,4 +61,6 @@
     border-color: #C3EB78;
     border-radius: 8px;
 }
+
+
 
