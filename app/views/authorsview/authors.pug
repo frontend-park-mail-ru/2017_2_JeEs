@@ -1,0 +1,13 @@
+mixin item(title, href)
+    li
+        a.authors__author(href=href)= title
+
+
+.main-block__authors.element-area
+    h3= "Авторы"
+    ol
+        +item('@barzug', 'https://github.com/barzug')
+        +item('@OkciD', 'https://github.com/OkciD')
+        +item('@EvgeniaNevtrinosova', 'https://github.com/EvgeniaNevtrinosova')
+        +item('@erm0shin', 'https://github.com/erm0shin')
+

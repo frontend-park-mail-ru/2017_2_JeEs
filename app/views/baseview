@@ -14,23 +14,8 @@ export default class BaseView {
         this.template = null;
     }
 
-    // create() {
-    //     this.element.innerHTML = this.template({});
-    //
-    //     if (!this.isCreated) {
-    //         this._createFirst();
-    //         this.isCreated = true
-    //     }
-    // }
-    //
-    // _createFirst() {
-    //
-    // }
 
     destroy() {
-        // this.element.removeChild(this.element);
-        // while (this.element.firstChild) {
-        //     this.element.removeChild(this.element.firstChild);
-        // }
+
     }
 }

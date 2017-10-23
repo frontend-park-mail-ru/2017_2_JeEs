@@ -1,0 +1,21 @@
+.authors__author {
+    transition: border-radius .3s ease-in-out;
+}
+
+.authors__author {
+    color: #116B55;
+
+}
+
+.authors__author:hover {
+    color: #246B2B;
+}
+
+.main-block__authors {
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(192, 192, 192, 0.4);
+    color: #1C5253;
+    font-size: 36px;
+    font-family: cursive;
+}

@@ -1,8 +1,28 @@
+@font-face {
+	font-family: Neucha Regular;
+	src: url(/public/static/fonts/Neucha.ttf);
+	font-weight: normal;
+	font-style: normal;
+}
+
+.form__field {
+	transition: border-radius .3s ease-in-out;
+}
+
 .form__field {
 	margin-bottom: 10px;
 	text-align: center;
 	width: 200px;
 	height: 30px;
+	color: #116B55;
+	font-family: "Neucha Regular", sans-serif;
+	font-size: 18px;
+	border-color: #FFFFFF;
+}
+
+.form__field:hover {
+	border-color: #116B55;
+	border-radius: 3px;
 }
 
 .form__title {
@@ -19,6 +39,7 @@
 	font-family:cursive;
 	color: #B6174B;
 	font-size: 21px;
+    text-align: center;
 }
 
 
