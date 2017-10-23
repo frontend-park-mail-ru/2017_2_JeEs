@@ -8,7 +8,8 @@ module.exports = {
         filename: './bundle.js',
         path: __dirname + '/dist'
     },
-    entry: './app/application.js',
+    entry: './app/package-requirements.js',
+    devtool: 'inline-source-map',
     module: {
         rules: [
             {
@@ -29,7 +30,7 @@ module.exports = {
             }, {
                 test: /\.(pug|jade)$/,
                 loader: 'pug-loader'
-            }
+            },
         ],
     },
     plugins: [

@@ -4,9 +4,10 @@
   "description": "Quoridor",
   "main": "main.js",
   "scripts": {
-    "start": "npm run build && node server/index.js",
+    "start": "npm run compile-ts && npm run build && node server/index.js",
+    "compile-ts": "tsc && cd app/views/ && find ./ -type 'f' | grep pug | xargs -I % cp --parents \"%\" ../../dist/compiled/views && cd ../../",
     "build": "webpack",
-    "linker": "eslint ./app/*"
+    "linter": "eslint ./app/*"
   },
   "repository": {
     "type": "git",
@@ -26,24 +27,26 @@
     "cookie-parser": "^1.4.3",
     "cors": "^2.8.4",
     "css-loader": "^0.28.7",
-    "eslint": "^4.7.2",
+    "eslint": "^4.9.0",
     "eslint-config-google": "^0.9.1",
     "eslint-config-standard": "^10.2.1",
-    "eslint-plugin-import": "^2.7.0",
-    "eslint-plugin-node": "^5.2.0",
-    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-node": "^5.2.1",
+    "eslint-plugin-promise": "^3.6.0",
     "eslint-plugin-standard": "^3.0.1",
-    "express": "^4.16.0",
+    "express": "^4.16.2",
     "express-history-api-fallback": "^2.2.1",
-    "extract-text-webpack-plugin": "^3.0.0",
+    "extract-text-webpack-plugin": "^3.0.1",
     "file-loader": "^0.11.2",
     "morgan": "^1.9.0",
     "pug": "^2.0.0-rc.4",
     "pug-cli": "^1.0.0-alpha6",
     "pug-loader": "^2.3.0",
     "style-loader": "^0.18.2",
+    "ts-loader": "^3.0.5",
+    "typescript": "^2.5.3",
     "url-loader": "^0.5.9",
     "uuid": "^3.1.0",
-    "webpack": "^3.5.6"
+    "webpack": "^3.8.1"
   }
 }

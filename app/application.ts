@@ -1,14 +1,5 @@
 'use strict';
 
-function requireAll(r) { r.keys().forEach(r); }
-
-requireAll(require.context('../public/static/fonts/', true, /\.(ttf)$/));
-requireAll(require.context('../public/static/images/', true, /\.(png)$/));
-requireAll(require.context('./views/', true, /\.(css)$/));
-requireAll(require.context('./modules/', true, /\.(js)$/));
-requireAll(require.context('./views/', true, /\.(pug|jade)$/));
-
-
 import ApplicationView from './views/applicationview/applicationview';
 import AuthUserView from './views/userblockview/auth/authview';
 import UnauthUserView from './views/userblockview/unauth/unauthview';
@@ -52,9 +43,7 @@ const ratingView = new RatingView(mainBlock);
 const authView = new AuthView(mainBlock);
 const registrationView = new RegistrationView(mainBlock);
 
-
-
-const router = new Router(mainBlock);
+const router = new Router();
 
 router.setNotFoundPage(notFoundView);
 
@@ -70,5 +59,3 @@ router.register('/', menuView)
 userService.getData()
     .then(() => authUserView.create())
     .catch(() => unauthUserView.create());
-
-
