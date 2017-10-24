@@ -44,7 +44,7 @@ const unauthUserView = new UnauthUserView(topBar);
 
 const notFoundView = new NotFoundView(mainBlock);
 const creatorsView = new CreatorsView(mainBlock);
-const gameView = new GameView(mainBlock);
+const gameView = new GameView(mainBlock); 
 const rulesView = new RulesView(mainBlock);
 const menuView = new MenuView(mainBlock);
 const ratingView = new RatingView(mainBlock);

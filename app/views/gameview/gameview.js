@@ -1,4 +1,5 @@
 import BaseView from '../baseview';
+import game from '../../game/gameview/view'
 
 export default class GameView extends BaseView {
     constructor(parent) {
@@ -10,6 +11,7 @@ export default class GameView extends BaseView {
     create() {
 
         this.element.innerHTML = this.template({});
+        game()
     }
 
 }
