@@ -8,72 +8,77 @@
 //
 // fieldDimension = 5
 
-import Point from "./point";
+import Point from "../utils/point"
+import ACTOR from "../utils/actor"
 
-enum FigureType { HOST, GUEST }
 
-function * figureTypeGenerator() {
-    yield FigureType.HOST;
-    yield FigureType.GUEST;
+function * ownerGenerator() {
+    yield ACTOR.HOST;
+    yield ACTOR.GUEST;
     return;
 }
 
-enum Movement { FORWARD, BACKWARD, LEFT, RIGHT }
+enum MOVEMENT {
+    FORWARD,
+    BACKWARD,
+    LEFT,
+    RIGHT
+}
 
 class Figure {
     private position: Point;
-    private type: FigureType;
-    private static figureTypes: IterableIterator<FigureType> = figureTypeGenerator();
+    private owner: ACTOR;
+    private static owners: IterableIterator<ACTOR> = ownerGenerator();
 
     constructor(fieldDimension: number) {
-        const figureTypeIterator: IteratorResult<FigureType> = Figure.figureTypes.next();
+        const figureTypeIterator: IteratorResult<ACTOR> = Figure.owners.next();
         if (figureTypeIterator.done) {
             return;
         }
 
-        this.type = figureTypeIterator.value;
-        if (this.type === FigureType.HOST) {
+        this.owner = figureTypeIterator.value;
+        if (this.owner === ACTOR.HOST) {
             this.position = new Point(0, Math.floor(fieldDimension / 2));
-        } else if (this.type === FigureType.GUEST) {
-            this.position = new Point(fieldDimension, fieldDimension / 2);
+        } else if (this.owner === ACTOR.GUEST) {
+            this.position = new Point(fieldDimension, Math.floor(fieldDimension / 2));
         }
     }
 
-    move(movement: Movement): void {
-        if (this.type === FigureType.HOST) {
+    move(movement: MOVEMENT): void {
+        if (this.owner === ACTOR.HOST) {
             switch (movement) {
-                case Movement.FORWARD: {
+                case MOVEMENT.FORWARD: {
                     this.position.x += 1;
                     break;
                 }
-                case Movement.BACKWARD: {
+                case MOVEMENT.BACKWARD: {
                     this.position.x -= 1;
                     break;
                 }
-                case Movement.LEFT: {
+                case MOVEMENT.LEFT: {
                     this.position.y += 1;
                     break;
                 }
-                case Movement.RIGHT: {
+                case MOVEMENT.RIGHT: {
                     this.position.y -= 1;
                     break;
                 }
             }
         } else {
             switch (movement) {
-                case Movement.FORWARD: {
+                case MOVEMENT.FORWARD: {
                     this.position.x -= 1;
                     break;
                 }
-                case Movement.BACKWARD: {
+                case MOVEMENT.BACKWARD: {
                     this.position.x += 1;
                     break;
                 }
-                case Movement.LEFT: {
+                case MOVEMENT.LEFT: {
                     this.position.y -= 1;
                     break;
                 }
-                case Movement.RIGHT: {
+                case MOVEMENT.RIGHT: {
                     this.position.y += 1;
                     break;
                 }
@@ -82,4 +87,4 @@ class Figure {
     }
 }
 
-export default Figure;
+export {Figure, MOVEMENT};
