@@ -4,8 +4,7 @@
   "description": "Quoridor",
   "main": "main.js",
   "scripts": {
-    "start": "npm run compile-ts && npm run build && node server/index.js",
-    "compile-ts": "tsc && cd app/views/ && find ./ -type 'f' | grep pug | xargs -I % cp --parents \"%\" ../../dist/compiled/views && cd ../../",
+    "start": "npm run build && node server/index.js",
     "build": "webpack",
     "linter": "eslint ./app/*"
   },
@@ -21,6 +20,7 @@
   },
   "homepage": "https://github.com/frontend-park-mail-ru/2017_2_JeEs#readme",
   "dependencies": {
+    "awesome-typescript-loader": "^3.2.3",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
     "body-parser": "^1.18.1",

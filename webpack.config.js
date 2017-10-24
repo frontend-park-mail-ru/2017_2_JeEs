@@ -8,11 +8,17 @@ module.exports = {
         filename: './bundle.js',
         path: __dirname + '/dist'
     },
-    entry: './app/package-requirements.js',
+    entry: './app/application.js',
     devtool: 'inline-source-map',
+    resolve: {
+        extensions: ['.ts', '.js']
+    },
     module: {
         rules: [
             {
+                test: /\.ts$/,
+                loader: 'ts-loader'
+            }, {
                 test: /\.css$/,
                 use: ExtractTextPlugin.extract({
                     fallback: 'style-loader',

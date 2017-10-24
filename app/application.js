@@ -1,5 +1,13 @@
 'use strict';
 
+function requireAll(r) { r.keys().forEach(r); }
+
+requireAll(require.context('../public/static/fonts/', true, /\.(ttf)$/));
+requireAll(require.context('../public/static/images/', true, /\.(png)$/));
+requireAll(require.context('./views/', true, /\.(css)$/));
+requireAll(require.context('./views/', true, /\.(pug|jade)$/));
+requireAll(require.context('./game/', true, /\.(ts)$/));
+
 import ApplicationView from './views/applicationview/applicationview';
 import AuthUserView from './views/userblockview/auth/authview';
 import UnauthUserView from './views/userblockview/unauth/unauthview';
