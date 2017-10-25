@@ -40,3 +40,4 @@ jspm_packages
 
 dist/*
 package-lock.json
+game-test.ts

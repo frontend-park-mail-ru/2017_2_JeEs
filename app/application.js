@@ -67,3 +67,4 @@ router.register('/', menuView)
 userService.getData()
     .then(() => authUserView.create())
     .catch(() => unauthUserView.create());
+

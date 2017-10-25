@@ -9,14 +9,23 @@
 // [|]   wall, ok?         is a wall too, but a
 //                         horizontal one :)
 
-import Point from "./point";
+import Point from "../utils/point";
 
-export default class Wall {
+enum WALL_ORIENTATION {
+    VERTICAL,
+    HORIZONTAL
+}
+
+class Wall {
     private upperLeft: Point;
     private lowerRight: Point;
+    private orientation: WALL_ORIENTATION;
 
-    constructor(upperLeft: Point, lowerRight: Point) {
+    constructor(upperLeft: Point, lowerRight: Point, orientation: WALL_ORIENTATION) {
         this.upperLeft = upperLeft;
         this.lowerRight = lowerRight;
+        this.orientation = orientation;
     }
 }
+
+export {Wall, WALL_ORIENTATION}
