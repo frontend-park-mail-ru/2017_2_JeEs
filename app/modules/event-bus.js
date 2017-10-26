@@ -28,13 +28,13 @@ export default class EventBus {
         event.splice(event.indexOf(callback), 1);
     }
 
-    emit(eventName) {
+    emit(eventName, data) {
         const event = this.channels.get(eventName);
         if (!event) {
             return;
         }
         event.forEach(callback => {
-            callback();
+            callback(data);
         });
     }
 }

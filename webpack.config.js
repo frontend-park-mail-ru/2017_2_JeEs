@@ -9,9 +9,16 @@ module.exports = {
         path: __dirname + '/dist'
     },
     entry: './app/application.js',
+    devtool: 'inline-source-map',
+    resolve: {
+        extensions: ['.ts', '.js']
+    },
     module: {
         rules: [
             {
+                test: /\.ts$/,
+                loader: 'ts-loader'
+            }, {
                 test: /\.css$/,
                 use: ExtractTextPlugin.extract({
                     fallback: 'style-loader',
@@ -29,7 +36,7 @@ module.exports = {
             }, {
                 test: /\.(pug|jade)$/,
                 loader: 'pug-loader'
-            }
+            },
         ],
     },
     plugins: [
