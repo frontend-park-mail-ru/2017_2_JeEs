@@ -1,31 +1,50 @@
-//  __ ___ ___ __ __        __ ____ ____ __ __
-// |__|___|___|__|__|      |__|____|____|__|__|
-// |__|uL[|]__|__|__|      |__|____|____|__|__|
-// |__|__[|]lR|__|__|      |__|uL__|__  |__|__|
-// |__|___|___|__|__|      |__|____|__lR|__|__|
-// |__|___|___|__|__|      |__|____|____|__|__|
-//
-// [|] - this is a         this shit in the middle
-// [|]   wall, ok?         is a wall too, but a
-//                         horizontal one :)
+// game field:
+//   _________________
+// 8|O : O : O : O : O|
+// 7|: : : : : : : : :|
+// 6|O : O : O : O : O|
+// 5|: : : : : : : : :|
+// 4|O : O : O : O : O|
+// 3|: : : : : : : : :|
+// 2|O : O : O : O : O|
+// 1|: : : : : : : : :|
+// 0|O : O : O : O : O|
+//   0 1 2 3 4 5 6 7 8
+// fieldDimension = 5
+// O is for figures, : for walls
+
+// vertical:    horizontal:
+// : upper          ....
+// : lower      left    right
 
 import Point from "../utils/point";
 
-enum WALL_ORIENTATION {
-    VERTICAL,
-    HORIZONTAL
-}
+export default class Wall {
+    private _upperOrLeft: Point;
+    private _lowerOrRight: Point;
 
-class Wall {
-    private upperLeft: Point;
-    private lowerRight: Point;
-    private orientation: WALL_ORIENTATION;
+    constructor(upperOrLeft: Point, lowerOrRight: Point) {
+        let points: Point[] = [...arguments];
+        let dataIsValid: boolean = true;
+        points.forEach((point: Point) => {
+            if ((point.x % 2 === 0) && (point.y % 2 === 0)) {
+                dataIsValid = false;
+                return;
+            }
+        });
+        if (!dataIsValid) {
+            return;
+        }
 
-    constructor(upperLeft: Point, lowerRight: Point, orientation: WALL_ORIENTATION) {
-        this.upperLeft = upperLeft;
-        this.lowerRight = lowerRight;
-        this.orientation = orientation;
+        this._upperOrLeft = upperOrLeft;
+        this._lowerOrRight = lowerOrRight;
+    }
+
+    get lowerOrRight(): Point {
+        return this._lowerOrRight;
+    }
+
+    get upperOrLeft(): Point {
+        return this._upperOrLeft;
     }
 }
-
-export {Wall, WALL_ORIENTATION}

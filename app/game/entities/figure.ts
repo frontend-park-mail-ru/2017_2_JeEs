@@ -1,34 +1,37 @@
-// initial positions of figures:
-//         _ _ _ _ _
-//        |_|_|_|_|_|
-//        |_|_|_|_|_|
-// host-> |h|_|_|_|g| <-guest
-//        |_|_|_|_|_|
-//        |_|_|_|_|_|
-//
+// game field:
+//   _________________
+// 8|O : O : O : O : O|
+// 7|: : : : : : : : :|
+// 6|O : O : O : O : O|
+// 5|: : : : : : : : :|
+// 4|% : O : O : O : $|
+// 3|: : : : : : : : :|
+// 2|O : O : O : O : O|
+// 1|: : : : : : : : :|
+// 0|O : O : O : O : O|
+//   0 1 2 3 4 5 6 7 8
 // fieldDimension = 5
+// O is for figures, : for walls
+// % is you, $ is your opponent
+
 
 import Point from "../utils/point"
-import ACTOR from "../utils/actor"
 
-
-function * ownerGenerator() {
-    yield ACTOR.HOST;
-    yield ACTOR.GUEST;
-    return;
+enum ACTOR {
+    YOU,
+    OPPONENT
 }
 
-enum MOVEMENT {
-    FORWARD,
-    BACKWARD,
-    LEFT,
-    RIGHT
+function * ownerGeneratorFunction() {
+    while (true) {
+        yield ACTOR.YOU;
+        yield ACTOR.OPPONENT;
+    }
 }
 
-class Figure {
-    private position: Point;
-    private owner: ACTOR;
-    private static owners: IterableIterator<ACTOR> = ownerGenerator();
+export default class Figure {
+    private _position: Point;
+    private static owners: IterableIterator<ACTOR> = ownerGeneratorFunction();
 
     constructor(fieldDimension: number) {
         const figureTypeIterator: IteratorResult<ACTOR> = Figure.owners.next();
@@ -36,55 +39,24 @@ class Figure {
             return;
         }
 
-        this.owner = figureTypeIterator.value;
-        if (this.owner === ACTOR.HOST) {
-            this.position = new Point(0, Math.floor(fieldDimension / 2));
-        } else if (this.owner === ACTOR.GUEST) {
-            this.position = new Point(fieldDimension, Math.floor(fieldDimension / 2));
+        let owner: ACTOR = figureTypeIterator.value;
+        // actualFieldSize = 2 * fieldDimension - 1;
+        // lastY = actualFieldSize - 1 = 2 * (fieldDimension - 1);
+        // initialY = lastY / 2 = fieldDimension - 1;
+        if (owner === ACTOR.YOU) {
+            this._position = new Point(0, /* initialY */ fieldDimension - 1);
+        } else if (owner === ACTOR.OPPONENT) {
+            this._position = new Point(/* lastY */ 2 * (fieldDimension - 1), /* initialY */ fieldDimension - 1);
         }
     }
 
-    move(movement: MOVEMENT): void {
-        if (this.owner === ACTOR.HOST) {
-            switch (movement) {
-                case MOVEMENT.FORWARD: {
-                    this.position.x += 1;
-                    break;
-                }
-                case MOVEMENT.BACKWARD: {
-                    this.position.x -= 1;
-                    break;
-                }
-                case MOVEMENT.LEFT: {
-                    this.position.y += 1;
-                    break;
-                }
-                case MOVEMENT.RIGHT: {
-                    this.position.y -= 1;
-                    break;
-                }
-            }
-        } else {
-            switch (movement) {
-                case MOVEMENT.FORWARD: {
-                    this.position.x -= 1;
-                    break;
-                }
-                case MOVEMENT.BACKWARD: {
-                    this.position.x += 1;
-                    break;
-                }
-                case MOVEMENT.LEFT: {
-                    this.position.y -= 1;
-                    break;
-                }
-                case MOVEMENT.RIGHT: {
-                    this.position.y += 1;
-                    break;
-                }
-            }
+    public moveTo(point: Point): void {
+        if ((point.x % 2 === 0) && (point.y % 2 === 0)) {
+            this._position = point;
         }
+    }
+
+    get position(): Point {
+        return this._position;
     }
 }
-
-export {Figure, MOVEMENT};
