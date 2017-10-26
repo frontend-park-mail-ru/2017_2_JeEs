@@ -2,10 +2,10 @@ import * as BABYLON from 'babylonjs'
 import Point from "../utils/point"
 
 
-const WINDOW_WIDTH = window.innerWidth
-const WINDOW_HEIGHT = window.innerHeight
+const WINDOW_WIDTH = window.innerWidth;
+const WINDOW_HEIGHT = window.innerHeight;
 
-const BASE_SIZE = 10
+const BASE_SIZE = 10;
 
 export default class GameView {
     private _gameFieldSize: number;
@@ -28,24 +28,24 @@ export default class GameView {
         this._scene = new BABYLON.Scene(this._engine);
 
 
-        const cameraPosition = new BABYLON.Vector3(BASE_SIZE * 8, 0, BASE_SIZE * 8)
+        const cameraPosition = new BABYLON.Vector3(BASE_SIZE * 8, 0, BASE_SIZE * 8);
         this._camera = new BABYLON.ArcRotateCamera("Camera", -Math.PI / 2, Math.PI / 2.5, 200, cameraPosition, this._scene);
-        this._camera.attachControl(canvas, false)
+        this._camera.attachControl(canvas, false);
 
         //иногда ниобходимо чтобы при виде сверху не пропадали элементы
         this._camera.minZ = 0.1;
 
 
         const light = new BABYLON.DirectionalLight("light", new BABYLON.Vector3(0, -BASE_SIZE * 8, 0), this._scene);
-        light.position = new BABYLON.Vector3(BASE_SIZE * 8, -BASE_SIZE * 8, BASE_SIZE * 8)
+        light.position = new BABYLON.Vector3(BASE_SIZE * 8, -BASE_SIZE * 8, BASE_SIZE * 8);
 
-        this._addAsicsView()
+        this._addAsicsView();
 
-        this._addFloor()
+        this._addFloor();
 
-        const heroOne = this._addHero("hero", 8, 1 / 8 + 1 / 2, 0, BABYLON.Color3.Red())
+        const heroOne = this._addHero("hero", 8, 1 / 8 + 1 / 2, 0, BABYLON.Color3.Red());
 
-        const heroTwo = this._addHero("hero", 8, 1 / 8 + 1 / 2, 16, BABYLON.Color3.Blue())
+        const heroTwo = this._addHero("hero", 8, 1 / 8 + 1 / 2, 16, BABYLON.Color3.Blue());
 
         this._currentHero = heroOne;
 
@@ -63,7 +63,7 @@ export default class GameView {
         //     placeWall(ghostWall, x, y, needRotation, scene)
         // });
 
-        window.addEventListener("click", this.onSceneClick)
+        window.addEventListener("click", this.onSceneClick);
 
         this._engine.runRenderLoop(() => {
             this._scene.render();
@@ -149,21 +149,21 @@ export default class GameView {
         }
 
         if (pickResult.pickedMesh !== null && pickResult.pickedMesh.name === "ghostHero") {
-            this._moveHero(this._currentHero, { x: pickResult.pickedMesh.position.x, y: pickResult.pickedMesh.position.z })
+            this._moveHero(this._currentHero, { x: pickResult.pickedMesh.position.x, y: pickResult.pickedMesh.position.z });
 
             let ghost = this._scene.getMeshByName("ghostHero");
             while (ghost !== undefined) {
-                ghost.dispose()
+                ghost.dispose();
                 ghost = this._scene.getMeshByName("ghostHero");
             }
             // allGhosts.forEach((element) => { element.dispose() })
         }
-    }
+    };
 
     private _addGhostHeroes(hero, scene) {
-        this._addHero("ghostHero", hero.position.x / BASE_SIZE + 2, hero.position.y / BASE_SIZE, hero.position.z / BASE_SIZE, BABYLON.Color3.Green())
-        this._addHero("ghostHero", hero.position.x / BASE_SIZE, hero.position.y / BASE_SIZE, hero.position.z / BASE_SIZE + 2, BABYLON.Color3.Green())
-        this._addHero("ghostHero", hero.position.x / BASE_SIZE - 2, hero.position.y / BASE_SIZE, hero.position.z / BASE_SIZE, BABYLON.Color3.Green())
+        this._addHero("ghostHero", hero.position.x / BASE_SIZE + 2, hero.position.y / BASE_SIZE, hero.position.z / BASE_SIZE, BABYLON.Color3.Green());
+        this._addHero("ghostHero", hero.position.x / BASE_SIZE, hero.position.y / BASE_SIZE, hero.position.z / BASE_SIZE + 2, BABYLON.Color3.Green());
+        this._addHero("ghostHero", hero.position.x / BASE_SIZE - 2, hero.position.y / BASE_SIZE, hero.position.z / BASE_SIZE, BABYLON.Color3.Green());
         this._addHero("ghostHero", hero.position.x / BASE_SIZE, hero.position.y / BASE_SIZE, hero.position.z / BASE_SIZE - 2, BABYLON.Color3.Green())
     }
 
