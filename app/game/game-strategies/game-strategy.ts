@@ -20,6 +20,8 @@ class GameStrategy {
         this.eventMap = new Map<string, (data?: Object) => void>();
         this.eventMap.set(EVENTS.YOUR_FIGURE_MOVED, this.onYourFigureMoved.bind(this));
         this.eventMap.set(EVENTS.OPPONENTS_FIGURE_MOVED, this.onOpponentsFigureMoved.bind(this));
+        this.eventMap.set(EVENTS.YOUR_WALL_PLACED, this.onYourWallPlaced.bind(this));
+        this.eventMap.set(EVENTS.OPPONENTS_WALL_PLACED, this.onOpponentsWallPlaced.bind(this));
         this.eventMap.set(EVENTS.GAME_CLOSED, this.onDestroy.bind(this));
 
         this.eventMap.forEach((eventHandler: Function, event: string) => {
@@ -31,26 +33,35 @@ class GameStrategy {
         this._fieldState = value;
     }
 
-    public onYourFigureMoved(data): void {
+    private onYourFigureMoved(data): void {
         this._fieldState.moveFigureTo(FIGURE_KEY.YOUR, data.point);
         this.eventBus.emit(EVENTS.TURN_ENDED, {
-            event: TURN_ENDING_EVENTS.FIGURE_MOVED,
-            point: data.point
+            ...data,
+            event: TURN_ENDING_EVENTS.FIGURE_MOVED
         });
     }
 
-    public onOpponentsFigureMoved(data): void {
+    private onOpponentsFigureMoved(data): void {
         this._fieldState.moveFigureTo(FIGURE_KEY.OPPONENTS, data.point);
     }
 
-    public onDestroy(): void {
+    private onDestroy(): void {
         this.eventMap.forEach((eventHandler: Function, event: string) => {
             this.eventBus.off(event, eventHandler);
         });
     }
 
-    // TODO: onYourWallPlaced()
-    // TODO: onOpponentsWallPlaced()
+    private onYourWallPlaced(data): void {
+        this._fieldState.insertWall(data.upperOrLeft, data.lowerOrRight);
+        this.eventBus.emit(EVENTS.TURN_ENDED, {
+            ...data,
+            event: TURN_ENDING_EVENTS.WALL_PLACED
+        });
+    }
+
+    private onOpponentsWallPlaced(data): void {
+        this._fieldState.insertWall(data.upperOrLeft, data.lowerOrRight);
+    }
 }
 
 export {GameStrategy, TURN_ENDING_EVENTS};

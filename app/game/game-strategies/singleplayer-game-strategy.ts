@@ -36,11 +36,22 @@ export default class SingleplayerGameStrategy{
     }
 
     private onTurnEnded(data): void {
-        if (data.event = TURN_ENDING_EVENTS.FIGURE_MOVED) {
+        if (data.event === TURN_ENDING_EVENTS.FIGURE_MOVED) {
             let [recountedPoint]: Point[] =
                 SingleplayerGameStrategy.recountCoordinates(this.fieldDimension, data.point);
             this.changeFieldState();
             this.eventBus.emit(EVENTS.OPPONENTS_FIGURE_MOVED, {point: recountedPoint});
+        } else if (data.event === TURN_ENDING_EVENTS.WALL_PLACED) {
+            let [recountedUpperOrLeft, recountedLowerOrRight]: Point[] = SingleplayerGameStrategy.recountCoordinates(
+                    this.fieldDimension,
+                    data.upperOrLeft,
+                    data.lowerOrRight
+            );
+            this.changeFieldState();
+            this.eventBus.emit(EVENTS.OPPONENTS_WALL_PLACED, {
+                upperOrLeft: recountedUpperOrLeft,
+                lowerOrRight: recountedLowerOrRight
+            });
         }
     }
 
