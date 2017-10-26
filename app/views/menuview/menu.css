@@ -10,9 +10,28 @@
 }
 
 .main-menu__menu-button:hover {
-    /* темизация цвета */
     border-color: #116B55;
     background-color: #BEEC63;
     border-radius: 8px;
 }
 
+.change-theme {
+    height: 40px;
+    width: 121px;
+    font-size: 18px;
+
+    font-family: "Neucha Regular", sans-serif;
+    color: #C3EB78;
+    background-color: #306B34;
+    margin-top: 10px;
+
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+.change-theme:hover {
+    background-color: #428D47;
+    border-color: #C3EB78;
+}

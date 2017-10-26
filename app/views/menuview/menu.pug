@@ -1,9 +1,10 @@
 mixin item(title, href)
     button.main-menu__menu-button(value=href)= title
 
+
 .main-block__main-menu.element-area
     +item('Играть', '/game')
     +item('Рейтинг', '/rating')
     +item('Правила', '/rules')
     +item('Авторы', '/authors')
-
+    button(id='theme-switch').change-theme(value="/")= 'Сменить тему!'
