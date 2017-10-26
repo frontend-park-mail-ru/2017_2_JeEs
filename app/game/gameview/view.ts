@@ -31,6 +31,7 @@ export default class GameView {
 
         const gameFieldHalf = gameFieldSize / 2 - 0.5;
         const cameraPosition = new BABYLON.Vector3(BASE_SIZE * gameFieldHalf, 0, BASE_SIZE * gameFieldHalf);
+      
         this._camera = new BABYLON.ArcRotateCamera("Camera", -Math.PI / 2, Math.PI / 2.5, 200, cameraPosition, this._scene);
         this._camera.attachControl(canvas, false);
 
@@ -44,7 +45,6 @@ export default class GameView {
         this._addAsicsView();
 
         this._addFloor();
-
 
         const heroOneMaterial = new BABYLON.StandardMaterial("heroOneMaterial", this._scene);
         heroOneMaterial.diffuseColor = BABYLON.Color3.Red();
@@ -179,6 +179,7 @@ export default class GameView {
             this._moveHero(this._currentHero, { x: pickResult.pickedMesh.position.x, y: pickResult.pickedMesh.position.z });
 
             let ghost = this._scene.getMeshByName("ghostHero");
+          
             while (ghost !== null) {
                 ghost.dispose();
                 ghost = this._scene.getMeshByName("ghostHero");

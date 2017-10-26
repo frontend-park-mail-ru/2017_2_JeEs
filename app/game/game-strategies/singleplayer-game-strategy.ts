@@ -3,6 +3,7 @@ import {FieldState, } from "../utils/field-state";
 import EventBus from "../../modules/event-bus.js"
 import EVENTS from "../utils/events";
 import Point from "../utils/point";
+import GameStrategyInterface from "./game-strategy-interface";
 
 function * fieldStatesGeneratorFunction() {
     while (true) {
@@ -11,7 +12,7 @@ function * fieldStatesGeneratorFunction() {
     }
 }
 
-export default class SingleplayerGameStrategy{
+export default class SingleplayerGameStrategy implements GameStrategyInterface {
     private gameStrategy: GameStrategy;
     private firstPlayersFieldState: FieldState;
     private secondPlayersFieldState: FieldState;
