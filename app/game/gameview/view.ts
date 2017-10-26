@@ -1,5 +1,7 @@
 import * as BABYLON from 'babylonjs'
 import Point from "../utils/point"
+import Events from "../utils/events"
+import EventBus from "../../modules/event-bus"
 
 
 const WINDOW_WIDTH = window.innerWidth;
@@ -15,12 +17,28 @@ export default class GameView {
     private _camera: BABYLON.Camera;
 
     private _currentHero: BABYLON.Mesh;
+
+    private _heroOne: BABYLON.Mesh;
+    private _heroTwo: BABYLON.Mesh;
+
+
     private _ghostWall: BABYLON.Mesh;
 
     private _heroMoved: boolean = false;
 
+    private _eventBus;
+
     constructor(gameFieldSize: number) {
         this._gameFieldSize = gameFieldSize;
+
+        this._eventBus = new EventBus;
+
+        this._eventBus.on(Events.OPPONENTS_FIGURE_MOVED, (data) => { 
+            console.log(1);
+            this._changeHero(data);
+         })
+
+
 
         const canvas = <HTMLCanvasElement>document.getElementById("renderCanvas");
         canvas.width = WINDOW_WIDTH;
@@ -31,7 +49,6 @@ export default class GameView {
 
         const gameFieldHalf = gameFieldSize / 2 - 0.5;
         const cameraPosition = new BABYLON.Vector3(BASE_SIZE * gameFieldHalf, 0, BASE_SIZE * gameFieldHalf);
-      
         this._camera = new BABYLON.ArcRotateCamera("Camera", -Math.PI / 2, Math.PI / 2.5, 200, cameraPosition, this._scene);
         this._camera.attachControl(canvas, false);
 
@@ -46,16 +63,17 @@ export default class GameView {
 
         this._addFloor();
 
+
         const heroOneMaterial = new BABYLON.StandardMaterial("heroOneMaterial", this._scene);
         heroOneMaterial.diffuseColor = BABYLON.Color3.Red();
-        const heroOne = this._addHero("hero", gameFieldHalf, 1 / 8 + 1 / 2, 0, heroOneMaterial);
+        this._heroOne = this._addHero("hero", gameFieldHalf, 1 / 8 + 1 / 2, 0, heroOneMaterial);
 
 
         const heroTwoMaterial = new BABYLON.StandardMaterial("heroOneMaterial", this._scene);
         heroTwoMaterial.diffuseColor = BABYLON.Color3.Blue();
-        const heroTwo = this._addHero("hero", gameFieldHalf, 1 / 8 + 1 / 2, this._gameFieldSize - 1, heroTwoMaterial);
+        this._heroTwo = this._addHero("hero", gameFieldHalf, 1 / 8 + 1 / 2, this._gameFieldSize - 1, heroTwoMaterial);
 
-        this._currentHero = heroOne;
+        this._currentHero = this._heroOne;
 
 
         const wallMaterial = new BABYLON.StandardMaterial("wallMaterial", this._scene);
@@ -64,7 +82,7 @@ export default class GameView {
         this._ghostWall = this._addWall({ x: 0, y: 2 }, { x: 0, y: 0 }, 1 / 8 + 1 / 2, wallMaterial);
         this._ghostWall.isVisible = false;
 
-        window.addEventListener("click",  this.onSceneClick);
+        window.addEventListener("click", this.onSceneClick);
 
         window.addEventListener("mousemove", this.onSceneMove);
 
@@ -170,8 +188,8 @@ export default class GameView {
         let pickResult = this._scene.pick(event.clientX, event.clientY);
 
         if (pickResult.pickedMesh !== null && pickResult.pickedMesh === this._currentHero) {
-            this._heroMoved = true;         
-            this._ghostWall.isVisible = false;            
+            this._heroMoved = true;
+            this._ghostWall.isVisible = false;
             this._addGhostHeroes(pickResult.pickedMesh, this._scene)
         }
 
@@ -179,7 +197,6 @@ export default class GameView {
             this._moveHero(this._currentHero, { x: pickResult.pickedMesh.position.x, y: pickResult.pickedMesh.position.z });
 
             let ghost = this._scene.getMeshByName("ghostHero");
-          
             while (ghost !== null) {
                 ghost.dispose();
                 ghost = this._scene.getMeshByName("ghostHero");
@@ -200,6 +217,12 @@ export default class GameView {
     }
 
     private _moveHero(hero: BABYLON.Mesh, position: Point) {
+        if (this._currentHero === this._heroOne) {
+            this._eventBus.emit(Events.YOUR_FIGURE_MOVED, { point: new Point(Math.round(position.x / BASE_SIZE), Math.round(position.y / BASE_SIZE)) })
+        } else {
+            this._eventBus.emit(Events.YOUR_FIGURE_MOVED, { point: new Point(this._gameFieldSize - Math.round(position.x / BASE_SIZE), this._gameFieldSize - Math.round(position.y / BASE_SIZE)) })
+        }
+
         hero.position.x = position.x;
         hero.position.z = position.y;
     }
@@ -216,7 +239,7 @@ export default class GameView {
         if (this._heroMoved === false) { //дописать условий
             this._ghostWallAdd(this._ghostWall, { x, y })
             this._ghostWall.isVisible = true;
-            
+
         }
     }
 
@@ -234,6 +257,14 @@ export default class GameView {
     private _rotation(point: Point) {
         let needRotation = Math.floor((point.x - point.y + BASE_SIZE * 17) / BASE_SIZE) % 2
             != Math.floor((point.x + point.y + BASE_SIZE * 17) / BASE_SIZE) % 2;
-        return needRotation ? Math.PI : 0;
+        return needRotation ? Math.PI / 2 : 0;
+    }
+
+    private _changeHero(data) {
+        if (this._currentHero === this._heroOne) {
+            this._currentHero = this._heroTwo
+        } else {
+            this._currentHero = this._heroOne
+        }
     }
 }
