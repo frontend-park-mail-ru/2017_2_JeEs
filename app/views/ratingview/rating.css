@@ -8,7 +8,7 @@
 .main-block__rating {
     display: flex;
     flex-direction: column;
-    background-color: rgba(192, 192, 192, 0.4);
+    background-color: rgba(192, 192, 192, 0.7);
     color: #1C5253;
     font-size: 36px;
     margin-top: 0px;

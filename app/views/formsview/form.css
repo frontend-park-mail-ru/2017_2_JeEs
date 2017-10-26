@@ -18,6 +18,10 @@
 	font-family: "Neucha Regular", sans-serif;
 	font-size: 18px;
 	border-color: #FFFFFF;
+
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 .form__field:hover {
@@ -50,11 +54,22 @@
 	font-family: "Neucha Regular", sans-serif;
 	color: #C3EB78;
 	background-color: #306B34;
-	margin: 5%;
+	/*margin: 5%;*/
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+
+	margin-bottom: 10px;
 }
 
 .form__button:hover {
 	background-color: #428D47;
 	border-color: #C3EB78;
 	border-radius: 8px;
+}
+
+.auth-form__form, .registration-form__form {
+	display: table-cell;
+	vertical-align: middle;
+	width: 240px;
 }
