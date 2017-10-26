@@ -59,7 +59,7 @@ export default class GameView {
         const light = new BABYLON.DirectionalLight("light", new BABYLON.Vector3(0, -BASE_SIZE * gameFieldHalf, 0), this._scene);
         light.position = new BABYLON.Vector3(BASE_SIZE * gameFieldHalf, -BASE_SIZE * gameFieldHalf, BASE_SIZE * gameFieldHalf);
 
-        this._addAsicsView();
+        // this._addAsicsView();
 
         this._addFloor();
 
