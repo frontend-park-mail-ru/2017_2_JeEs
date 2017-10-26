@@ -30,7 +30,7 @@ function * ownerGeneratorFunction() {
 }
 
 export default class Figure {
-    private position: Point;
+    private _position: Point;
     private static owners: IterableIterator<ACTOR> = ownerGeneratorFunction();
 
     constructor(fieldDimension: number) {
@@ -44,15 +44,19 @@ export default class Figure {
         // lastY = actualFieldSize - 1 = 2 * (fieldDimension - 1);
         // initialY = lastY / 2 = fieldDimension - 1;
         if (owner === ACTOR.YOU) {
-            this.position = new Point(0, /* initialY */ fieldDimension - 1);
+            this._position = new Point(0, /* initialY */ fieldDimension - 1);
         } else if (owner === ACTOR.OPPONENT) {
-            this.position = new Point(/* lastY */ 2 * (fieldDimension - 1), /* initialY */ fieldDimension - 1);
+            this._position = new Point(/* lastY */ 2 * (fieldDimension - 1), /* initialY */ fieldDimension - 1);
         }
     }
 
     public moveTo(point: Point): void {
         if ((point.x % 2 === 0) && (point.y % 2 === 0)) {
-            this.position = point;
+            this._position = point;
         }
+    }
+
+    get position(): Point {
+        return this._position;
     }
 }

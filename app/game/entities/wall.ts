@@ -20,8 +20,8 @@
 import Point from "../utils/point";
 
 export default class Wall {
-    private upperOrLeft: Point;
-    private lowerOrRight: Point;
+    private _upperOrLeft: Point;
+    private _lowerOrRight: Point;
 
     constructor(upperOrLeft: Point, lowerOrRight: Point) {
         let points: Point[] = [...arguments];
@@ -36,7 +36,15 @@ export default class Wall {
             return;
         }
 
-        this.upperOrLeft = upperOrLeft;
-        this.lowerOrRight = lowerOrRight;
+        this._upperOrLeft = upperOrLeft;
+        this._lowerOrRight = lowerOrRight;
+    }
+
+    get lowerOrRight(): Point {
+        return this._lowerOrRight;
+    }
+
+    get upperOrLeft(): Point {
+        return this._upperOrLeft;
     }
 }

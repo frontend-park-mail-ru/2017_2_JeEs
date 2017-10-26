@@ -33,6 +33,10 @@ class GameStrategy {
         this._fieldState = value;
     }
 
+    get fieldState(): FieldState {
+        return this._fieldState;
+    }
+
     private onYourFigureMoved(data): void {
         this._fieldState.moveFigureTo(FIGURE_KEY.YOUR, data.point);
         this.eventBus.emit(EVENTS.TURN_ENDED, {
