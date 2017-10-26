@@ -2,10 +2,10 @@ import * as BABYLON from 'babylonjs'
 import Point from "../utils/point"
 
 
-const WINDOW_WIDTH = window.innerWidth
-const WINDOW_HEIGHT = window.innerHeight
+const WINDOW_WIDTH = window.innerWidth;
+const WINDOW_HEIGHT = window.innerHeight;
 
-const BASE_SIZE = 10
+const BASE_SIZE = 10;
 
 export default class GameView {
     private _gameFieldSize: number;
@@ -27,25 +27,25 @@ export default class GameView {
         this._engine = new BABYLON.Engine(canvas, true);
         this._scene = new BABYLON.Scene(this._engine);
 
-
-        const cameraPosition = new BABYLON.Vector3(BASE_SIZE * 8, 0, BASE_SIZE * 8)
+        const gameFieldHalf = gameFieldSize / 2 - 0.5;
+        const cameraPosition = new BABYLON.Vector3(BASE_SIZE * gameFieldHalf, 0, BASE_SIZE * gameFieldHalf);
         this._camera = new BABYLON.ArcRotateCamera("Camera", -Math.PI / 2, Math.PI / 2.5, 200, cameraPosition, this._scene);
-        this._camera.attachControl(canvas, false)
+        this._camera.attachControl(canvas, false);
 
         //иногда ниобходимо чтобы при виде сверху не пропадали элементы
         this._camera.minZ = 0.1;
 
 
-        const light = new BABYLON.DirectionalLight("light", new BABYLON.Vector3(0, -BASE_SIZE * 8, 0), this._scene);
-        light.position = new BABYLON.Vector3(BASE_SIZE * 8, -BASE_SIZE * 8, BASE_SIZE * 8)
+        const light = new BABYLON.DirectionalLight("light", new BABYLON.Vector3(0, -BASE_SIZE * gameFieldHalf, 0), this._scene);
+        light.position = new BABYLON.Vector3(BASE_SIZE * gameFieldHalf, -BASE_SIZE * gameFieldHalf, BASE_SIZE * gameFieldHalf);
 
-        this._addAsicsView()
+        this._addAsicsView();
 
-        this._addFloor()
+        this._addFloor();
 
-        const heroOne = this._addHero("hero", 8, 1 / 8 + 1 / 2, 0, BABYLON.Color3.Red())
+        const heroOne = this._addHero("hero", gameFieldHalf, 1 / 8 + 1 / 2, 0, BABYLON.Color3.Red());
 
-        const heroTwo = this._addHero("hero", 8, 1 / 8 + 1 / 2, 16, BABYLON.Color3.Blue())
+        const heroTwo = this._addHero("hero", gameFieldHalf, 1 / 8 + 1 / 2, this._gameFieldSize - 1, BABYLON.Color3.Blue());
 
         this._currentHero = heroOne;
 
@@ -63,7 +63,7 @@ export default class GameView {
         //     placeWall(ghostWall, x, y, needRotation, scene)
         // });
 
-        window.addEventListener("click", this.onSceneClick)
+        window.addEventListener("click", this.onSceneClick);
 
         this._engine.runRenderLoop(() => {
             this._scene.render();
@@ -72,17 +72,22 @@ export default class GameView {
 
 
     private _addFloor() {
-        const floor = BABYLON.MeshBuilder.CreateBox("floor", { width: BASE_SIZE * 17, height: BASE_SIZE / 4, depth: BASE_SIZE * 17 }, this._scene);
-        floor.position = new BABYLON.Vector3(BASE_SIZE * 8, 0, BASE_SIZE * 8);
+        const floor = BABYLON.MeshBuilder.CreateBox("floor", {
+            width: BASE_SIZE * this._gameFieldSize,
+            height: BASE_SIZE / 4,
+            depth: BASE_SIZE * this._gameFieldSize
+        }, this._scene);
+        const gameFieldHalf = this._gameFieldSize / 2 - 0.5;
+        floor.position = new BABYLON.Vector3(BASE_SIZE * gameFieldHalf, 0, BASE_SIZE * gameFieldHalf);
 
 
         const floorMaterial = new BABYLON.StandardMaterial("floorMaterial", this._scene);
         floor.material = floorMaterial;
 
 
-        for (let _i = 0; _i < 17; _i++) {
+        for (let _i = 0; _i < this._gameFieldSize; _i++) {
             if (_i % 2 == 0) {
-                for (let _j = 0; _j < 17; _j++) {
+                for (let _j = 0; _j < this._gameFieldSize; _j++) {
                     if (_j % 2 == 0) {
                         this._addAvailablePosition(_i, 1 / 8, _j)
                     }
@@ -149,16 +154,15 @@ export default class GameView {
         }
 
         if (pickResult.pickedMesh !== null && pickResult.pickedMesh.name === "ghostHero") {
-            this._moveHero(this._currentHero, { x: pickResult.pickedMesh.position.x, y: pickResult.pickedMesh.position.z })
+            this._moveHero(this._currentHero, { x: pickResult.pickedMesh.position.x, y: pickResult.pickedMesh.position.z });
 
             let ghost = this._scene.getMeshByName("ghostHero");
             while (ghost !== undefined) {
-                ghost.dispose()
+                ghost.dispose();
                 ghost = this._scene.getMeshByName("ghostHero");
             }
-            // allGhosts.forEach((element) => { element.dispose() })
         }
-    }
+    };
 
     private _addGhostHeroes(hero, scene) {
         this._addHero("ghostHero", hero.position.x / BASE_SIZE + 2, hero.position.y / BASE_SIZE, hero.position.z / BASE_SIZE, BABYLON.Color3.Green())
@@ -171,5 +175,15 @@ export default class GameView {
         hero.position.x = position.x;
         hero.position.z = position.y;
     }
-}
 
+    public onSceneMove = event => {
+        //     let pickResult = scene.pick(evt.clientX, evt.clientY);
+        //     let x = pickResult.pickedPoint.x;
+        //     let y = pickResult.pickedPoint.z;
+
+        //     let needRotation = Math.floor((x - y + BASE_SIZE * 17) / BASE_SIZE) % 2 != Math.floor((x + y + BASE_SIZE * 17) / BASE_SIZE) % 2;
+
+        //     placeWall(ghostWall, x, y, needRotation, scene)
+        // }
+    }
+}
