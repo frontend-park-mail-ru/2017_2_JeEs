@@ -157,6 +157,7 @@ const mainRulesStyle = {
     selector: '.main-block__rules',
     styles: {
         'color' : '#402641',
+        'text-shadow' : '-1px 0 #BDD9BF, 0 1px #BDD9BF, 1px 0 #BDD9BF, 0 -1px #BDD9BF'
     }
 };
 
