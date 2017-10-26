@@ -1,105 +1,175 @@
 import * as BABYLON from 'babylonjs'
+import Point from "../utils/point"
 
-const BASE_WIDTH = window.innerWidth / 2.0;
-const BASE_HEIGHT = window.innerHeight / 2.0;
 
+const WINDOW_WIDTH = window.innerWidth
+const WINDOW_HEIGHT = window.innerHeight
 
 const BASE_SIZE = 10
-// const NUMBER_BASE_SIZE_IN_FLOOR = 17;
 
-export default function base() {
+export default class GameView {
+    private _gameFieldSize: number;
 
-    const canvas = <HTMLCanvasElement>document.getElementById("renderCanvas");
+    private _engine: BABYLON.Engine;
+    private _scene: BABYLON.Scene;
+    private _camera: BABYLON.Camera;
 
-    canvas.width = BASE_WIDTH;
-    canvas.height = BASE_HEIGHT;
-
-    const engine = new BABYLON.Engine(canvas, true);
-    const scene = new BABYLON.Scene(engine);
+    private _currentHero: BABYLON.Mesh;
 
 
-    // //туман
-    // scene.fogMode = BABYLON.Scene.FOGMODE_EXP;
-    // scene.fogDensity = 0.05;
+    constructor(gameFieldSize: number) {
+        this._gameFieldSize = gameFieldSize;
+
+        const canvas = <HTMLCanvasElement>document.getElementById("renderCanvas");
+        canvas.width = WINDOW_WIDTH;
+        canvas.height = WINDOW_HEIGHT;
+
+        this._engine = new BABYLON.Engine(canvas, true);
+        this._scene = new BABYLON.Scene(this._engine);
 
 
-    const cameraPosition = new BABYLON.Vector3(BASE_SIZE * 8, 0, BASE_SIZE * 8)
-    const camera = new BABYLON.ArcRotateCamera("Camera", -Math.PI / 2, Math.PI / 2.5, 200, cameraPosition, scene);
-    camera.attachControl(canvas, false)
+        const cameraPosition = new BABYLON.Vector3(BASE_SIZE * 8, 0, BASE_SIZE * 8)
+        this._camera = new BABYLON.ArcRotateCamera("Camera", -Math.PI / 2, Math.PI / 2.5, 200, cameraPosition, this._scene);
+        this._camera.attachControl(canvas, false)
 
-    //иногда ниобходимо чтобы при виде сверху не пропадали элементы
-    camera.minZ = 0.1;
-
-
-
-    const light = new BABYLON.DirectionalLight("light", new BABYLON.Vector3(0, -BASE_SIZE * 8, 0), scene);
-    light.position = new BABYLON.Vector3(BASE_SIZE * 8, -BASE_SIZE * 8, BASE_SIZE * 8)
+        //иногда ниобходимо чтобы при виде сверху не пропадали элементы
+        this._camera.minZ = 0.1;
 
 
-    const x = BABYLON.MeshBuilder.CreateBox("x", { width: BASE_SIZE * 10, height: 0.1, depth: 0.1 }, scene);
-    const xMaterial = new BABYLON.StandardMaterial("xMaterial", scene);
-    xMaterial.diffuseColor = BABYLON.Color3.Red();
-    x.material = xMaterial;
-    x.position = new BABYLON.Vector3(BASE_SIZE * 5, 0, 0);
+        const light = new BABYLON.DirectionalLight("light", new BABYLON.Vector3(0, -BASE_SIZE * 8, 0), this._scene);
+        light.position = new BABYLON.Vector3(BASE_SIZE * 8, -BASE_SIZE * 8, BASE_SIZE * 8)
+
+        this._addAsicsView()
+
+        this._addFloor()
+
+        const heroOne = this._addHero("hero", 8, 1 / 8 + 1 / 2, 0, BABYLON.Color3.Red())
+
+        const heroTwo = this._addHero("hero", 8, 1 / 8 + 1 / 2, 16, BABYLON.Color3.Blue())
+
+        this._currentHero = heroOne;
 
 
-    const y = BABYLON.MeshBuilder.CreateBox("y", { width: 0.1, height: BASE_SIZE * 10, depth: 0.1 }, scene);
-    const yMaterial = new BABYLON.StandardMaterial("yMaterial", scene);
-    yMaterial.diffuseColor = BABYLON.Color3.Blue();
-    y.material = yMaterial;
-    y.position = new BABYLON.Vector3(0, BASE_SIZE * 5, 0);
+        // const ghostWall = addWalls({ x: 0, y: 2 }, { x: 0, y: 0 }, 1 / 8 + 1 / 2, scene)
 
 
-    const z = BABYLON.MeshBuilder.CreateBox("z", { width: 0.1, height: 0.1, depth: BASE_SIZE * 10 }, scene);
-    const zMaterial = new BABYLON.StandardMaterial("zMaterial", scene);
-    zMaterial.diffuseColor = BABYLON.Color3.Green();
-    z.material = zMaterial;
-    z.position = new BABYLON.Vector3(0, 0, BASE_SIZE * 5);
+        // window.addEventListener("mousemove", function (evt) {
+        //     let pickResult = scene.pick(evt.clientX, evt.clientY);
+        //     let x = pickResult.pickedPoint.x;
+        //     let y = pickResult.pickedPoint.z;
+
+        //     let needRotation = Math.floor((x - y + BASE_SIZE * 17) / BASE_SIZE) % 2 != Math.floor((x + y + BASE_SIZE * 17) / BASE_SIZE) % 2;
+
+        //     placeWall(ghostWall, x, y, needRotation, scene)
+        // });
+
+        window.addEventListener("click", this.onSceneClick)
+
+        this._engine.runRenderLoop(() => {
+            this._scene.render();
+        })
+    }
 
 
+    private _addFloor() {
+        const floor = BABYLON.MeshBuilder.CreateBox("floor", { width: BASE_SIZE * 17, height: BASE_SIZE / 4, depth: BASE_SIZE * 17 }, this._scene);
+        floor.position = new BABYLON.Vector3(BASE_SIZE * 8, 0, BASE_SIZE * 8);
 
 
+        const floorMaterial = new BABYLON.StandardMaterial("floorMaterial", this._scene);
+        floor.material = floorMaterial;
 
 
-
-    const floor = BABYLON.MeshBuilder.CreateBox("floor", { width: BASE_SIZE * 17, height: BASE_SIZE / 4, depth: BASE_SIZE * 17 }, scene);
-    floor.position = new BABYLON.Vector3(BASE_SIZE * 8, 0, BASE_SIZE * 8);
-
-
-    const floorMaterial = new BABYLON.StandardMaterial("floorMaterial", scene);
-    floor.material = floorMaterial;
-
-    // BASE_SIZE / 8 + BASE_SIZE / 2 - ширина поля+ширина квадрата пополам
-    addHeroes(8 * BASE_SIZE, BASE_SIZE / 8 + BASE_SIZE / 2, 0, BABYLON.Color3.Red(), scene)
-
-    addHeroes(8 * BASE_SIZE, BASE_SIZE / 8 + BASE_SIZE / 2, 16 * BASE_SIZE, BABYLON.Color3.Blue(), scene)
+        for (let _i = 0; _i < 17; _i++) {
+            if (_i % 2 == 0) {
+                for (let _j = 0; _j < 17; _j++) {
+                    if (_j % 2 == 0) {
+                        this._addAvailablePosition(_i, 1 / 8, _j)
+                    }
+                }
+            }
+        }
 
 
+    }
 
-    engine.runRenderLoop(() => {
-        scene.render();
-    })
+
+    private _addAvailablePosition(x: number, y: number, z: number) {
+        let availablePosition = BABYLON.MeshBuilder.CreateBox("availablePosition", { width: BASE_SIZE, height: BASE_SIZE / 20, depth: BASE_SIZE }, this._scene);
+        availablePosition.position = new BABYLON.Vector3(BASE_SIZE * x, BASE_SIZE * y, BASE_SIZE * z);
+
+        let availablePositionMaterial = new BABYLON.StandardMaterial("availablePositionMaterial", this._scene);
+        availablePositionMaterial.diffuseColor = BABYLON.Color3.Gray();
+
+        availablePosition.material = availablePositionMaterial;
+        return availablePositionMaterial
+    }
+
+
+    private _addAsicsView() {
+        const x = BABYLON.MeshBuilder.CreateBox("x", { width: BASE_SIZE * 20, height: 0.1, depth: 0.1 }, this._scene);
+        const xMaterial = new BABYLON.StandardMaterial("xMaterial", this._scene);
+        xMaterial.diffuseColor = BABYLON.Color3.Red();
+        x.material = xMaterial;
+        x.position = new BABYLON.Vector3(BASE_SIZE * 10, 0, 0);
+
+
+        const y = BABYLON.MeshBuilder.CreateBox("y", { width: 0.1, height: BASE_SIZE * 20, depth: 0.1 }, this._scene);
+        const yMaterial = new BABYLON.StandardMaterial("yMaterial", this._scene);
+        yMaterial.diffuseColor = BABYLON.Color3.Blue();
+        y.material = yMaterial;
+        y.position = new BABYLON.Vector3(0, BASE_SIZE * 10, 0);
+
+
+        const z = BABYLON.MeshBuilder.CreateBox("z", { width: 0.1, height: 0.1, depth: BASE_SIZE * 20 }, this._scene);
+        const zMaterial = new BABYLON.StandardMaterial("zMaterial", this._scene);
+        zMaterial.diffuseColor = BABYLON.Color3.Green();
+        z.material = zMaterial;
+        z.position = new BABYLON.Vector3(0, 0, BASE_SIZE * 10);
+    }
+
+
+    private _addHero(name, x: number, y: number, z: number, colour: BABYLON.Color3) {
+        const hero = BABYLON.Mesh.CreateBox(name, BASE_SIZE, this._scene);
+        hero.position = new BABYLON.Vector3(BASE_SIZE * x, BASE_SIZE * y, BASE_SIZE * z);
+
+        const heroMaterial = new BABYLON.StandardMaterial(`${name}Material`, this._scene);
+        heroMaterial.diffuseColor = colour;
+
+        hero.material = heroMaterial;
+        return hero
+    }
+
+
+    public onSceneClick = event => {
+        let pickResult = this._scene.pick(event.clientX, event.clientY);
+
+        if (pickResult.pickedMesh !== null && pickResult.pickedMesh === this._currentHero) {
+            this._addGhostHeroes(pickResult.pickedMesh, this._scene)
+        }
+
+        if (pickResult.pickedMesh !== null && pickResult.pickedMesh.name === "ghostHero") {
+            this._moveHero(this._currentHero, { x: pickResult.pickedMesh.position.x, y: pickResult.pickedMesh.position.z })
+
+            let ghost = this._scene.getMeshByName("ghostHero");
+            while (ghost !== undefined) {
+                ghost.dispose()
+                ghost = this._scene.getMeshByName("ghostHero");
+            }
+            // allGhosts.forEach((element) => { element.dispose() })
+        }
+    }
+
+    private _addGhostHeroes(hero, scene) {
+        this._addHero("ghostHero", hero.position.x / BASE_SIZE + 2, hero.position.y / BASE_SIZE, hero.position.z / BASE_SIZE, BABYLON.Color3.Green())
+        this._addHero("ghostHero", hero.position.x / BASE_SIZE, hero.position.y / BASE_SIZE, hero.position.z / BASE_SIZE + 2, BABYLON.Color3.Green())
+        this._addHero("ghostHero", hero.position.x / BASE_SIZE - 2, hero.position.y / BASE_SIZE, hero.position.z / BASE_SIZE, BABYLON.Color3.Green())
+        this._addHero("ghostHero", hero.position.x / BASE_SIZE, hero.position.y / BASE_SIZE, hero.position.z / BASE_SIZE - 2, BABYLON.Color3.Green())
+    }
+
+    private _moveHero(hero: BABYLON.Mesh, position: Point) {
+        hero.position.x = position.x;
+        hero.position.z = position.y;
+    }
 }
 
-
-function addHeroes(x, y, z, colour, scene) {
-    var heroOne = BABYLON.Mesh.CreateBox("heroOne", BASE_SIZE, scene);
-    heroOne.position = new BABYLON.Vector3(x, y, z);
-
-    var heroOneMaterial = new BABYLON.StandardMaterial("heroMaterial", scene);
-    heroOneMaterial.diffuseColor = colour;
-
-    heroOne.material = heroOneMaterial;
-}
-
-function addWalls(scene) {
-
-}
-
-function moveHeroes(scene) {
-
-}
-
-function moveWalls(scene) {
-
-}
