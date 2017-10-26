@@ -223,7 +223,7 @@ export default class GameView {
         let transformedCoordinate: Point = { x: Math.round(point.x / BASE_SIZE), y: Math.round(point.y / BASE_SIZE) }
         const rotation = this._rotation(point);
 
-        if (transformedCoordinate.x % 2 != 0 || transformedCoordinate.y % 2 != 0) { //ljgbcfnm eckjdbq
+        if (transformedCoordinate.x % 2 != 0 || transformedCoordinate.y % 2 != 0) { //дописать логики
             wall.position.x = transformedCoordinate.x * BASE_SIZE;
             wall.position.z = transformedCoordinate.y * BASE_SIZE;
             wall.rotation.y = rotation
