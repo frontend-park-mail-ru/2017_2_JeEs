@@ -2,10 +2,13 @@ import * as BABYLON from 'babylonjs'
 import Point from "../utils/point"
 import * as FieldState from "../utils/field-state"
 import Constants from "./constants"
+import EventBus from "../../modules/event-bus"
 
 import HeroView from "./heroview"
 import WallView from "./wallview"
 import FloorView from "./floorview"
+import Events from "../utils/events"
+
 
 
 
@@ -23,9 +26,12 @@ export default class GameViewManager {
     private _wallView: WallView;
     private _floorView: FloorView;
 
+    private _myTurn: boolean = false;
 
+    private _eventBus;
 
     constructor(gameFieldSize: number) {
+        this._eventBus = new EventBus;
 
         const canvas = <HTMLCanvasElement>document.getElementById("renderCanvas");
         canvas.width = WINDOW_WIDTH;
@@ -56,6 +62,13 @@ export default class GameViewManager {
 
         window.addEventListener("mousemove", this.OnSceneMove);
 
+
+        this._eventBus.on(Events.TURN_BEGAN, (data) => {
+            this._heroView.NewTurn()
+            this._wallView.NewTurn()
+            this._myTurn = true;
+        });
+
         this._engine.runRenderLoop(() => {
             this._scene.render();
         })
@@ -63,36 +76,40 @@ export default class GameViewManager {
 
 
     public OnSceneClick = event => {
-        let pickResult = this._scene.pick(event.clientX, event.clientY);
+        if (this._myTurn) {
+            let pickResult = this._scene.pick(event.clientX, event.clientY);
 
-        if (pickResult.pickedMesh !== null && this._heroView.IsCurrentHero(pickResult.pickedMesh)) {
-            this._heroView.HeroMovementStart(pickResult.pickedMesh)
-        }
+            if (pickResult.pickedMesh !== null && this._heroView.IsCurrentHero(pickResult.pickedMesh)) {
+                this._heroView.HeroMovementStart(pickResult.pickedMesh)
+            }
 
-        if (pickResult.pickedMesh !== null && this._heroView.IsGhostHero(pickResult.pickedMesh)) {
-            this._heroView.MoveOnGhostHero(pickResult.pickedMesh)
-        }
+            if (pickResult.pickedMesh !== null && this._heroView.IsGhostHero(pickResult.pickedMesh)) {
+                this._heroView.MoveOnGhostHero(pickResult.pickedMesh)
+                this._myTurn = false;
+            }
 
-        if (pickResult.pickedMesh !== null && this._wallView.IsGhostWall(pickResult.pickedMesh)) {
-            this._wallView.AddWallByGhosWall()
+            if (pickResult.pickedMesh !== null && this._wallView.IsGhostWall(pickResult.pickedMesh)) {
+                this._wallView.AddWallByGhosWall()
+                this._myTurn = false;
+            }
         }
     };
 
 
 
     public OnSceneMove = event => {
-        let pickResult = this._scene.pick(event.clientX, event.clientY);
+        if (this._myTurn) {
+            let pickResult = this._scene.pick(event.clientX, event.clientY);
 
-        if (pickResult.pickedPoint === null) {
-            return
-        }
-        let x = pickResult.pickedPoint.x;
-        let y = pickResult.pickedPoint.z;
+            if (pickResult.pickedPoint === null) {
+                return
+            }
+            let x = pickResult.pickedPoint.x;
+            let y = pickResult.pickedPoint.z;
 
-        if (!this._heroView.IsHeroMoving()) { //дописать условий
-            this._wallView.AddGhostWall({ x, y })
+            if (!this._heroView.IsHeroMoving()) { //дописать условий
+                this._wallView.AddGhostWall({ x, y })
+            }
         }
     }
-
-
 }

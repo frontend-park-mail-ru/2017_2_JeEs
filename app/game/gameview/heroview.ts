@@ -32,13 +32,13 @@ export default class HeroView {
 
         this._eventBus = new EventBus;
 
-        this._eventBus.on(Events.OPPONENTS_FIGURE_MOVED, (data) => {
-            this._changeHero(data);
-        });
+        // this._eventBus.on(Events.OPPONENTS_FIGURE_MOVED, (data) => {
+        //     this._changeHero(data);
+        // });
 
-        this._eventBus.on(Events.OPPONENTS_WALL_PLACED, (data) => {
-            this._changeHero(data);
-        });
+        // this._eventBus.on(Events.OPPONENTS_WALL_PLACED, (data) => {
+        //     this._changeHero(data);
+        // });
 
         this._eventBus.on(Events.GAMEVIEW_WALL_PLACED, (data) => {
             if (this._currentHero === this._heroOne) {
@@ -48,6 +48,10 @@ export default class HeroView {
             }
         });
 
+    }
+
+    public NewTurn() {
+        this._changeHero();
     }
 
     public CreateHeroes() {
@@ -119,7 +123,7 @@ export default class HeroView {
     }
 
 
-    private _changeHero(data) {
+    private _changeHero() {
         if (this._currentHero === this._heroOne) {
             this._currentHero = this._heroTwo
         } else {
@@ -133,10 +137,9 @@ export default class HeroView {
         ghostHeroMaterial.diffuseColor = BABYLON.Color3.Green();
         ghostHeroMaterial.alpha = 0.5;
 
-        this._addHero("ghostHero", hero.position.x / BASE_SIZE + 2, hero.position.y / BASE_SIZE, hero.position.z / BASE_SIZE, ghostHeroMaterial);
-        this._addHero("ghostHero", hero.position.x / BASE_SIZE, hero.position.y / BASE_SIZE, hero.position.z / BASE_SIZE + 2, ghostHeroMaterial);
-        this._addHero("ghostHero", hero.position.x / BASE_SIZE - 2, hero.position.y / BASE_SIZE, hero.position.z / BASE_SIZE, ghostHeroMaterial);
-        this._addHero("ghostHero", hero.position.x / BASE_SIZE, hero.position.y / BASE_SIZE, hero.position.z / BASE_SIZE - 2, ghostHeroMaterial);
+        for (const _point of points) {
+            this._addHero("ghostHero", _point.x, hero.position.y / BASE_SIZE, _point.y, ghostHeroMaterial);
+        }
     }
 
     private _deleteGhostHero() {
