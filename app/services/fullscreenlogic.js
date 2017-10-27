@@ -1,11 +1,9 @@
 export default class FullScreenLogic {
     static addFullScreen(element) {
         document.onkeypress = event => {
-            debugger;
             if (event.code === "KeyF") {
                 if (element.width !== window.innerWidth) {
                     FullScreenLogic._launchIntoFullscreen(element);
-                    // element.requestPointerLock();
                 } else {
                     FullScreenLogic._exitFullScreen(element);
                 }

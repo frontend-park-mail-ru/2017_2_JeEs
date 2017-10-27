@@ -13,7 +13,7 @@ export default class HeroView {
 
     public _currentHero: BABYLON.Mesh;
 
-    private _heroOne: BABYLON.Mesh;
+    public _heroOne: BABYLON.Mesh;
 
     private _heroTwo: BABYLON.Mesh;
 
@@ -23,7 +23,7 @@ export default class HeroView {
 
     private _gameFieldSize: number;
 
-    private _engagedPoints: Point[]
+    private _availableForMovementPoints: Point[]
 
     private _eventBus;
 
@@ -36,18 +36,22 @@ export default class HeroView {
 
         this._eventBus.on(Events.GAMEVIEW_WALL_PLACED, (data) => {
             debugger;
-            if (this._currentHero === this._heroOne) {
+            // if (this._currentHero === this._heroTwo) {
                 this._eventBus.emit(Events.YOUR_WALL_PLACED, data)
-            } else {
-                this._eventBus.emit(Events.YOUR_WALL_PLACED, { upperOrLeft: 17 - data.upperOrLeft, lowerOrRight: 17 - data.lowerOrRight })
-            }
+            // } else {
+            //     debugger;
+            //     this._eventBus.emit(Events.YOUR_WALL_PLACED, {
+            //         upperOrLeft: new Point(this._gameFieldSize - 1 - data.upperOrLeft.x, this._gameFieldSize - 1 - data.upperOrLeft.y),
+            //         lowerOrRight: new Point(this._gameFieldSize - 1 - data.lowerOrRight.x, this._gameFieldSize - 1 - data.lowerOrRight.y)
+            //     })
+            // }
         });
 
     }
 
-    public NewTurn(engagedPoints: Point[]) {
+    public NewTurn(availableForMovementPoints: Point[]) {
         this._changeHero();
-        this._engagedPoints = engagedPoints;
+        this._availableForMovementPoints = availableForMovementPoints;
     }
 
     public CreateHeroes() {
@@ -134,7 +138,8 @@ export default class HeroView {
         ghostHeroMaterial.diffuseColor = BABYLON.Color3.Green();
         ghostHeroMaterial.alpha = 0.5;
 
-        for (const _point of this._engagedPoints) {
+        debugger;
+        for (const _point of this._availableForMovementPoints) {
             if (this._currentHero === this._heroTwo) {
                 this._addHero("ghostHero", this._gameFieldSize - _point.x - 1, hero.position.y / BASE_SIZE, this._gameFieldSize - _point.y - 1, ghostHeroMaterial);
             } else {
