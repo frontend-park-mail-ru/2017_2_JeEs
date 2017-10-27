@@ -43,6 +43,7 @@ class GameStrategy {
             ...data,
             event: TURN_ENDING_EVENTS.FIGURE_MOVED
         });
+        this.emitTurnBegan();
     }
 
     private onOpponentsFigureMoved(data): void {
@@ -61,10 +62,18 @@ class GameStrategy {
             ...data,
             event: TURN_ENDING_EVENTS.WALL_PLACED
         });
+        this.emitTurnBegan();
     }
 
     private onOpponentsWallPlaced(data): void {
         this._fieldState.insertWall(data.upperOrLeft, data.lowerOrRight);
+    }
+
+    private emitTurnBegan() {
+        this.eventBus.emit(EVENTS.TURN_BEGAN, {
+            engagedPoints: this._fieldState.getEngagedPoints(),
+            AvailableForMovementPoints: this._fieldState.getAvailableForMovementPoints()
+        });
     }
 }
 
