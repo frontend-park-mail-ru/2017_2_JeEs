@@ -1,6 +1,6 @@
 import SingleplayerGameStrategy from "./game-strategies/singleplayer-game-strategy"
 import GameStrategyInterface from "./game-strategies/game-strategy-interface"
-import GameView from "./gameview/view"
+import GameView from "./gameview/gameviewmanager"
 
 enum GAME_TYPE {
     SINGLEPLAYER,

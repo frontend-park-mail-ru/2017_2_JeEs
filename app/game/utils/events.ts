@@ -11,4 +11,10 @@ export default abstract class EVENTS {
     // emitted in Single- and MultiPlayerGameStrategy, handled in GameStrategy
     public static readonly OPPONENTS_FIGURE_MOVED: string = "game:opponents_figure_moved";
     public static readonly OPPONENTS_WALL_PLACED: string = "game:opponents_wall_placed";
+
+
+    // emitted and handled in view
+    public static readonly GAMEVIEW_HERO_MOVEMENT_START: string = "gameview:hero_movement_start"
+    public static readonly GAMEVIEW_WALL_PLACED: string = "gameview:wall_placed"  //костыль для синглплеера
+    
 }

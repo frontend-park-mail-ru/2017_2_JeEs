@@ -1,5 +1,5 @@
 import BaseView from '../baseview';
-import Game from '../../game/gameview/view';
+import Game from '../../game/gameview/gameviewmanager';
 import {GameManager, GAME_TYPE} from '../../game/game-manager.ts';
 
 export default class GameView extends BaseView {
