@@ -11,4 +11,7 @@ export default abstract class EVENTS {
     // emitted in Single- and MultiPlayerGameStrategy, handled in GameStrategy
     public static readonly OPPONENTS_FIGURE_MOVED: string = "game:opponents_figure_moved";
     public static readonly OPPONENTS_WALL_PLACED: string = "game:opponents_wall_placed";
+
+    // emitted in GameStrategy, handled in view
+    public static readonly TURN_BEGAN: string = "game:turn_began";
 }

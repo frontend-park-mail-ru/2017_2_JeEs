@@ -1,25 +1,17 @@
 import SingleplayerGameStrategy from "./game-strategies/singleplayer-game-strategy"
-import GameStrategyInterface from "./game-strategies/game-strategy-interface"
 import GameView from "./gameview/view"
 
-enum GAME_TYPE {
-    SINGLEPLAYER,
-    MULTIPLAYER
-}
-
 class GameManager {
-    private gameStrategy: GameStrategyInterface;
+    private singleplayerGameStrategy;
     private _gameView: GameView;
     private static __instance: GameManager = null;
 
-    constructor(gameType: GAME_TYPE, fieldDimension: number) {
+    constructor(fieldDimension: number) {
         if (GameManager.__instance) {
             return GameManager.__instance;
         }
 
-        if (gameType === GAME_TYPE.SINGLEPLAYER) {
-            this.gameStrategy = new SingleplayerGameStrategy(fieldDimension);
-        }
+        this.singleplayerGameStrategy = new SingleplayerGameStrategy(fieldDimension);
 
         GameManager.__instance = this;
     }
@@ -29,4 +21,4 @@ class GameManager {
     }
 }
 
-export {GameManager, GAME_TYPE}
+export {GameManager, }

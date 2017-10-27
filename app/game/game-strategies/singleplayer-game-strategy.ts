@@ -3,7 +3,6 @@ import {FieldState, } from "../utils/field-state";
 import EventBus from "../../modules/event-bus.js"
 import EVENTS from "../utils/events";
 import Point from "../utils/point";
-import GameStrategyInterface from "./game-strategy-interface";
 
 function * fieldStatesGeneratorFunction() {
     while (true) {
@@ -12,8 +11,8 @@ function * fieldStatesGeneratorFunction() {
     }
 }
 
-export default class SingleplayerGameStrategy implements GameStrategyInterface {
-    private gameStrategy: GameStrategy;
+export default class SingleplayerGameStrategy {
+    private _gameStrategy: GameStrategy;
     private firstPlayersFieldState: FieldState;
     private secondPlayersFieldState: FieldState;
     private fieldStateIterator: IterableIterator<FieldState>;
@@ -21,19 +20,19 @@ export default class SingleplayerGameStrategy implements GameStrategyInterface {
     private fieldDimension: number;
 
     constructor(fieldDimension: number) {
-        this.gameStrategy = new GameStrategy;
+        this._gameStrategy = new GameStrategy;
         this.firstPlayersFieldState = new FieldState(fieldDimension);
         this.secondPlayersFieldState = new FieldState(fieldDimension);
         this.fieldStateIterator = fieldStatesGeneratorFunction.bind(this)();
         this.eventBus = new EventBus();
         this.fieldDimension = fieldDimension;
 
-        this.gameStrategy.fieldState = this.fieldStateIterator.next().value;
+        this._gameStrategy.fieldState = this.fieldStateIterator.next().value;
         this.eventBus.on(EVENTS.TURN_ENDED, this.onTurnEnded.bind(this));
     }
 
     private changeFieldState(): void {
-        this.gameStrategy.fieldState = this.fieldStateIterator.next().value;
+        this._gameStrategy.fieldState = this.fieldStateIterator.next().value;
     }
 
     private onTurnEnded(data): void {
@@ -60,5 +59,9 @@ export default class SingleplayerGameStrategy implements GameStrategyInterface {
         return points.map((point) => {
             return new Point(2 * (fieldDimension - 1) - point.x, point.y);
         });
+    }
+
+    get gameStrategy(): GameStrategy {
+        return this._gameStrategy;
     }
 }
