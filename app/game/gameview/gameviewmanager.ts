@@ -9,11 +9,13 @@ import WallView from "./wallview"
 import FloorView from "./floorview"
 import Events from "../utils/events"
 
+import FullScreen from "../../services/fullscreenlogic"
 
 
 
-const WINDOW_WIDTH = window.innerWidth;
-const WINDOW_HEIGHT = window.innerHeight;
+
+const WINDOW_WIDTH = window.innerWidth / 2;
+const WINDOW_HEIGHT = window.innerHeight / 2;
 
 const BASE_SIZE = Constants.BASE_SIZE;
 
@@ -34,6 +36,9 @@ export default class GameViewManager {
         this._eventBus = new EventBus;
 
         const canvas = <HTMLCanvasElement>document.getElementById("renderCanvas");
+
+        FullScreen.addFullScreen(canvas)
+        
         canvas.width = WINDOW_WIDTH;
         canvas.height = WINDOW_HEIGHT;
 
@@ -63,11 +68,11 @@ export default class GameViewManager {
         window.addEventListener("mousemove", this.OnSceneMove);
 
 
-        this._eventBus.on(Events.TURN_BEGAN, (data) => {
-            this._heroView.NewTurn()
-            this._wallView.NewTurn()
-            this._myTurn = true;
-        });
+        // this._eventBus.on(Events.TURN_BEGAN, (data) => {
+        //     this._heroView.NewTurn()
+        //     this._wallView.NewTurn()
+        //     this._myTurn = true;
+        // });
 
         this._engine.runRenderLoop(() => {
             this._scene.render();
@@ -112,4 +117,6 @@ export default class GameViewManager {
             }
         }
     }
+
+
 }

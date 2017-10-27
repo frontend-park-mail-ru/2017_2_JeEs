@@ -27,18 +27,21 @@ export default class FloorView {
         floor.material = floorMaterial;
 
 
+        this._addAllAvailablePositionOnFloor()
+
+    }
+
+    private _addAllAvailablePositionOnFloor() {
         for (let _i = 0; _i < this._gameFieldSize; _i++) {
-            if (_i % 2 == 0) {
+            if (_i % 2 === 0) {
                 for (let _j = 0; _j < this._gameFieldSize; _j++) {
-                    if (_j % 2 == 0) {
+                    if (_j % 2 === 0) {
                         this._addAvailablePosition(_i, 1 / 8, _j)
                     }
                 }
             }
         }
     }
-
-
 
     private _addAvailablePosition(x: number, y: number, z: number) {
         let availablePosition = BABYLON.MeshBuilder.CreateBox("availablePosition", { width: BASE_SIZE, height: BASE_SIZE / 20, depth: BASE_SIZE }, this._scene);

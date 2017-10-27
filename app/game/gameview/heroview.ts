@@ -137,9 +137,9 @@ export default class HeroView {
         ghostHeroMaterial.diffuseColor = BABYLON.Color3.Green();
         ghostHeroMaterial.alpha = 0.5;
 
-        for (const _point of points) {
-            this._addHero("ghostHero", _point.x, hero.position.y / BASE_SIZE, _point.y, ghostHeroMaterial);
-        }
+        // for (const _point of points) {
+        //     this._addHero("ghostHero", _point.x, hero.position.y / BASE_SIZE, _point.y, ghostHeroMaterial);
+        // }
     }
 
     private _deleteGhostHero() {
