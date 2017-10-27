@@ -21,6 +21,6 @@
     margin-right: auto;
 
     width: 224px;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: space-between;
 }

@@ -2,7 +2,7 @@ const createStylesheet = (styles) => {
     return styles.reduce((stylesheet, current) => {
 
         const properties = Object.entries(current.styles)
-            .map(prop => prop[0] + ':' + prop[1] + ';');
+            .map(([key, value]) => `${key}:${value};`);
 
 
         stylesheet += `${current.selector}{${properties.join('')}}\n`;
