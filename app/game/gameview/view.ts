@@ -33,10 +33,13 @@ export default class GameView {
 
         this._eventBus = new EventBus;
 
-        this._eventBus.on(Events.OPPONENTS_FIGURE_MOVED, (data) => { 
-            console.log(1);
+        this._eventBus.on(Events.OPPONENTS_FIGURE_MOVED, (data) => {
             this._changeHero(data);
-         })
+        })
+
+        this._eventBus.on(Events.OPPONENTS_WALL_PLACED, (data) => {
+            this._changeHero(data);
+        })
 
 
 
@@ -75,12 +78,7 @@ export default class GameView {
 
         this._currentHero = this._heroOne;
 
-
-        const wallMaterial = new BABYLON.StandardMaterial("wallMaterial", this._scene);
-        wallMaterial.diffuseColor = BABYLON.Color3.Purple();
-        wallMaterial.alpha = 0.5;
-        this._ghostWall = this._addWall({ x: 0, y: 2 }, { x: 0, y: 0 }, 1 / 8 + 1 / 2, wallMaterial);
-        this._ghostWall.isVisible = false;
+        this._ghostWall = this._createGhostWall()
 
         window.addEventListener("click", this.onSceneClick);
 
@@ -177,7 +175,6 @@ export default class GameView {
 
         wall.position = new BABYLON.Vector3(BASE_SIZE * position.x, BASE_SIZE * z, BASE_SIZE * position.y);
 
-
         wall.material = material;
 
         return wall
@@ -202,6 +199,30 @@ export default class GameView {
                 ghost = this._scene.getMeshByName("ghostHero");
             }
             this._heroMoved = false;
+        }
+
+        if (pickResult.pickedMesh !== null && pickResult.pickedMesh === this._ghostWall) {
+
+            this._ghostWall.material.alpha = 1;
+
+            let upperOrLeft: Point
+            let lowerOrRight: Point
+
+            if (this._ghostWall.rotation.y === 0) {
+                upperOrLeft = new Point(this._ghostWall.position.x / BASE_SIZE, this._ghostWall.position.z / BASE_SIZE + 1)
+                lowerOrRight = new Point(this._ghostWall.position.x / BASE_SIZE, this._ghostWall.position.z / BASE_SIZE - 1)
+            } else {
+                upperOrLeft = new Point(this._ghostWall.position.x / BASE_SIZE + 1, this._ghostWall.position.z / BASE_SIZE)
+                lowerOrRight = new Point(this._ghostWall.position.x / BASE_SIZE - 1, this._ghostWall.position.z / BASE_SIZE)
+            }
+
+            if (this._currentHero === this._heroOne) {
+                this._eventBus.emit(Events.YOUR_WALL_PLACED, { upperOrLeft, lowerOrRight })
+            } else {
+                this._eventBus.emit(Events.YOUR_WALL_PLACED, { upperOrLeft, lowerOrRight })
+            }
+            this._heroMoved = false;
+            this._ghostWall = this._createGhostWall()
         }
     };
 
@@ -254,6 +275,7 @@ export default class GameView {
         }
     }
 
+
     private _rotation(point: Point) {
         let needRotation = Math.floor((point.x - point.y + BASE_SIZE * 17) / BASE_SIZE) % 2
             != Math.floor((point.x + point.y + BASE_SIZE * 17) / BASE_SIZE) % 2;
@@ -266,5 +288,14 @@ export default class GameView {
         } else {
             this._currentHero = this._heroOne
         }
+    }
+
+    private _createGhostWall() {
+        const wallMaterial = new BABYLON.StandardMaterial("wallMaterial", this._scene);
+        wallMaterial.diffuseColor = BABYLON.Color3.Purple();
+        wallMaterial.alpha = 0.5;
+        let ghostWall = this._addWall({ x: 0, y: 2 }, { x: 0, y: 0 }, 1 / 8 + 1 / 2, wallMaterial);
+        ghostWall.isVisible = false;
+        return ghostWall
     }
 }
