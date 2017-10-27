@@ -14,7 +14,7 @@ export default class WallView {
     private _ghostWall: BABYLON.Mesh;
     private _scene: BABYLON.Scene
     private _eventBus;
-
+    private _availableForMovementPoints: Point[]
 
     constructor(scene: BABYLON.Scene) {
         this._scene = scene;
@@ -30,11 +30,12 @@ export default class WallView {
         })
     }
 
-    public NewTurn() {
+    public NewTurn(availableForMovementPoints: Point[]) {
+        this._availableForMovementPoints = availableForMovementPoints;
     }
 
     public AddGhostWall(point: Point) {
-        const transformedCoordinate: Point = { x: Math.round(point.x / BASE_SIZE), y: Math.round(point.y / BASE_SIZE) };
+        const transformedCoordinate: Point = new Point(Math.round(point.x / BASE_SIZE), Math.round(point.y / BASE_SIZE));
         let upperOrLeft: Point;
         let lowerOrRight: Point;
 
@@ -48,13 +49,13 @@ export default class WallView {
             lowerOrRight = new Point(transformedCoordinate.x - 1, transformedCoordinate.y);
         }
 
-        if (this._checkСollisions([upperOrLeft, lowerOrRight, transformedCoordinate])) { 
+        if (this._checkСollisions([upperOrLeft, lowerOrRight, transformedCoordinate])) {
+            this._ghostWall.isVisible = true;            
             this._ghostWall.position.x = transformedCoordinate.x * BASE_SIZE;
             this._ghostWall.position.z = transformedCoordinate.y * BASE_SIZE;
-            this._ghostWall.rotation.y = rotation
+            this._ghostWall.rotation.y = rotation;
         }
 
-        this._ghostWall.isVisible = true;
     }
 
     public AddWallByGhosWall() {
@@ -77,7 +78,7 @@ export default class WallView {
 
         this._ghostWall = this._createGhostWall()
         this._ghostWall.isVisible = false;
-        
+
     }
 
     public IsGhostWall(mesh: BABYLON.AbstractMesh): boolean {
@@ -96,7 +97,7 @@ export default class WallView {
         const wallMaterial = new BABYLON.StandardMaterial("wallMaterial", this._scene);
         wallMaterial.diffuseColor = BABYLON.Color3.Purple();
         wallMaterial.alpha = 0.5;
-        let ghostWall = this._addWall({ x: 0, y: 2 }, { x: 0, y: 0 }, 1 / 8 + 1 / 2, wallMaterial);
+        let ghostWall = this._addWall(new Point(0, 2), new Point(0, 0), 1 / 8 + 1 / 2, wallMaterial);
         ghostWall.isVisible = false;
         return ghostWall
     }
@@ -122,7 +123,7 @@ export default class WallView {
 
     private _checkСollisions(points: Point[]) {
         for (const _point of points) {
-            if (_point.x % 2 != 0 || _point.y % 2 != 0) { // || foo(_point) ) {
+            if (_point.x % 2 != 0 || _point.y % 2 != 0 || (points.filter(_filterPoint => _filterPoint.equals(_point)))) {
                 return false
             }
         }

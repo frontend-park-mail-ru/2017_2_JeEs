@@ -69,10 +69,10 @@ class GameStrategy {
         this._fieldState.insertWall(data.upperOrLeft, data.lowerOrRight);
     }
 
-    private emitTurnBegan() {
+    public emitTurnBegan() {
         this.eventBus.emit(EVENTS.TURN_BEGAN, {
             engagedPoints: this._fieldState.getEngagedPoints(),
-            AvailableForMovementPoints: this._fieldState.getAvailableForMovementPoints()
+            availableForMovementPoints: this._fieldState.getAvailableForMovementPoints()
         });
     }
 }

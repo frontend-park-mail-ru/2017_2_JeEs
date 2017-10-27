@@ -14,8 +14,8 @@ import FullScreen from "../../services/fullscreenlogic"
 
 
 
-const WINDOW_WIDTH = window.innerWidth / 2;;
-const WINDOW_HEIGHT = window.innerHeight / 2;
+const WINDOW_WIDTH = window.innerWidth;;
+const WINDOW_HEIGHT = window.innerHeight;
 
 const BASE_SIZE = Constants.BASE_SIZE;
 
@@ -38,7 +38,7 @@ export default class GameViewManager {
         const canvas = <HTMLCanvasElement>document.getElementById("renderCanvas");
 
         FullScreen.addFullScreen(canvas)
-        
+
         canvas.width = WINDOW_WIDTH;
         canvas.height = WINDOW_HEIGHT;
 
@@ -68,11 +68,11 @@ export default class GameViewManager {
         window.addEventListener("mousemove", this.OnSceneMove);
 
 
-        // this._eventBus.on(Events.TURN_BEGAN, (data) => {
-        //     this._heroView.NewTurn()
-        //     this._wallView.NewTurn()
-        //     this._myTurn = true;
-        // });
+        this._eventBus.on(Events.TURN_BEGAN, (data) => {
+            this._heroView.NewTurn(data.availableForMovementPoints)
+            this._wallView.NewTurn(data.engagedPoints)
+            this._myTurn = true;
+        });
 
         this._engine.runRenderLoop(() => {
             this._scene.render();
@@ -83,19 +83,18 @@ export default class GameViewManager {
     public OnSceneClick = event => {
         if (this._myTurn) {
             let pickResult = this._scene.pick(event.clientX, event.clientY);
-
-            if (pickResult.pickedMesh !== null && this._heroView.IsCurrentHero(pickResult.pickedMesh)) {
+            if (pickResult.pickedMesh !== null && this._heroView._currentHero === pickResult.pickedMesh) {
                 this._heroView.HeroMovementStart(pickResult.pickedMesh)
             }
 
-            if (pickResult.pickedMesh !== null && this._heroView.IsGhostHero(pickResult.pickedMesh)) {
-                this._heroView.MoveOnGhostHero(pickResult.pickedMesh)
+            if (pickResult.pickedMesh !== null && pickResult.pickedMesh.name === "ghostHero") {
                 this._myTurn = false;
+                this._heroView.MoveOnGhostHero(pickResult.pickedMesh)
             }
 
             if (pickResult.pickedMesh !== null && this._wallView.IsGhostWall(pickResult.pickedMesh)) {
-                this._wallView.AddWallByGhosWall()
                 this._myTurn = false;
+                this._wallView.AddWallByGhosWall()
             }
         }
     };
@@ -113,7 +112,7 @@ export default class GameViewManager {
             let y = pickResult.pickedPoint.z;
 
             if (!this._heroView.IsHeroMoving()) { //дописать условий
-                this._wallView.AddGhostWall({ x, y })
+                this._wallView.AddGhostWall(new Point(x, y))
             }
         }
     }

@@ -1,5 +1,5 @@
 import SingleplayerGameStrategy from "./game-strategies/singleplayer-game-strategy"
-import GameView from "./gameview/view"
+import GameView from "./gameview/gameviewmanager"
 
 class GameManager {
     private singleplayerGameStrategy;

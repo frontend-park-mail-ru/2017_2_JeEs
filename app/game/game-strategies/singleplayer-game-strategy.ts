@@ -29,6 +29,7 @@ export default class SingleplayerGameStrategy {
 
         this._gameStrategy.fieldState = this.fieldStateIterator.next().value;
         this.eventBus.on(EVENTS.TURN_ENDED, this.onTurnEnded.bind(this));
+        this._gameStrategy.emitTurnBegan();
     }
 
     private changeFieldState(): void {
