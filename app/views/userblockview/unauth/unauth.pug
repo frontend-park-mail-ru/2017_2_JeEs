@@ -1,0 +1,6 @@
+mixin item(title, href)
+    button.user-block__button(value=href)= title
+
+.top-bar__user-block
+    +item('Вход', '/signin')
+    +item('Регистрация', '/signup')

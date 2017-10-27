@@ -6,12 +6,19 @@ module.exports = {
     context: __dirname,
     output: {
         filename: './bundle.js',
-        path: __dirname + '/public'
+        path: __dirname + '/dist'
     },
-    entry: './public/application.js',
+    entry: './app/application.js',
+    devtool: 'inline-source-map',
+    resolve: {
+        extensions: ['.ts', '.js']
+    },
     module: {
         rules: [
             {
+                test: /\.ts$/,
+                loader: 'ts-loader'
+            }, {
                 test: /\.css$/,
                 use: ExtractTextPlugin.extract({
                     fallback: 'style-loader',
@@ -29,7 +36,7 @@ module.exports = {
             }, {
                 test: /\.(pug|jade)$/,
                 loader: 'pug-loader'
-            }
+            },
         ],
     },
     plugins: [

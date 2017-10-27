@@ -1,0 +1,31 @@
+
+
+.main-block__notfound {
+    color: #B6174B;
+    font-size: 36px;
+    font-family: cursive;
+    margin-top: 10px;
+
+}
+
+div {
+    flex-direction: row;
+    margin-top: 0;
+}
+
+.cry-image {
+    background-image: url('../../../public/static/images/404.png');
+
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: block;
+    width: 240px;
+    height: 240px;
+    margin-left: 30px;
+    filter : blur(0px);
+}
+
+h2 {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}

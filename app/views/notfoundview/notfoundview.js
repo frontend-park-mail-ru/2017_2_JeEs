@@ -1,0 +1,51 @@
+import BaseView from '../baseview';
+
+const imageStyle = {
+    selector: '.cry-image',
+    styles: {
+        'background-image': 'url(\'./static/images/cat.png\')',
+        'filter' : 'blur(5px)'
+    }
+};
+
+const createStylesheet = (styles) => {
+    return styles.reduce((stylesheet, current) => {
+
+        const properties = Object.entries(current.styles)
+            .map(prop => prop[0] + ':' + prop[1] + ';');
+
+
+        stylesheet += `${current.selector}{${properties.join('')}}\n`;
+
+        return stylesheet;
+
+    }, '');
+};
+
+const appendStylesheet = (stylesheet) => {
+    let styleTag = document.getElementById('theme-styles');
+
+    styleTag.innerHTML = stylesheet;
+};
+
+let style = createStylesheet([imageStyle]);
+
+export default class NotFoundView extends BaseView {
+    constructor(parent) {
+        super(parent);
+
+        this.template = require('./notfound.pug');
+    }
+
+    create() {
+        this.element.innerHTML = this.template({});
+        document
+            .getElementById('image-switch')
+            .addEventListener('click', function (evt) {
+
+                appendStylesheet(style);
+
+            });
+    }
+
+}

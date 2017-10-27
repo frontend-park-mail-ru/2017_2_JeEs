@@ -1,0 +1,10 @@
+.main-block__game {
+    color: #1C5253;
+    text-shadow: -1px 0 #C3EB78, 0 1px #C3EB78, 1px 0 #C3EB78, 0 -1px #C3EB78;
+    font-family: cursive;
+}
+
+#renderCanvas {
+    width: 900;
+    height: 600;
+}

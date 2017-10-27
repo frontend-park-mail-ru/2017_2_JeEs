@@ -1,5 +1,6 @@
 'use strict';
 
+const fallback = require('express-history-api-fallback');
 const express = require('express');
 const body = require('body-parser');
 const cors = require('cors');
@@ -16,6 +17,8 @@ app.use(cors({
 
 app.use(morgan('dev'));
 app.use(express.static('public'));
+app.use(express.static('dist'));
+app.use(fallback('index.html', { root: 'public' }));
 app.use(body.json());
 app.use(cookie());
 
@@ -66,15 +69,14 @@ app.post('/signin', function (req, res) {
     res.status(201).json({id});
 });
 
-app.post('/currentUser', function (req, res) {
+app.get('/currentUser', function (req, res) {
     const id = req.cookies['cookie'];
     const login = ids[id];
     if (!login || !users[login]) {
         return res.status(401).end();
     }
 
-    res.json({id}); //или не id?
-    res.status(200);
+    res.json({id});
 });
 
 app.get('/users', function (req, res) {
@@ -83,22 +85,20 @@ app.get('/users', function (req, res) {
         .map(user => {
             return {
                 email: user.login
-            };
+            }
         });
 
     res.json(scorelist);
 });
 
-app.post('/signout', function (req, res) {
+app.delete('/signout', function (req, res) {
     res.cookie('cookie', null, {expires: new Date(Date.now() + 1000 * 60 * 10)});
     res.status(200).json(null);
 });
 
-app.use(express.static('public'));
-
-app.get('*', (req, res) => {
-    res.send('404');
-});
+// app.get('*', (req, res) => {
+//     res.send('404');
+// });
 
 const port = process.env.PORT || 8080;
 
