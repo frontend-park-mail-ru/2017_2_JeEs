@@ -14,7 +14,7 @@ import FullScreen from "../../services/fullscreenlogic"
 
 
 
-const WINDOW_WIDTH = window.innerWidth / 2;
+const WINDOW_WIDTH = window.innerWidth / 2;;
 const WINDOW_HEIGHT = window.innerHeight / 2;
 
 const BASE_SIZE = Constants.BASE_SIZE;

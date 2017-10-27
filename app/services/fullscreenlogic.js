@@ -3,11 +3,11 @@ export default class FullScreenLogic {
         document.onkeypress = event => {
             debugger;
             if (event.code === "KeyF") {
-                if (!document.fullScreen) {
+                if (element.width !== window.innerWidth) {
                     FullScreenLogic._launchIntoFullscreen(element);
                     // element.requestPointerLock();
                 } else {
-                    FullScreenLogic._exitFullScreen();
+                    FullScreenLogic._exitFullScreen(element);
                 }
             }
         }
@@ -23,9 +23,11 @@ export default class FullScreenLogic {
         } else if (element.msRequestFullscreen) {
             element.msRequestFullscreen();
         }
+        element.width = window.innerWidth;
+        element.height = window.innerHeight;
     }
 
-    static _exitFullScreen() {
+    static _exitFullScreen(element) {
         if (document.exitFullscreen) {
             document.exitFullscreen();
         } else if (document.mozCancelFullScreen) {
@@ -33,5 +35,7 @@ export default class FullScreenLogic {
         } else if (document.webkitExitFullscreen) {
             document.webkitExitFullscreen();
         }
+        element.width = window.innerWidth / 2;
+        element.height = window.innerHeight / 2;
     }
 }
