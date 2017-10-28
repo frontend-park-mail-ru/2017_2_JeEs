@@ -18,4 +18,5 @@ export default abstract class EVENTS {
 
     // emitted in GameStrategy, handled in view
     public static readonly TURN_BEGAN: string = "game:turn_began";
+    public static readonly GAME_OVER: string = "game:game_over";
 }

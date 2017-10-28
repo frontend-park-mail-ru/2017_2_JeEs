@@ -39,6 +39,10 @@ class GameStrategy {
 
     private onYourFigureMoved(data): void {
         this._fieldState.moveFigureTo(FIGURE_KEY.YOUR, data.point);
+        if (this._fieldState.getFigure(FIGURE_KEY.YOUR).hasReachedFinish()) {
+            this.eventBus.emit(EVENTS.GAME_OVER);
+            return;
+        }
         this.eventBus.emit(EVENTS.TURN_ENDED, {
             ...data,
             event: TURN_ENDING_EVENTS.FIGURE_MOVED

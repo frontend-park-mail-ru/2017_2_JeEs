@@ -58,7 +58,7 @@ export default class SingleplayerGameStrategy {
 
     private static recountCoordinates(fieldDimension: number, ...points: Point[]): Point[] {
         return points.map((point) => {
-            return new Point(2 * (fieldDimension - 1) - point.x, point.y);
+            return new Point(2 * (fieldDimension - 1) - point.x, 2 * (fieldDimension - 1) - point.y);
         });
     }
 
