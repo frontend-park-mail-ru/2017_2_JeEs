@@ -14,7 +14,7 @@ import FullScreen from "../../services/fullscreenlogic"
 
 
 
-const WINDOW_WIDTH = window.innerWidth;;
+const WINDOW_WIDTH = window.innerWidth;
 const WINDOW_HEIGHT = window.innerHeight;
 
 const BASE_SIZE = Constants.BASE_SIZE;
@@ -70,7 +70,7 @@ export default class GameViewManager {
 
         this._eventBus.on(Events.TURN_BEGAN, (data) => {
             this._heroView.NewTurn(data.availableForMovementPoints)
-            this._wallView.NewTurn(data.engagedPoints, this._heroView._currentHero !== this._heroView._heroOne)
+            this._wallView.NewTurn(data.engagedPoints, this._heroView._currentHero === this._heroView._heroOne)
             this._myTurn = true;
         });
 

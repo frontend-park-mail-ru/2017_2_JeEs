@@ -35,7 +35,7 @@ export default class HeroView {
         this._eventBus = new EventBus;
 
         this._eventBus.on(Events.GAMEVIEW_WALL_PLACED, (data) => {
-            if (this._currentHero === this._heroTwo) {
+            if (this._currentHero === this._heroOne) {
                 this._eventBus.emit(Events.YOUR_WALL_PLACED, data)
             } else {
                 this._eventBus.emit(Events.YOUR_WALL_PLACED, {
