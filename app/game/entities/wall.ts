@@ -42,9 +42,9 @@ export default class Wall {
 
     private static getValidationResult(upperOrLeft: Point, lowerOrRight: Point): any {
         let isVertical: boolean =
-            (upperOrLeft.x === lowerOrRight.x) && (upperOrLeft.y - lowerOrRight.y === Wall._length - 1);
+            (upperOrLeft.x === lowerOrRight.x) && (Math.abs(upperOrLeft.y - lowerOrRight.y )=== Wall._length - 1);
         let isHorizontal: boolean =
-            (upperOrLeft.x - lowerOrRight.x === Wall._length - 1) && (upperOrLeft.y === lowerOrRight.y);
+            (Math.abs(upperOrLeft.x - lowerOrRight.x)=== Wall._length - 1) && (upperOrLeft.y === lowerOrRight.y);
 
         let wallAffectsFigurePoints: boolean = false;
         [...arguments].forEach((point) => {

@@ -69,15 +69,14 @@ export default class GameViewManager {
 
 
         this._eventBus.on(Events.TURN_BEGAN, (data) => {
-            debugger;
             this._heroView.NewTurn(data.availableForMovementPoints)
             this._wallView.NewTurn(data.engagedPoints, this._heroView._currentHero !== this._heroView._heroOne)
             this._myTurn = true;
         });
 
-        // this._eventBus.on(Events.GAME_OVER, (data) => {
-        //     alert("Вы победили!");
-        // });
+        this._eventBus.on(Events.GAME_OVER, (data) => {
+            alert("Вы победили!");
+        });
 
         this._engine.runRenderLoop(() => {
             this._scene.render();
@@ -89,7 +88,6 @@ export default class GameViewManager {
         if (this._myTurn) {
             let pickResult = this._scene.pick(event.clientX, event.clientY);
             if (pickResult.pickedMesh !== null && this._heroView._currentHero === pickResult.pickedMesh) {
-                debugger;
                 this._heroView.HeroMovementStart(pickResult.pickedMesh)
             }
 

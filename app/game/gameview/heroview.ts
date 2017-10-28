@@ -35,16 +35,14 @@ export default class HeroView {
         this._eventBus = new EventBus;
 
         this._eventBus.on(Events.GAMEVIEW_WALL_PLACED, (data) => {
-            debugger;
-            // if (this._currentHero === this._heroTwo) {
+            if (this._currentHero === this._heroTwo) {
                 this._eventBus.emit(Events.YOUR_WALL_PLACED, data)
-            // } else {
-            //     debugger;
-            //     this._eventBus.emit(Events.YOUR_WALL_PLACED, {
-            //         upperOrLeft: new Point(this._gameFieldSize - 1 - data.upperOrLeft.x, this._gameFieldSize - 1 - data.upperOrLeft.y),
-            //         lowerOrRight: new Point(this._gameFieldSize - 1 - data.lowerOrRight.x, this._gameFieldSize - 1 - data.lowerOrRight.y)
-            //     })
-            // }
+            } else {
+                this._eventBus.emit(Events.YOUR_WALL_PLACED, {
+                    upperOrLeft: new Point(this._gameFieldSize - 1 - data.upperOrLeft.x, this._gameFieldSize - 1 - data.upperOrLeft.y),
+                    lowerOrRight: new Point(this._gameFieldSize - 1 - data.lowerOrRight.x, this._gameFieldSize - 1 - data.lowerOrRight.y)
+                })
+            }
         });
 
     }
@@ -138,7 +136,6 @@ export default class HeroView {
         ghostHeroMaterial.diffuseColor = BABYLON.Color3.Green();
         ghostHeroMaterial.alpha = 0.5;
 
-        debugger;
         for (const _point of this._availableForMovementPoints) {
             if (this._currentHero === this._heroTwo) {
                 this._addHero("ghostHero", this._gameFieldSize - _point.x - 1, hero.position.y / BASE_SIZE, this._gameFieldSize - _point.y - 1, ghostHeroMaterial);

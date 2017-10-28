@@ -33,11 +33,9 @@ export default class WallView {
         if (isCurrentHero) {
             this._engagedPoints = engagedPoints;
         } else {
-            debugger;
             this._engagedPoints = engagedPoints.map((point: Point) => {
                 return new Point(16 - point.x, 16 - point.y)
             });
-            debugger;
         }
     }
 
@@ -57,7 +55,6 @@ export default class WallView {
         }
 
         if (this._checkСollisions([upperOrLeft, transformedCoordinate, lowerOrRight])) {
-            console.log([upperOrLeft, transformedCoordinate, lowerOrRight]);
             this._ghostWall.position.x = transformedCoordinate.x * BASE_SIZE;
             this._ghostWall.position.z = transformedCoordinate.y * BASE_SIZE;
             this._ghostWall.rotation.y = rotation;
