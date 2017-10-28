@@ -29,10 +29,6 @@ export default class Wall {
     constructor(upperOrLeft: Point, lowerOrRight: Point) {
         let {isValid, isVertical, isHorizontal} = Wall.getValidationResult(upperOrLeft, lowerOrRight);
 
-        if (!isValid) {
-            return;
-        }
-
         this._upperOrLeft = upperOrLeft;
         this._lowerOrRight = lowerOrRight;
 
@@ -50,21 +46,15 @@ export default class Wall {
         let isHorizontal: boolean =
             (upperOrLeft.x - lowerOrRight.x === Wall._length - 1) && (upperOrLeft.y === lowerOrRight.y);
 
-        let centralPointAffectsFigurePoint: boolean =
-            ((upperOrLeft.x === lowerOrRight.x) && (lowerOrRight.x % 2 === 0)) ||
-            ((upperOrLeft.y === lowerOrRight.y) && (lowerOrRight.y % 2 === 0));
-
-        let otherPointsAffectFigurePoints: boolean = false;
+        let wallAffectsFigurePoints: boolean = false;
         [...arguments].forEach((point) => {
             if ((point.x % 2 === 0) && (point.y % 2 === 0)) {
-                otherPointsAffectFigurePoints = true;
+                wallAffectsFigurePoints = true;
                 return;
             }
         });
 
-        let isValid = (isVertical || isHorizontal) &&
-            !centralPointAffectsFigurePoint &&
-            !otherPointsAffectFigurePoints;
+        let isValid = (isVertical || isHorizontal) && !wallAffectsFigurePoints;
 
         return { isValid, isVertical, isHorizontal };
     }

@@ -11,22 +11,26 @@ function * surroundingPointsGeneratorFunction(yourFigurePosition: Point) {
     // UP
     yield { // thx, Serge Peshkofff
         pointPossiblyContainingWall: {...yourFigurePosition, y: yourFigurePosition.y + 1},
-        pointToMove: {...yourFigurePosition, y: yourFigurePosition.y + 2}
+        pointToMoveTo: {...yourFigurePosition, y: yourFigurePosition.y + 2},
+        pointToJumpTo: {...yourFigurePosition, y: yourFigurePosition.y + 4}
     };
     // RIGHT
     yield {
         pointPossiblyContainingWall: {...yourFigurePosition, x: yourFigurePosition.x + 1},
-        pointToMove: {...yourFigurePosition, x: yourFigurePosition.x + 2}
+        pointToMoveTo: {...yourFigurePosition, x: yourFigurePosition.x + 2},
+        pointToJumpTo: {...yourFigurePosition, x: yourFigurePosition.y + 4}
     };
     // DOWN
     yield {
         pointPossiblyContainingWall: {...yourFigurePosition, y: yourFigurePosition.y - 1},
-        pointToMove: {...yourFigurePosition, y: yourFigurePosition.y - 2}
+        pointToMoveTo: {...yourFigurePosition, y: yourFigurePosition.y - 2},
+        pointToJumpTo: {...yourFigurePosition, y: yourFigurePosition.y - 4}
     };
     // LEFT
     yield {
         pointPossiblyContainingWall: {...yourFigurePosition, x: yourFigurePosition.x - 1},
-        pointToMove: {...yourFigurePosition, x: yourFigurePosition.x - 2}
+        pointToMoveTo: {...yourFigurePosition, x: yourFigurePosition.x - 2},
+        pointToJumpTo: {...yourFigurePosition, x: yourFigurePosition.y - 4}
     };
     return;
 }
@@ -52,34 +56,46 @@ class FieldState {
         this.walls.push(new Wall(upperOrLeft, lowerOrRight));
     }
 
-    public getEngagedPoints(): Array<Point> {
+    public getEngagedPoints(includeFiguresPosition: boolean = true): Array<Point> {
         return []
             .concat(...this.walls.map((wall) => {
                 return [wall.upperOrLeft, wall.central, wall.lowerOrRight]
             }))
-            .concat([...this.figureMap.values()].map((figure) => {
-                return figure.position
-            }));
+            .concat(
+                (includeFiguresPosition) ?
+                    [...this.figureMap.values()].map((figure) => { return figure.position}) :
+                    []
+            );
     }
 
 
     public getAvailableForMovementPoints(): Point[] {
-        let wallPoints: Point[] = this.walls.map((wall) => {return wall.central});
+        let wallPoints: Point[] = this.getEngagedPoints(false);
 
         let result: Point[] = [];
-        let surroundingPointsIterator: IterableIterator<{pointPossiblyContainingWall, pointToMove}> =
+        let surroundingPointsIterator: IterableIterator<{pointPossiblyContainingWall, pointToMoveTo, pointToJumpTo}> =
             surroundingPointsGeneratorFunction(this.figureMap.get(FIGURE_KEY.YOUR).position);
 
         for (let pointsObject of surroundingPointsIterator) {
-            // if wallPoints not contains pointsObject.pointPossiblyContainingWall
-            if (wallPoints.filter(point => point.equals(pointsObject.pointPossiblyContainingWall)).length === 0) {
-                result.push(pointsObject.pointToMove);
+            // if wallPoints array contains pointsObject.pointPossiblyContainingWall
+            if (wallPoints.filter(point => point.equals(pointsObject.pointPossiblyContainingWall)).length > 0) {
+                continue;
+            }
+            // if your opponent stays at the point you want to move to
+            if (this.figureMap.get(FIGURE_KEY.OPPONENTS).position.equals(pointsObject.pointToMoveTo)) {
+                result.push(new Point(pointsObject.pointToJumpTo.x, pointsObject.pointToJumpTo.y));
+            } else {
+                result.push(new Point(pointsObject.pointToMoveTo.x, pointsObject.pointToMoveTo.y));
             }
         }
 
         return result.filter((point) => {
             return (point.x >= 0) && (point.y >= 0) && (point.x <= this.lastIndex) && (point.y <= this.lastIndex)
         });
+    }
+
+    getFigure(figureKey: FIGURE_KEY): Figure {
+        return this.figureMap.get(figureKey);
     }
 }
 
