@@ -1,10 +1,10 @@
-import {GameStrategy, TURN_ENDING_EVENTS} from "./game-strategy";
-import {FieldState, } from "../utils/field-state";
+import { GameStrategy, TURN_ENDING_EVENTS } from "./game-strategy";
+import { FieldState, } from "../utils/field-state";
 import EventBus from "../../modules/event-bus.js"
 import EVENTS from "../utils/events";
 import Point from "../utils/point";
 
-function * fieldStatesGeneratorFunction() {
+function* fieldStatesGeneratorFunction() {
     while (true) {
         yield this.firstPlayersFieldState;
         yield this.secondPlayersFieldState;
@@ -41,12 +41,12 @@ export default class SingleplayerGameStrategy {
             let [recountedPoint]: Point[] =
                 SingleplayerGameStrategy.recountCoordinates(this.fieldDimension, data.point);
             this.changeFieldState();
-            this.eventBus.emit(EVENTS.OPPONENTS_FIGURE_MOVED, {point: recountedPoint});
+            this.eventBus.emit(EVENTS.OPPONENTS_FIGURE_MOVED, { point: recountedPoint });
         } else if (data.event === TURN_ENDING_EVENTS.WALL_PLACED) {
             let [recountedUpperOrLeft, recountedLowerOrRight]: Point[] = SingleplayerGameStrategy.recountCoordinates(
-                    this.fieldDimension,
-                    data.upperOrLeft,
-                    data.lowerOrRight
+                this.fieldDimension,
+                data.upperOrLeft,
+                data.lowerOrRight
             );
             this.changeFieldState();
             this.eventBus.emit(EVENTS.OPPONENTS_WALL_PLACED, {
@@ -58,7 +58,7 @@ export default class SingleplayerGameStrategy {
 
     private static recountCoordinates(fieldDimension: number, ...points: Point[]): Point[] {
         return points.map((point) => {
-            return new Point(2 * (fieldDimension - 1) - point.x, point.y);
+            return new Point(2 * (fieldDimension - 1) - point.x, 2 * (fieldDimension - 1) - point.y);
         });
     }
 

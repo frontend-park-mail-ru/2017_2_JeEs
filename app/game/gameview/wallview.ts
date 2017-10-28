@@ -49,15 +49,15 @@ export default class WallView {
         const rotation = this._rotation(point);
 
         if (rotation === 0) {
-            upperOrLeft = new Point(transformedCoordinate.x + 1, transformedCoordinate.y);
-            lowerOrRight = new Point(transformedCoordinate.x - 1, transformedCoordinate.y);
+            upperOrLeft = new Point(transformedCoordinate.x - 1, transformedCoordinate.y);
+            lowerOrRight = new Point(transformedCoordinate.x + 1, transformedCoordinate.y);
         } else {
-            upperOrLeft = new Point(transformedCoordinate.x, transformedCoordinate.y - 1);
-            lowerOrRight = new Point(transformedCoordinate.x, transformedCoordinate.y + 1);
+            upperOrLeft = new Point(transformedCoordinate.x, transformedCoordinate.y + 1);
+            lowerOrRight = new Point(transformedCoordinate.x, transformedCoordinate.y - 1);
         }
 
-        if (this._checkСollisions([upperOrLeft, lowerOrRight, transformedCoordinate])) {
-            console.log([upperOrLeft, lowerOrRight, transformedCoordinate]);
+        if (this._checkСollisions([upperOrLeft, transformedCoordinate, lowerOrRight])) {
+            console.log([upperOrLeft, transformedCoordinate, lowerOrRight]);
             this._ghostWall.position.x = transformedCoordinate.x * BASE_SIZE;
             this._ghostWall.position.z = transformedCoordinate.y * BASE_SIZE;
             this._ghostWall.rotation.y = rotation;
@@ -73,11 +73,11 @@ export default class WallView {
         let lowerOrRight: Point;
 
         if (this._ghostWall.rotation.y === 0) {
-            upperOrLeft = new Point(this._ghostWall.position.x / BASE_SIZE + 1, this._ghostWall.position.z / BASE_SIZE);
-            lowerOrRight = new Point(this._ghostWall.position.x / BASE_SIZE - 1, this._ghostWall.position.z / BASE_SIZE);
+            upperOrLeft = new Point(this._ghostWall.position.x / BASE_SIZE - 1, this._ghostWall.position.z / BASE_SIZE);
+            lowerOrRight = new Point(this._ghostWall.position.x / BASE_SIZE + 1, this._ghostWall.position.z / BASE_SIZE);
         } else {
-            upperOrLeft = new Point(this._ghostWall.position.x / BASE_SIZE, this._ghostWall.position.z / BASE_SIZE - 1);
-            lowerOrRight = new Point(this._ghostWall.position.x / BASE_SIZE, this._ghostWall.position.z / BASE_SIZE + 1);
+            upperOrLeft = new Point(this._ghostWall.position.x / BASE_SIZE, this._ghostWall.position.z / BASE_SIZE + 1);
+            lowerOrRight = new Point(this._ghostWall.position.x / BASE_SIZE, this._ghostWall.position.z / BASE_SIZE - 1);
         }
 
 
@@ -133,12 +133,15 @@ export default class WallView {
     }
 
     private _checkСollisions(points: Point[]) {
-        for (const _point of points) {
-            if (_point.x < 0 || _point.y < 0 || _point.x > 16 || _point.y > 16 ||
-                (_point.x % 2 === 0 && _point.y % 2 === 0) ||
-                this._engagedPoints.filter(_filterPoint => _filterPoint.equals(_point)).length !== 0) {
-                return false
+        if (points[1].x % 2 === 1 && points[1].y % 2 === 1) {
+            for (const _point of points) {
+                if (_point.x < 0 || _point.y < 0 || _point.x > 16 || _point.y > 16 ||
+                    this._engagedPoints.filter(_filterPoint => _filterPoint.equals(_point)).length !== 0) {
+                    return false;
+                }
             }
+        } else {
+            return false;
         }
         return true
     }

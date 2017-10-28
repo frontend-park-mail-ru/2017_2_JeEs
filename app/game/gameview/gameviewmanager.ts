@@ -63,9 +63,9 @@ export default class GameViewManager {
 
         this._heroView.CreateHeroes();
 
-        window.addEventListener("click", this.OnSceneClick);
+        canvas.addEventListener("click", this.OnSceneClick);
 
-        window.addEventListener("mousemove", this.OnSceneMove);
+        canvas.addEventListener("mousemove", this.OnSceneMove);
 
 
         this._eventBus.on(Events.TURN_BEGAN, (data) => {
@@ -74,6 +74,10 @@ export default class GameViewManager {
             this._wallView.NewTurn(data.engagedPoints, this._heroView._currentHero !== this._heroView._heroOne)
             this._myTurn = true;
         });
+
+        // this._eventBus.on(Events.GAME_OVER, (data) => {
+        //     alert("Вы победили!");
+        // });
 
         this._engine.runRenderLoop(() => {
             this._scene.render();
