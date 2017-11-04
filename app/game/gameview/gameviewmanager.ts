@@ -35,9 +35,9 @@ export default class GameViewManager {
     constructor(gameFieldSize: number) {
         this._eventBus = new EventBus;
 
-        const canvas = <HTMLCanvasElement>document.getElementById("renderCanvas");
+        const canvas = <HTMLCanvasElement>document.getElementsByClassName("renderCanvas")[0];
 
-        FullScreen.addFullScreen(canvas)
+        // FullScreen.addFullScreen(canvas) мб потом допилим
 
         canvas.width = WINDOW_WIDTH;
         canvas.height = WINDOW_HEIGHT;
@@ -86,7 +86,7 @@ export default class GameViewManager {
 
     public OnSceneClick = event => {
         if (this._myTurn) {
-            let pickResult = this._scene.pick(event.clientX, event.clientY);
+            let pickResult = this._scene.pick(event.offsetX , event.offsetY);
             if (pickResult.pickedMesh !== null && this._heroView._currentHero === pickResult.pickedMesh) {
                 this._heroView.HeroMovementStart(pickResult.pickedMesh)
             }
@@ -107,7 +107,7 @@ export default class GameViewManager {
 
     public OnSceneMove = event => {
         if (this._myTurn) {
-            let pickResult = this._scene.pick(event.clientX, event.clientY);
+            let pickResult = this._scene.pick(event.offsetX, event.offsetY);
 
             if (pickResult.pickedPoint === null) {
                 return

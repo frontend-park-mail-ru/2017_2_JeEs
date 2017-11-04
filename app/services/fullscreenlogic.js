@@ -21,8 +21,9 @@ export default class FullScreenLogic {
         } else if (element.msRequestFullscreen) {
             element.msRequestFullscreen();
         }
-        element.width = window.innerWidth;
-        element.height = window.innerHeight;
+        debugger;
+        // element.width = window.innerWidth;
+        // element.height = window.innerHeight;
     }
 
     static _exitFullScreen(element) {
@@ -33,7 +34,7 @@ export default class FullScreenLogic {
         } else if (document.webkitExitFullscreen) {
             document.webkitExitFullscreen();
         }
-        element.width = window.innerWidth / 2;
-        element.height = window.innerHeight / 2;
+        // element.width = window.innerWidth / 2;
+        // element.height = window.innerHeight / 2;
     }
 }
