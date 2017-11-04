@@ -11,9 +11,9 @@ const BASE_SIZE = Constants.BASE_SIZE;
 export default class HeroView {
 
 
-    public _currentHero: BABYLON.Mesh;
+    private _currentHero: BABYLON.Mesh;
 
-    public _heroOne: BABYLON.Mesh;
+    private _heroOne: BABYLON.Mesh;
 
     private _heroTwo: BABYLON.Mesh;
 
@@ -93,12 +93,13 @@ export default class HeroView {
         return mesh.name === "ghostHero";
     }
 
-    // public IsCurrentHero(mesh: BABYLON.AbstractMesh): boolean {
-    //     return mesh === this._currentHero
-    // }
+    public IsCurrentHero(mesh: BABYLON.AbstractMesh): boolean {
+        return mesh === this._currentHero
+    }
 
-
-
+    public isMainHeroTurn(): boolean {
+        return  this._currentHero === this._heroOne
+    }
 
 
     private _addHero(name, x: number, y: number, z: number, material: BABYLON.StandardMaterial) {

@@ -70,7 +70,7 @@ export default class GameViewManager {
 
         this._eventBus.on(Events.TURN_BEGAN, (data) => {
             this._heroView.NewTurn(data.availableForMovementPoints)
-            this._wallView.NewTurn(data.engagedPoints, this._heroView._currentHero === this._heroView._heroOne)
+            this._wallView.NewTurn(data.engagedPoints, this._heroView.isMainHeroTurn())
             this._myTurn = true;
         });
 
@@ -87,7 +87,7 @@ export default class GameViewManager {
     public OnSceneClick = event => {
         if (this._myTurn) {
             let pickResult = this._scene.pick(event.offsetX , event.offsetY);
-            if (pickResult.pickedMesh !== null && this._heroView._currentHero === pickResult.pickedMesh) {
+            if (pickResult.pickedMesh !== null && this._heroView.IsCurrentHero(pickResult.pickedMesh)) {
                 this._heroView.HeroMovementStart(pickResult.pickedMesh)
             }
 
