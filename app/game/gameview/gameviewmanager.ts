@@ -22,7 +22,7 @@ const BASE_SIZE = Constants.BASE_SIZE;
 export default class GameViewManager {
     private _engine: BABYLON.Engine;
     private _scene: BABYLON.Scene;
-    private _camera: BABYLON.Camera;
+    private _camera: BABYLON.ArcRotateCamera;
 
     private _heroView: HeroView;
     private _wallView: WallView;
@@ -47,9 +47,11 @@ export default class GameViewManager {
 
         const gameFieldHalf = gameFieldSize / 2 - 0.5;
         const cameraPosition = new BABYLON.Vector3(BASE_SIZE * gameFieldHalf, 0, BASE_SIZE * gameFieldHalf);
-        this._camera = new BABYLON.ArcRotateCamera("Camera", -Math.PI / 2, Math.PI / 2.5, 200, cameraPosition, this._scene);
+        this._camera = new BABYLON.ArcRotateCamera("Camera", -Math.PI / 2, Math.PI / 2.5, 250, cameraPosition, this._scene);
         this._camera.attachControl(canvas, false);
         this._camera.minZ = 0.1;
+        this._camera.lowerRadiusLimit = 150;
+        this._camera.upperRadiusLimit = 300;
 
         const light = new BABYLON.DirectionalLight("light", new BABYLON.Vector3(0, -BASE_SIZE * gameFieldHalf, 0), this._scene);
         light.position = new BABYLON.Vector3(BASE_SIZE * gameFieldHalf, -BASE_SIZE * gameFieldHalf, BASE_SIZE * gameFieldHalf);
@@ -86,7 +88,7 @@ export default class GameViewManager {
 
     public OnSceneClick = event => {
         if (this._myTurn) {
-            let pickResult = this._scene.pick(event.offsetX , event.offsetY);
+            let pickResult = this._scene.pick(event.offsetX, event.offsetY);
             if (pickResult.pickedMesh !== null && this._heroView.IsCurrentHero(pickResult.pickedMesh)) {
                 this._heroView.HeroMovementStart(pickResult.pickedMesh)
             }
