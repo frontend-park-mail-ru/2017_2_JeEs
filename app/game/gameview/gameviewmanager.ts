@@ -49,8 +49,8 @@ export default class GameViewManager {
         const cameraPosition = new BABYLON.Vector3(BASE_SIZE * gameFieldHalf, 0, BASE_SIZE * gameFieldHalf);
         this._camera = new BABYLON.ArcRotateCamera("Camera", -Math.PI / 2, Math.PI / 2.5, 250, cameraPosition, this._scene);
         this._camera.attachControl(canvas, false);
-        this._camera.minZ = 0.1;
         this._camera.lowerRadiusLimit = 150;
+        this._camera.upperBetaLimit = Math.PI / 2.1;
         this._camera.upperRadiusLimit = 300;
 
         const light = new BABYLON.DirectionalLight("light", new BABYLON.Vector3(0, -BASE_SIZE * gameFieldHalf, 0), this._scene);
