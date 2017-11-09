@@ -1,4 +1,4 @@
-import EventBus from "../../modules/event-bus.js"
+import EventBus from "../../modules/event-bus"
 import EVENTS from "../utils/events"
 import {FieldState, FIGURE_KEY} from "../utils/field-state"
 
