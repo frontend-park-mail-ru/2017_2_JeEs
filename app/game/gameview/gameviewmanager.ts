@@ -90,17 +90,24 @@ export default class GameViewManager {
         if (this._myTurn) {
             let pickResult = this._scene.pick(event.offsetX, event.offsetY);
             if (pickResult.pickedMesh !== null && this._heroView.IsCurrentHero(pickResult.pickedMesh)) {
+                if (this._heroView.IsHeroMoving()) {
+                    this._heroView.CancelMove();
+                    return;
+                }
                 this._heroView.HeroMovementStart(pickResult.pickedMesh)
+                return;
             }
 
             if (pickResult.pickedMesh !== null && pickResult.pickedMesh.name === "ghostHero") {
                 this._myTurn = false;
                 this._heroView.MoveOnGhostHero(pickResult.pickedMesh)
+                return;
             }
 
             if (pickResult.pickedMesh !== null && this._wallView.IsGhostWall(pickResult.pickedMesh)) {
                 this._myTurn = false;
                 this._wallView.AddWallByGhosWall()
+                return;
             }
         }
     };
@@ -112,13 +119,12 @@ export default class GameViewManager {
             let pickResult = this._scene.pick(event.offsetX, event.offsetY);
 
             if (pickResult.pickedPoint === null) {
-                return
+                return;
             }
             let x = pickResult.pickedPoint.x;
             let y = pickResult.pickedPoint.z;
 
             if (!this._heroView.IsHeroMoving()) {
-                //не выполнять следующую пока не выполнится эта
                 this._wallView.AddGhostWall(new Point(x, y))
             }
         }

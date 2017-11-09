@@ -82,6 +82,11 @@ export default class HeroView {
         this._addGhostHeroes(pickedHero, this._scene)
     }
 
+    public CancelMove() {
+        this._deleteGhostHero();
+        this._heroMoved = false;
+    }
+
     public MoveOnGhostHero(pickedGhostHero: BABYLON.AbstractMesh) {
         this._moveHero(this._currentHero, new Point(pickedGhostHero.position.x, pickedGhostHero.position.z));
 
