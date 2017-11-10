@@ -22,7 +22,7 @@ class GameStrategy {
         this.eventMap.set(EVENTS.OPPONENTS_FIGURE_MOVED, this.onOpponentsFigureMoved.bind(this));
         this.eventMap.set(EVENTS.YOUR_WALL_PLACED, this.onYourWallPlaced.bind(this));
         this.eventMap.set(EVENTS.OPPONENTS_WALL_PLACED, this.onOpponentsWallPlaced.bind(this));
-        this.eventMap.set(EVENTS.GAME_CLOSED, this.onDestroy.bind(this));
+        this.eventMap.set(EVENTS.GAME_CLOSED, this.destroy.bind(this));
 
         this.eventMap.forEach((eventHandler: Function, event: string) => {
             this.eventBus.on(event, eventHandler);
@@ -54,7 +54,7 @@ class GameStrategy {
         this._fieldState.moveFigureTo(FIGURE_KEY.OPPONENTS, data.point);
     }
 
-    private onDestroy(): void {
+    public destroy(): void {
         this.eventMap.forEach((eventHandler: Function, event: string) => {
             this.eventBus.off(event, eventHandler);
         });

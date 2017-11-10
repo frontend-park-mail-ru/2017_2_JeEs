@@ -18,7 +18,7 @@ function * surroundingPointsGeneratorFunction(yourFigurePosition: Point) {
     yield {
         pointPossiblyContainingWall: {...yourFigurePosition, x: yourFigurePosition.x + 1},
         pointToMoveTo: {...yourFigurePosition, x: yourFigurePosition.x + 2},
-        pointToJumpTo: {...yourFigurePosition, x: yourFigurePosition.y + 4}
+        pointToJumpTo: {...yourFigurePosition, x: yourFigurePosition.x + 4}
     };
     // DOWN
     yield {
@@ -30,7 +30,7 @@ function * surroundingPointsGeneratorFunction(yourFigurePosition: Point) {
     yield {
         pointPossiblyContainingWall: {...yourFigurePosition, x: yourFigurePosition.x - 1},
         pointToMoveTo: {...yourFigurePosition, x: yourFigurePosition.x - 2},
-        pointToJumpTo: {...yourFigurePosition, x: yourFigurePosition.y - 4}
+        pointToJumpTo: {...yourFigurePosition, x: yourFigurePosition.x - 4}
     };
     return;
 }

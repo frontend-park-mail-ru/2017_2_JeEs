@@ -64,6 +64,11 @@
       "tsx",
       "js",
       "json"
-    ]
+    ],
+    "globals": {
+      "ts-jest": {
+        "tsConfigFile": "test-tsconfig.json"
+      }
+    }
   }
 }
