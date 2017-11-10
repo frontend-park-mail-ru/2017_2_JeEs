@@ -28,11 +28,17 @@ export default class GameViewManager {
     private _wallView: WallView;
     private _floorView: FloorView;
 
+    private _heroMesh: BABYLON.Mesh;
+
     private _myTurn: boolean = false;
+
+    private _gameFieldSize: number;
 
     private _eventBus;
 
     constructor(gameFieldSize: number) {
+        this._gameFieldSize = gameFieldSize;
+
         this._eventBus = new EventBus;
 
         const canvas = <HTMLCanvasElement>document.getElementsByClassName("renderCanvas")[0];
@@ -45,17 +51,25 @@ export default class GameViewManager {
         this._engine = new BABYLON.Engine(canvas, true);
         this._scene = new BABYLON.Scene(this._engine);
 
-        const gameFieldHalf = gameFieldSize / 2 - 0.5;
+        const gameFieldHalf = this._gameFieldSize / 2 - 0.5;
         const cameraPosition = new BABYLON.Vector3(BASE_SIZE * gameFieldHalf, 0, BASE_SIZE * gameFieldHalf);
-        this._camera = new BABYLON.ArcRotateCamera("Camera", -Math.PI / 2, Math.PI / 2.5, 250, cameraPosition, this._scene);
+        this._camera = new BABYLON.ArcRotateCamera("Camera", -Math.PI / 2, Math.PI / 2.5, BASE_SIZE * 25, cameraPosition, this._scene);
         this._camera.attachControl(canvas, false);
-        this._camera.lowerRadiusLimit = 150;
+        this._camera.lowerRadiusLimit = BASE_SIZE * 15;
         this._camera.upperBetaLimit = Math.PI / 2.1;
-        this._camera.upperRadiusLimit = 300;
+        this._camera.upperRadiusLimit = BASE_SIZE * 30;
 
-        const light = new BABYLON.DirectionalLight("light", new BABYLON.Vector3(0, -BASE_SIZE * gameFieldHalf, 0), this._scene);
-        light.position = new BABYLON.Vector3(BASE_SIZE * gameFieldHalf, -BASE_SIZE * gameFieldHalf, BASE_SIZE * gameFieldHalf);
+        this._addLights()
 
+        BABYLON.SceneLoader.ImportMesh("Hero", "./", "hero.babylon", this._scene, function (newMeshes) {
+            debugger;
+            // let ghostHeroMaterial = new BABYLON.StandardMaterial("ghostHeroMaterial", this._scene);
+            // ghostHeroMaterial.diffuseColor = BABYLON.Color3.Green();
+            // ghostHeroMaterial.alpha = 0.5;
+            newMeshes[0].scaling = new BABYLON.Vector3(0.7, 0.7, 0.7);
+            // debugger;            
+            // newMeshes[0].material = ghostHeroMaterial;
+        })
 
         this._heroView = new HeroView(gameFieldSize, this._scene);
         this._wallView = new WallView(this._scene);
@@ -128,6 +142,13 @@ export default class GameViewManager {
                 this._wallView.AddGhostWall(new Point(x, y))
             }
         }
+    }
+
+    private _addLights() {
+        const gameFieldHalf = this._gameFieldSize / 2 - 0.5;
+
+        const lightOne = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, BASE_SIZE * gameFieldHalf, 0), this._scene);
+
     }
 
 

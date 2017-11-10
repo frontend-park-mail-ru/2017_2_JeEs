@@ -25,7 +25,7 @@ module.exports = {
                     use: 'css-loader'
                 })
             }, {
-                test: /\.(eot|woff|woff2|ttf|svg|png|jpg)$/,
+                test: /\.(eot|woff|woff2|ttf|svg|png|jpg|babylon)$/,
                 loader: 'url-loader?limit=30000&name=./[name]-[hash].[ext]',
             }, {
                 test: /\.js$/,

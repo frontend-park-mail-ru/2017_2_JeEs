@@ -67,6 +67,14 @@ export default class HeroView {
         this._currentHero = this._heroTwo;
     }
 
+    // public CreateHeroesByMesh() {
+    //     const hero = BABYLON.SceneLoader.ImportMesh("hero", "",BASE_SIZE, this._scene);
+    //     hero.position = new BABYLON.Vector3(BASE_SIZE * x, BASE_SIZE * y, BASE_SIZE * z);
+
+    //     hero.material = material;
+    //     return hero
+    // }
+
     public IsHeroMoving(): boolean {
         return this._heroMoved;
     }
