@@ -1,8 +1,8 @@
-import SinglePlayerGameStrategy from "../app/game/game-strategies/singleplayer-game-strategy"
-import EventBus from "../app/modules/event-bus"
-import {FIGURE_KEY} from "../app/game/utils/field-state"
-import EVENTS from "../app/game/utils/events"
-import Point from "../app/game/utils/point"
+import SinglePlayerGameStrategy from "../../app/game/game-strategies/singleplayer-game-strategy"
+import EventBus from "../../app/modules/event-bus"
+import {FIGURE_KEY} from "../../app/game/utils/field-state"
+import EVENTS from "../../app/game/utils/events"
+import Point from "../../app/game/utils/point"
 
 const eventBus: EventBus = new EventBus;
 let singlePlayerGameStrategy: SinglePlayerGameStrategy;
@@ -147,6 +147,37 @@ describe("Figure movements", () => {
                 { x: 4, y: 8 },  // right
                 { x: 0, y: 8 }, // left
                 { x: 2, y: 6 } // down
+            ]));
+    });
+
+    it("collisions near map edges", () => {
+        // first player
+        eventBus.emit(EVENTS.YOUR_FIGURE_MOVED, {point: new Point(6, 4)});
+        // second player
+        expect(singlePlayerGameStrategy.secondPlayersFieldState.getAvailableForMovementPoints())
+            .toEqual(expect.arrayContaining([
+                { x: 0, y: 6 }, // up
+                { x: 0, y: 2 } // down
+            ]));
+        eventBus.emit(EVENTS.YOUR_FIGURE_MOVED, {point: new Point(0, 0)});
+        // first player
+        eventBus.emit(EVENTS.YOUR_FIGURE_MOVED, {point: new Point(6, 8)});
+        // second player
+        expect(singlePlayerGameStrategy.secondPlayersFieldState.getAvailableForMovementPoints())
+            .toEqual(expect.arrayContaining([
+                { x: 0, y: 2 } // up
+            ]));
+        expect(singlePlayerGameStrategy.firstPlayersFieldState.getAvailableForMovementPoints())
+            .toEqual(expect.arrayContaining([
+                { x: 6, y: 6 }, // down
+                { x: 4, y: 8 } // left
+            ]));
+        eventBus.emit(EVENTS.YOUR_FIGURE_MOVED, {point: new Point(4, 0)});
+        // first player
+        expect(singlePlayerGameStrategy.firstPlayersFieldState.getAvailableForMovementPoints())
+            .toEqual(expect.arrayContaining([
+                { x: 8, y: 8 }, // right
+                { x: 6, y: 6 } // left
             ]));
     });
 });
