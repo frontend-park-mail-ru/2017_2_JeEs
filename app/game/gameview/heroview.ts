@@ -9,13 +9,14 @@ const BASE_SIZE = Constants.BASE_SIZE;
 
 
 export default class HeroView {
+    private _currentHeroName: string;
 
+    private readonly _mainHeroName: string = "mainHero";
 
-    private _currentHero: BABYLON.Mesh;
+    private readonly _opponentHeroName: string = "opponentHero";
 
-    private _heroOne: BABYLON.Mesh;
+    private readonly _ghostHeroName: string = "ghostHero";
 
-    private _heroTwo: BABYLON.Mesh;
 
     private _heroMoved: boolean = false;
 
@@ -35,7 +36,7 @@ export default class HeroView {
         this._eventBus = new EventBus;
 
         this._eventBus.on(Events.GAMEVIEW_WALL_PLACED, (data) => {
-            if (this._currentHero === this._heroOne) {
+            if (this._currentHeroName === this._mainHeroName) {
                 this._eventBus.emit(Events.YOUR_WALL_PLACED, data)
             } else {
                 this._eventBus.emit(Events.YOUR_WALL_PLACED, {
@@ -57,31 +58,23 @@ export default class HeroView {
 
         const heroOneMaterial = new BABYLON.StandardMaterial("heroOneMaterial", this._scene);
         heroOneMaterial.diffuseColor = BABYLON.Color3.Red();
-        this._heroOne = this._addHero("hero", 0, 1 / 8 + 1 / 2, gameFieldHalf, heroOneMaterial);
+        this._addHero(this._mainHeroName, 0, 1 / 8 + 1 / 2, gameFieldHalf, heroOneMaterial);
 
 
         const heroTwoMaterial = new BABYLON.StandardMaterial("heroOneMaterial", this._scene);
         heroTwoMaterial.diffuseColor = BABYLON.Color3.Blue();
-        this._heroTwo = this._addHero("hero", this._gameFieldSize - 1, 1 / 8 + 1 / 2, gameFieldHalf, heroTwoMaterial);
+        this._addHero(this._opponentHeroName, this._gameFieldSize - 1, 1 / 8 + 1 / 2, gameFieldHalf, heroTwoMaterial);
 
-        this._currentHero = this._heroTwo;
+        this._currentHeroName = this._opponentHeroName; //костыль? почему первый не ьфштРукщ
     }
-
-    // public CreateHeroesByMesh() {
-    //     const hero = BABYLON.SceneLoader.ImportMesh("hero", "",BASE_SIZE, this._scene);
-    //     hero.position = new BABYLON.Vector3(BASE_SIZE * x, BASE_SIZE * y, BASE_SIZE * z);
-
-    //     hero.material = material;
-    //     return hero
-    // }
 
     public IsHeroMoving(): boolean {
         return this._heroMoved;
     }
 
-    public GetCurrentHero(): BABYLON.Mesh {
-        return this._currentHero;
-    }
+    // public GetCurrentHero(): BABYLON.Mesh {
+    //     return this._currentHero;
+    // }
 
     public HeroMovementStart(pickedHero: BABYLON.AbstractMesh) {
         this._heroMoved = true;
@@ -95,52 +88,78 @@ export default class HeroView {
         this._heroMoved = false;
     }
 
-    public MoveOnGhostHero(pickedGhostHero: BABYLON.AbstractMesh) {
-        this._moveHero(this._currentHero, new Point(pickedGhostHero.position.x, pickedGhostHero.position.z));
+    public MoveOnGhostHero(pickedGhostHero: BABYLON.Mesh) {
+        debugger;
+        this._moveHero(this._currentHeroName, new Point(pickedGhostHero.absolutePosition.x, pickedGhostHero.absolutePosition.z));
 
         this._deleteGhostHero();
         this._heroMoved = false;
     }
 
     public IsGhostHero(mesh: BABYLON.AbstractMesh): boolean {
-        return mesh.name === "ghostHero";
+        return mesh.name === this._ghostHeroName;
     }
 
     public IsCurrentHero(mesh: BABYLON.AbstractMesh): boolean {
-        return mesh === this._currentHero
+        return mesh.name === this._currentHeroName
     }
 
-    public isMainHeroTurn(): boolean {
-        return  this._currentHero === this._heroOne
-    }
-
-
-    private _addHero(name, x: number, y: number, z: number, material: BABYLON.StandardMaterial) {
-        const hero = BABYLON.Mesh.CreateBox(name, BASE_SIZE, this._scene);
-        hero.position = new BABYLON.Vector3(BASE_SIZE * x, BASE_SIZE * y, BASE_SIZE * z);
-
-        hero.material = material;
-        return hero
+    public IsMainHeroTurn(): boolean {
+        return this._currentHeroName === this._mainHeroName
     }
 
 
-    private _moveHero(hero: BABYLON.Mesh, position: Point) {
-        if (this._currentHero === this._heroOne) {
+    private _addHero(heroName, x: number, y: number, z: number, material: BABYLON.StandardMaterial) {
+        BABYLON.SceneLoader.ImportMesh("Hero", "./", "hero.babylon", this._scene, (newMeshes) => {
+            // let ghostHeroMaterial = new BABYLON.StandardMaterial("ghostHeroMaterial", this._scene);
+            // ghostHeroMaterial.diffuseColor = BABYLON.Color3.Green();
+            // ghostHeroMaterial.alpha = 0.5;
+            let hero = <BABYLON.Mesh>newMeshes[0]
+            hero.scaling = new BABYLON.Vector3(0.7, 0.7, 0.7);
+            hero.position = new BABYLON.Vector3(BASE_SIZE * x, BASE_SIZE * y, BASE_SIZE * z);
+            newMeshes.forEach(element => {
+                element.name = heroName;
+            });
+            // hero.name = heroName;
+            debugger;      
+            
+            // alert(hero === this._heroTwo)
+            // let copyHeroMesh = newMeshes[0].clone
+            // copyHeroMesh.position = new BABYLON.Vector3(10, 10, 10);
+            // debugger;            
+            // newMeshes[0].material = ghostHeroMaterial;
+        })
+
+        // const hero = BABYLON.Mesh.CreateBox(name, BASE_SIZE, this._scene);
+        // hero.position = new BABYLON.Vector3(BASE_SIZE * x, BASE_SIZE * y, BASE_SIZE * z);
+
+        // hero.material = material;
+    }
+
+
+    private _moveHero(heroName: string, position: Point) {
+        let hero = this._scene.getMeshByName(heroName);
+        if (this.IsCurrentHero(hero)) {
             this._eventBus.emit(Events.YOUR_FIGURE_MOVED, { point: new Point(Math.round(position.x / BASE_SIZE), Math.round(position.y / BASE_SIZE)) })
         } else {
             this._eventBus.emit(Events.YOUR_FIGURE_MOVED, { point: new Point(this._gameFieldSize - Math.round(position.x / BASE_SIZE) - 1, this._gameFieldSize - Math.round(position.y / BASE_SIZE) - 1) })
         }
 
+        console.log(position.x)
+        console.log(position.y)
+        
+        
+        debugger;
         hero.position.x = position.x;
         hero.position.z = position.y;
     }
 
 
     private _changeHero() {
-        if (this._currentHero === this._heroOne) {
-            this._currentHero = this._heroTwo
+        if (this._currentHeroName === this._mainHeroName) {
+            this._currentHeroName = this._opponentHeroName
         } else {
-            this._currentHero = this._heroOne
+            this._currentHeroName = this._mainHeroName
         }
     }
 
@@ -151,19 +170,21 @@ export default class HeroView {
         ghostHeroMaterial.alpha = 0.5;
 
         for (const _point of this._availableForMovementPoints) {
-            if (this._currentHero === this._heroTwo) {
-                this._addHero("ghostHero", this._gameFieldSize - _point.x - 1, hero.position.y / BASE_SIZE, this._gameFieldSize - _point.y - 1, ghostHeroMaterial);
-            } else {
+            if (this._currentHeroName === this._mainHeroName) {
                 this._addHero("ghostHero", _point.x, hero.position.y / BASE_SIZE, _point.y, ghostHeroMaterial);
+
+            } else {
+                this._addHero("ghostHero", this._gameFieldSize - _point.x - 1, hero.position.y / BASE_SIZE, this._gameFieldSize - _point.y - 1, ghostHeroMaterial);
+
             }
         }
     }
 
     private _deleteGhostHero() {
-        let ghost = this._scene.getMeshByName("ghostHero");
+        let ghost = this._scene.getMeshByName(this._ghostHeroName);
         while (ghost !== null) {
             ghost.dispose();
-            ghost = this._scene.getMeshByName("ghostHero");
+            ghost = this._scene.getMeshByName(this._ghostHeroName);
         }
     }
 }

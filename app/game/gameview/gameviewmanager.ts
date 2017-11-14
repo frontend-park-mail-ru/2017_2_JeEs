@@ -28,8 +28,6 @@ export default class GameViewManager {
     private _wallView: WallView;
     private _floorView: FloorView;
 
-    private _heroMesh: BABYLON.Mesh;
-
     private _myTurn: boolean = false;
 
     private _gameFieldSize: number;
@@ -49,7 +47,7 @@ export default class GameViewManager {
         canvas.height = WINDOW_HEIGHT;
 
         this._engine = new BABYLON.Engine(canvas, true);
-        this._scene = new BABYLON.Scene(this._engine);
+        this._scene = new BABYLON.Scene(this._engine);        
 
         const gameFieldHalf = this._gameFieldSize / 2 - 0.5;
         const cameraPosition = new BABYLON.Vector3(BASE_SIZE * gameFieldHalf, 0, BASE_SIZE * gameFieldHalf);
@@ -60,16 +58,6 @@ export default class GameViewManager {
         this._camera.upperRadiusLimit = BASE_SIZE * 30;
 
         this._addLights()
-
-        BABYLON.SceneLoader.ImportMesh("Hero", "./", "hero.babylon", this._scene, function (newMeshes) {
-            debugger;
-            // let ghostHeroMaterial = new BABYLON.StandardMaterial("ghostHeroMaterial", this._scene);
-            // ghostHeroMaterial.diffuseColor = BABYLON.Color3.Green();
-            // ghostHeroMaterial.alpha = 0.5;
-            newMeshes[0].scaling = new BABYLON.Vector3(0.7, 0.7, 0.7);
-            // debugger;            
-            // newMeshes[0].material = ghostHeroMaterial;
-        })
 
         this._heroView = new HeroView(gameFieldSize, this._scene);
         this._wallView = new WallView(this._scene);
@@ -86,7 +74,7 @@ export default class GameViewManager {
 
         this._eventBus.on(Events.TURN_BEGAN, (data) => {
             this._heroView.NewTurn(data.availableForMovementPoints)
-            this._wallView.NewTurn(data.engagedPoints, this._heroView.isMainHeroTurn())
+            this._wallView.NewTurn(data.engagedPoints, this._heroView.IsMainHeroTurn())
             this._myTurn = true;
         });
 
@@ -103,6 +91,8 @@ export default class GameViewManager {
     public OnSceneClick = event => {
         if (this._myTurn) {
             let pickResult = this._scene.pick(event.offsetX, event.offsetY);
+            console.log(pickResult.pickedMesh.name)
+            
             if (pickResult.pickedMesh !== null && this._heroView.IsCurrentHero(pickResult.pickedMesh)) {
                 if (this._heroView.IsHeroMoving()) {
                     this._heroView.CancelMove();
@@ -112,9 +102,9 @@ export default class GameViewManager {
                 return;
             }
 
-            if (pickResult.pickedMesh !== null && pickResult.pickedMesh.name === "ghostHero") {
+            if (pickResult.pickedMesh !== null && this._heroView.IsGhostHero(pickResult.pickedMesh)) {
                 this._myTurn = false;
-                this._heroView.MoveOnGhostHero(pickResult.pickedMesh)
+                this._heroView.MoveOnGhostHero(<BABYLON.Mesh>pickResult.pickedMesh)
                 return;
             }
 
