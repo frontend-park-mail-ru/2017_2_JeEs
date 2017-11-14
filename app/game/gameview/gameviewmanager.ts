@@ -4,12 +4,13 @@ import * as FieldState from "../utils/field-state"
 import Constants from "./constants"
 import EventBus from "../../modules/event-bus"
 
-import HeroView from "./heroview"
+import HeroManaher from "./heroview/heroManager"
 import WallView from "./wallview"
 import FloorView from "./floorview"
 import Events from "../utils/events"
 
 import FullScreen from "../../services/fullscreenlogic"
+import HeroManager from './heroview/heroManager';
 
 
 
@@ -24,7 +25,7 @@ export default class GameViewManager {
     private _scene: BABYLON.Scene;
     private _camera: BABYLON.ArcRotateCamera;
 
-    private _heroView: HeroView;
+    private _HeroManaher: HeroManaher;
     private _wallView: WallView;
     private _floorView: FloorView;
 
@@ -59,13 +60,13 @@ export default class GameViewManager {
 
         this._addLights()
 
-        this._heroView = new HeroView(gameFieldSize, this._scene);
+        this._HeroManaher = new HeroManager(gameFieldSize, this._scene);
         this._wallView = new WallView(this._scene);
         this._floorView = new FloorView(gameFieldSize, this._scene);
 
         this._floorView.AddFloor();
 
-        this._heroView.CreateHeroes();
+        this._HeroManaher.CreateHeroes();
 
         canvas.addEventListener("click", this.OnSceneClick);
 
@@ -73,8 +74,8 @@ export default class GameViewManager {
 
 
         this._eventBus.on(Events.TURN_BEGAN, (data) => {
-            this._heroView.NewTurn(data.availableForMovementPoints)
-            this._wallView.NewTurn(data.engagedPoints, this._heroView.IsMainHeroTurn())
+            this._HeroManaher.NewTurn(data.availableForMovementPoints)
+            this._wallView.NewTurn(data.engagedPoints, this._HeroManaher.IsMainHeroTurn())
             this._myTurn = true;
         });
 
@@ -93,18 +94,18 @@ export default class GameViewManager {
             let pickResult = this._scene.pick(event.offsetX, event.offsetY);
             console.log(pickResult.pickedMesh.name)
             
-            if (pickResult.pickedMesh !== null && this._heroView.IsCurrentHero(pickResult.pickedMesh)) {
-                if (this._heroView.IsHeroMoving()) {
-                    this._heroView.CancelMove();
+            if (pickResult.pickedMesh !== null && this._HeroManaher.IsCurrentHero(pickResult.pickedMesh)) {
+                if (this._HeroManaher.IsHeroMoving()) {
+                    this._HeroManaher.CancelMove();
                     return;
                 }
-                this._heroView.HeroMovementStart(pickResult.pickedMesh)
+                this._HeroManaher.HeroMovementStart()
                 return;
             }
 
-            if (pickResult.pickedMesh !== null && this._heroView.IsGhostHero(pickResult.pickedMesh)) {
+            if (pickResult.pickedMesh !== null && this._HeroManaher.IsGhostHero(pickResult.pickedMesh)) {
                 this._myTurn = false;
-                this._heroView.MoveOnGhostHero(<BABYLON.Mesh>pickResult.pickedMesh)
+                this._HeroManaher.MoveOnGhostHero(<BABYLON.Mesh>pickResult.pickedMesh)
                 return;
             }
 
@@ -128,7 +129,7 @@ export default class GameViewManager {
             let x = pickResult.pickedPoint.x;
             let y = pickResult.pickedPoint.z;
 
-            if (!this._heroView.IsHeroMoving()) {
+            if (!this._HeroManaher.IsHeroMoving()) {
                 this._wallView.AddGhostWall(new Point(x, y))
             }
         }
