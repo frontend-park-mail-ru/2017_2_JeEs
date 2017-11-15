@@ -19,13 +19,13 @@ export default class SinglePlayerGameStrategy {
     private eventBus: EventBus;
     private fieldDimension: number;
 
-    constructor(fieldDimension: number) {
+    constructor() {
         this._gameStrategy = new GameStrategy;
-        this.firstPlayersFieldState = new FieldState(fieldDimension);
-        this.secondPlayersFieldState = new FieldState(fieldDimension);
+        this.fieldDimension = parseInt(window.sessionStorage["fieldDimension"]);
+        this.firstPlayersFieldState = new FieldState(this.fieldDimension);
+        this.secondPlayersFieldState = new FieldState(this.fieldDimension);
         this.fieldStateIterator = fieldStatesGeneratorFunction.bind(this)();
         this.eventBus = new EventBus();
-        this.fieldDimension = fieldDimension;
 
         this._gameStrategy.fieldState = this.fieldStateIterator.next().value;
         this.eventBus.on(EVENTS.TURN_ENDED, this.onTurnEnded.bind(this));

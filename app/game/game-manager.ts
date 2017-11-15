@@ -6,12 +6,12 @@ class GameManager {
     private _gameView: GameView;
     private static __instance: GameManager = null;
 
-    constructor(fieldDimension: number) {
+    constructor() {
         if (GameManager.__instance) {
             return GameManager.__instance;
         }
 
-        this.singlePlayerGameStrategy = new SinglePlayerGameStrategy(fieldDimension);
+        this.singlePlayerGameStrategy = new SinglePlayerGameStrategy();
 
         GameManager.__instance = this;
     }

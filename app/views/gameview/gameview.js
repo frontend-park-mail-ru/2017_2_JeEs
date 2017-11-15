@@ -11,11 +11,11 @@ export default class GameView extends BaseView {
 
     create() {
 
-        // TODO: 17 and 9
         this.element.innerHTML = this.template({});
-        this.game = new Game(9);
+        this.game = new Game(17);
 
-        let gameManager = new GameManager(5);
+        window.sessionStorage['fieldDimension'] = '9';
+        let gameManager = new GameManager();
         gameManager.gameView = this.game;
     }
 

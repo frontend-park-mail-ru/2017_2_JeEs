@@ -21,16 +21,16 @@
   },
   "homepage": "https://github.com/frontend-park-mail-ru/2017_2_JeEs#readme",
   "dependencies": {
-    "@types/jest": "^21.1.5",
+    "@types/jest": "^21.1.6",
     "awesome-typescript-loader": "^3.3.0",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
-    "babylonjs": "^3.1.0-beta1.0",
+    "babylonjs": "^3.1.0-beta3",
     "body-parser": "^1.18.1",
     "cookie-parser": "^1.4.3",
     "cors": "^2.8.4",
     "css-loader": "^0.28.7",
-    "eslint": "^4.9.0",
+    "eslint": "^4.11.0",
     "eslint-config-google": "^0.9.1",
     "eslint-config-standard": "^10.2.1",
     "eslint-plugin-import": "^2.8.0",
@@ -42,12 +42,13 @@
     "extract-text-webpack-plugin": "^3.0.2",
     "file-loader": "^0.11.2",
     "jest": "^21.2.1",
+    "jest-localstorage-mock": "^2.1.0",
     "morgan": "^1.9.0",
     "pug": "^2.0.0-rc.4",
     "pug-cli": "^1.0.0-alpha6",
     "pug-loader": "^2.3.0",
     "style-loader": "^0.18.2",
-    "ts-jest": "^21.2.1",
+    "ts-jest": "^21.2.2",
     "ts-loader": "^3.1.1",
     "typescript": "^2.6.1",
     "url-loader": "^0.5.9",
@@ -64,6 +65,9 @@
       "tsx",
       "js",
       "json"
+    ],
+    "setupFiles": [
+      "jest-localstorage-mock"
     ],
     "globals": {
       "ts-jest": {
