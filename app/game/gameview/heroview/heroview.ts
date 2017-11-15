@@ -6,13 +6,12 @@ const BASE_SIZE = Constants.BASE_SIZE;
 
 
 export default class Hero {
-    public static readonly DefaultHeightPosition: number = BASE_SIZE / 8;
+    private readonly DefaultHeightPosition: number = BASE_SIZE / 8;
+    private readonly DefaultRotation: number = -Math.PI / 2;
 
     private _position: Point;
 
     private _heroMeshes: BABYLON.Mesh[];
-
-    private _rotation: number;
 
     constructor(name: string, scene: BABYLON.Scene, x: number, z: number, isGhost: boolean, rotation: number) {
         BABYLON.SceneLoader.ImportMesh("Hero", "./", "hero.babylon", scene, (newMeshes) => {
@@ -21,8 +20,12 @@ export default class Hero {
             // }
             this._position = new Point(x, z)
             this._heroMeshes = <BABYLON.Mesh[]>newMeshes
-            this._heroMeshes[0].scaling = new BABYLON.Vector3(0.7, 0.7, 0.7);
-            this._heroMeshes[0].position = new BABYLON.Vector3(BASE_SIZE * x, Hero.DefaultHeightPosition, BASE_SIZE * z);
+            this._heroMeshes[0].scaling = new BABYLON.Vector3(0.6, 0.6, 0.6);
+            this._heroMeshes[0].position = new BABYLON.Vector3(BASE_SIZE * x, this.DefaultHeightPosition, BASE_SIZE * z);
+           
+            this._heroMeshes[0].rotation.y = this.DefaultRotation;            
+            this._heroMeshes[0].rotation.y += rotation;
+            
             newMeshes.forEach(element => {
                 element.name = name;
             });
@@ -40,11 +43,11 @@ export default class Hero {
     }
 
     public SetRotation(rotation: number) {
-        this._rotation = rotation;
+        this._heroMeshes[0].rotation.y += rotation;
     }
 
     public GetRotation(): number {
-        return this._rotation;
+        return this._heroMeshes[0].rotation.y - this.DefaultRotation;
     }
 
     public Delete() {
