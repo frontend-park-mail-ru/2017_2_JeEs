@@ -6,24 +6,23 @@ const BASE_SIZE = Constants.BASE_SIZE;
 
 
 export default class Hero {
-    public static readonly DefaultHeightPosition: number = 1;
+    public static readonly DefaultHeightPosition: number = BASE_SIZE / 8;
 
     private _position: Point;
 
-    private _heroMesh: BABYLON.Mesh;
+    private _heroMeshes: BABYLON.Mesh[];
 
     private _rotation: number;
 
     constructor(name: string, scene: BABYLON.Scene, x: number, z: number, isGhost: boolean, rotation: number) {
         BABYLON.SceneLoader.ImportMesh("Hero", "./", "hero.babylon", scene, (newMeshes) => {
-
             // if (isGhost) {
             //     this._heroMesh.material.alpha = 0.2
             // }
             this._position = new Point(x, z)
-            this._heroMesh = <BABYLON.Mesh>newMeshes[0]
-            this._heroMesh.scaling = new BABYLON.Vector3(0.7, 0.7, 0.7);
-            this._heroMesh.position = new BABYLON.Vector3(BASE_SIZE * x, BASE_SIZE * Hero.DefaultHeightPosition, BASE_SIZE * z);
+            this._heroMeshes = <BABYLON.Mesh[]>newMeshes
+            this._heroMeshes[0].scaling = new BABYLON.Vector3(0.7, 0.7, 0.7);
+            this._heroMeshes[0].position = new BABYLON.Vector3(BASE_SIZE * x, Hero.DefaultHeightPosition, BASE_SIZE * z);
             newMeshes.forEach(element => {
                 element.name = name;
             });
@@ -31,8 +30,9 @@ export default class Hero {
     }
 
     public SetPosition(position: Point) {
-        this._heroMesh.position.x = position.x;
-        this._heroMesh.position.z = position.y;
+        this._heroMeshes[0].position.x = BASE_SIZE * position.x;
+        this._heroMeshes[0].position.z = BASE_SIZE * position.y;
+        this._position = position;
     }
 
     public GetPosition(): Point {
@@ -48,10 +48,14 @@ export default class Hero {
     }
 
     public Delete() {
-        this._heroMesh.dispose();
+        this._heroMeshes[0].dispose();
     }
 
     public GetName(): string {
-        return this._heroMesh.name;
+        return this._heroMeshes[0].name;
+    }
+
+    public CheckHeroByMesh(heroMesh: BABYLON.Mesh): boolean {
+        return this._heroMeshes.indexOf(heroMesh) !== -1;
     }
 }

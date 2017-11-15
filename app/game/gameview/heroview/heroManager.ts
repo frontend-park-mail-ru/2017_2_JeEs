@@ -87,7 +87,7 @@ export default class HeroManager {
         this._heroMoved = true;
         this._eventBus.emit(Events.GAMEVIEW_HERO_MOVEMENT_START);
 
-        this._addGhostHeroes(this._currentHero, this._scene)
+        this._addGhostHeroes(this._currentHero)
     }
 
     public CancelMove() {
@@ -96,19 +96,22 @@ export default class HeroManager {
     }
 
     public MoveOnGhostHero(pickedGhostHero: BABYLON.Mesh) {
-
-        if (this.IsMainHeroTurn()) {
-            let position: Point = this._mainHero.GetPosition();
-            this._eventBus.emit(Events.YOUR_FIGURE_MOVED, { point: new Point(Math.round(position.x / BASE_SIZE), Math.round(position.y / BASE_SIZE)) })
-        } else {
-            let position: Point = this._opponentHero.GetPosition();            
-            this._eventBus.emit(Events.YOUR_FIGURE_MOVED, { point: new Point(this._gameFieldSize - Math.round(position.x / BASE_SIZE) - 1, this._gameFieldSize - Math.round(position.y / BASE_SIZE) - 1) })
+        let position: Point;
+        for (let _i = 0; _i < this._ghostHeroes.length; _i++) {
+            if (this._ghostHeroes[_i].CheckHeroByMesh(pickedGhostHero)) {
+                position = this._ghostHeroes[_i].GetPosition()
+                this._currentHero.SetPosition(this._ghostHeroes[_i].GetPosition())
+                break
+            }
         }
 
-        //TODO: Hero Move
-        
-        this._deleteGhostHeroes();
-        this._heroMoved = false;
+        if (this.IsMainHeroTurn()) {
+            this._eventBus.emit(Events.YOUR_FIGURE_MOVED, { point: position })
+        } else {
+            this._eventBus.emit(Events.YOUR_FIGURE_MOVED, { point: new Point(this._gameFieldSize - position.x - 1, this._gameFieldSize - position.y - 1) })
+        }
+
+        this.CancelMove()
     }
 
     public IsGhostHero(mesh: BABYLON.AbstractMesh): boolean {
@@ -125,9 +128,7 @@ export default class HeroManager {
 
 
 
-    private _addGhostHeroes(hero: Hero, scene: BABYLON.Scene) {
-        let position: Point = hero.GetPosition();
-
+    private _addGhostHeroes(hero: Hero) {
         this._availableForMovementPoints.forEach(_point => {
             if (this.IsMainHeroTurn()) {
                 this._ghostHeroes.push(new Hero("ghostHero", this._scene, _point.x, _point.y, true, hero.GetRotation()));

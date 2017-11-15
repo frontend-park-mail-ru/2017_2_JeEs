@@ -92,7 +92,6 @@ export default class GameViewManager {
     public OnSceneClick = event => {
         if (this._myTurn) {
             let pickResult = this._scene.pick(event.offsetX, event.offsetY);
-            console.log(pickResult.pickedMesh.name)
             
             if (pickResult.pickedMesh !== null && this._HeroManaher.IsCurrentHero(pickResult.pickedMesh)) {
                 if (this._HeroManaher.IsHeroMoving()) {
