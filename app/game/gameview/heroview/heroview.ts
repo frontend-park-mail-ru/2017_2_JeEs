@@ -14,21 +14,36 @@ export default class Hero {
     private _heroMeshes: BABYLON.Mesh[];
 
     constructor(name: string, scene: BABYLON.Scene, x: number, z: number, isGhost: boolean, rotation: number) {
-        BABYLON.SceneLoader.ImportMesh("Hero", "./", "hero.babylon", scene, (newMeshes) => {
-            // if (isGhost) {
-            //     this._heroMesh.material.alpha = 0.2
-            // }
+        BABYLON.SceneLoader.ImportMesh("Hero", "./", "hero.babylon", scene, newMeshes => {
             this._position = new Point(x, z)
-            this._heroMeshes = <BABYLON.Mesh[]>newMeshes
-            this._heroMeshes[0].scaling = new BABYLON.Vector3(0.6, 0.6, 0.6);
+            this._heroMeshes = <BABYLON.Mesh[]>newMeshes;
+
+            if (isGhost) {
+                const ghostHeroMaterial = new BABYLON.StandardMaterial("ghostHeroMaterial", scene);
+                ghostHeroMaterial.diffuseColor = BABYLON.Color3.Gray();
+                ghostHeroMaterial.alpha = 0.3;
+                newMeshes.forEach(element => {
+                    element.name = name;                    
+                    element.material = ghostHeroMaterial;
+                });
+            } else {
+                newMeshes.forEach(element => {
+                    element.name = name;
+                });
+            }
+
+            this._heroMeshes[0].scaling = new BABYLON.Vector3(0.4, 0.4, 0.4);
             this._heroMeshes[0].position = new BABYLON.Vector3(BASE_SIZE * x, this.DefaultHeightPosition, BASE_SIZE * z);
-           
-            this._heroMeshes[0].rotation.y = this.DefaultRotation;            
+
+            this._heroMeshes[0].rotation.y = this.DefaultRotation;
             this._heroMeshes[0].rotation.y += rotation;
+
+            // this._heroMeshes[3].material = ghostHeroMaterial
+            // this._heroMeshes[4].material = ghostHeroMaterial
+            // this._heroMeshes[5].material = ghostHeroMaterial
+            // this._heroMeshes[7].material = ghostHeroMaterial
+            // this._heroMeshes[13].material = ghostHeroMaterial
             
-            newMeshes.forEach(element => {
-                element.name = name;
-            });
         });
     }
 
