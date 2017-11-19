@@ -28,26 +28,28 @@ export default class RegistrationView extends BaseView {
         this.form = this.element.querySelector('.registration-form__form');
         this.formErrorTextString = this.element.querySelector('.form__message');
 
-        this.form.addEventListener('submit', (formdata) => {
+        this.form.addEventListener('submit', () => {
             event.preventDefault();
             this._onSubmit();
         });
     }
 
     _onSubmit() {
-        const formdata = {};
+        const formData = {};
         const elements = this.form.elements;
-        for (let name in elements) {
-            formdata[name] = elements[name].value;
+        for (let field in elements) {
+            if (elements[field].nodeName === 'INPUT') {
+                formData[elements[field].name] = elements[field].value;
+            }
         }
 
-        const authValidation = validate(formdata.email, formdata.login, formdata.password, formdata.passwordConfirm);
+        const authValidation = validate(formData.email, formData.login, formData.password, formData.passwordConfirm);
         if (authValidation !== null) {
             this.formError(authValidation);
             return;
         }
 
-        this.userService.signup(formdata.email, formdata.login, formdata.password)
+        this.userService.signup(formData.email, formData.login, formData.password)
             .then(() => {
                 this.formReset();
                 this.eventBus.emit('user-block:auth');
