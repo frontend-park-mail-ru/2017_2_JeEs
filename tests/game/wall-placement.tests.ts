@@ -13,7 +13,7 @@ window.sessionStorage["fieldDimension"] = "5";
 
 describe("Wall placements", () => {
     beforeEach(() => {
-        singlePlayerGameStrategy = new SinglePlayerGameStrategy(5);
+        singlePlayerGameStrategy = new SinglePlayerGameStrategy();
     });
 
     afterEach(() => {
@@ -65,11 +65,6 @@ describe("Wall placements", () => {
                 { x: 2, y: 4 } // right
             ]));
     });
-
-    // {
-    //     upperOrLeft: new Point(),
-    //         lowerOrRight: new Point()
-    // }
 
     it("incorrect", () => {
         let incorrectPoints: Array<{}> = [
