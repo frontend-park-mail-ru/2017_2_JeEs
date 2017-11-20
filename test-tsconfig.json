@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es2016",
+    "sourceMap": true,
+    "allowJs": true,
+    "outDir": "dist/compiled"
+  },
+  "exclude": [
+    "node_modules",
+    "server",
+    "public/static",
+    "dist",
+    "webpack.config.js",
+    "app/package-requirements.js"
+  ]
+}

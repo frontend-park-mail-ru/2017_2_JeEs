@@ -14,7 +14,8 @@ export default class GameView extends BaseView {
         this.element.innerHTML = this.template({});
         this.game = new Game(17);
 
-        let gameManager = new GameManager(9);
+        window.sessionStorage['fieldDimension'] = '9';
+        let gameManager = new GameManager();
         gameManager.gameView = this.game;
     }
 

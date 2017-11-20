@@ -1,6 +1,6 @@
 import { GameStrategy, TURN_ENDING_EVENTS } from "./game-strategy";
 import { FieldState, } from "../utils/field-state";
-import EventBus from "../../modules/event-bus.js"
+import EventBus from "../../modules/event-bus"
 import EVENTS from "../utils/events";
 import Point from "../utils/point";
 
@@ -11,7 +11,7 @@ function* fieldStatesGeneratorFunction() {
     }
 }
 
-export default class SingleplayerGameStrategy {
+export default class SinglePlayerGameStrategy {
     private _gameStrategy: GameStrategy;
     private firstPlayersFieldState: FieldState;
     private secondPlayersFieldState: FieldState;
@@ -19,13 +19,13 @@ export default class SingleplayerGameStrategy {
     private eventBus: EventBus;
     private fieldDimension: number;
 
-    constructor(fieldDimension: number) {
+    constructor() {
         this._gameStrategy = new GameStrategy;
-        this.firstPlayersFieldState = new FieldState(fieldDimension);
-        this.secondPlayersFieldState = new FieldState(fieldDimension);
+        this.fieldDimension = parseInt(window.sessionStorage["fieldDimension"]);
+        this.firstPlayersFieldState = new FieldState(this.fieldDimension);
+        this.secondPlayersFieldState = new FieldState(this.fieldDimension);
         this.fieldStateIterator = fieldStatesGeneratorFunction.bind(this)();
         this.eventBus = new EventBus();
-        this.fieldDimension = fieldDimension;
 
         this._gameStrategy.fieldState = this.fieldStateIterator.next().value;
         this.eventBus.on(EVENTS.TURN_ENDED, this.onTurnEnded.bind(this));
@@ -39,11 +39,11 @@ export default class SingleplayerGameStrategy {
     private onTurnEnded(data): void {
         if (data.event === TURN_ENDING_EVENTS.FIGURE_MOVED) {
             let [recountedPoint]: Point[] =
-                SingleplayerGameStrategy.recountCoordinates(this.fieldDimension, data.point);
+                SinglePlayerGameStrategy.recountCoordinates(this.fieldDimension, data.point);
             this.changeFieldState();
             this.eventBus.emit(EVENTS.OPPONENTS_FIGURE_MOVED, { point: recountedPoint });
         } else if (data.event === TURN_ENDING_EVENTS.WALL_PLACED) {
-            let [recountedUpperOrLeft, recountedLowerOrRight]: Point[] = SingleplayerGameStrategy.recountCoordinates(
+            let [recountedUpperOrLeft, recountedLowerOrRight]: Point[] = SinglePlayerGameStrategy.recountCoordinates(
                 this.fieldDimension,
                 data.upperOrLeft,
                 data.lowerOrRight
