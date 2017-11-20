@@ -13,10 +13,14 @@ export default abstract class EVENTS {
     public static readonly OPPONENTS_WALL_PLACED: string = "game:opponents_wall_placed";
 
     // emitted and handled in view
-    public static readonly GAMEVIEW_HERO_MOVEMENT_START: string = "gameview:hero_movement_start"
-    public static readonly GAMEVIEW_WALL_PLACED: string = "gameview:wall_placed"  //костыль для синглплеера
+    public static readonly GAMEVIEW_HERO_MOVEMENT_START: string = "gameview:hero_movement_start";
+    public static readonly GAMEVIEW_WALL_PLACED: string = "gameview:wall_placed";  //костыль для синглплеера
 
     // emitted in GameStrategy, handled in view
     public static readonly TURN_BEGAN: string = "game:turn_began";
     public static readonly GAME_OVER: string = "game:game_over";
+
+    // emitted in transport, handled in MultiPlayerGameStrategy
+    public static readonly GAME_STARTED: string = "game:game_started";
+    public static readonly COORDINATES_PARSED: string = "game:coordinates_parsed";
 }
