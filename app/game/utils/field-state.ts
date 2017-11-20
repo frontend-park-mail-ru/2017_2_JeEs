@@ -18,7 +18,7 @@ function * surroundingPointsGeneratorFunction(yourFigurePosition: Point) {
     yield {
         pointPossiblyContainingWall: {...yourFigurePosition, x: yourFigurePosition.x + 1},
         pointToMoveTo: {...yourFigurePosition, x: yourFigurePosition.x + 2},
-        pointToJumpTo: {...yourFigurePosition, x: yourFigurePosition.y + 4}
+        pointToJumpTo: {...yourFigurePosition, x: yourFigurePosition.x + 4}
     };
     // DOWN
     yield {
@@ -30,7 +30,7 @@ function * surroundingPointsGeneratorFunction(yourFigurePosition: Point) {
     yield {
         pointPossiblyContainingWall: {...yourFigurePosition, x: yourFigurePosition.x - 1},
         pointToMoveTo: {...yourFigurePosition, x: yourFigurePosition.x - 2},
-        pointToJumpTo: {...yourFigurePosition, x: yourFigurePosition.y - 4}
+        pointToJumpTo: {...yourFigurePosition, x: yourFigurePosition.x - 4}
     };
     return;
 }
@@ -38,14 +38,14 @@ function * surroundingPointsGeneratorFunction(yourFigurePosition: Point) {
 class FieldState {
     private figureMap: Map<FIGURE_KEY, Figure>;
     private walls: Wall[];
-    private lastIndex: number;
+    private maxCellCoordinate: number;
 
     constructor(fieldDimension: number) {
         this.figureMap = new Map<FIGURE_KEY, Figure>();
         this.figureMap.set(FIGURE_KEY.YOUR, new Figure(fieldDimension));
         this.figureMap.set(FIGURE_KEY.OPPONENTS, new Figure(fieldDimension));
         this.walls = [];
-        this.lastIndex = 2 * (fieldDimension - 1);
+        this.maxCellCoordinate = 2 * (fieldDimension - 1);
     }
 
     public moveFigureTo(figureKey: FIGURE_KEY, point: Point): void {
@@ -53,7 +53,10 @@ class FieldState {
     }
 
     public insertWall(upperOrLeft: Point, lowerOrRight: Point) {
-        this.walls.push(new Wall(upperOrLeft, lowerOrRight));
+        let newWall: Wall = new Wall(upperOrLeft, lowerOrRight);
+        if (newWall.isValid) {
+            this.walls.push(newWall);
+        }
     }
 
     public getEngagedPoints(includeFiguresPosition: boolean = true): Array<Point> {
@@ -90,7 +93,7 @@ class FieldState {
         }
 
         return result.filter((point) => {
-            return (point.x >= 0) && (point.y >= 0) && (point.x <= this.lastIndex) && (point.y <= this.lastIndex)
+            return (point.x >= 0) && (point.y >= 0) && (point.x <= this.maxCellCoordinate) && (point.y <= this.maxCellCoordinate)
         });
     }
 
