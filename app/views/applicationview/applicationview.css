@@ -24,7 +24,7 @@ html, body, #root {
 
 .top-bar {
     width: 90%;
-    height: 60px;
+
     display: flex;
     flex-direction: row-reverse;
     justify-content: space-between;
@@ -46,9 +46,10 @@ html, body, #root {
 .game-name-block__game-name {
     font-family: "Lombardia Regular", sans-serif;
     text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white, 0 0 1em #116B55;
-    font-size: 140px;
+    font-size: 800%;
     color: #116B55;
-    margin-bottom: 30px;
+    margin-bottom: 1%;
+
 }
 
 .game-name-block__game-name:hover {

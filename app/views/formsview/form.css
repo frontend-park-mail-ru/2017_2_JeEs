@@ -10,13 +10,12 @@
 }
 
 .form__field {
-	margin-bottom: 10px;
+	margin-bottom: 5%;
 	text-align: center;
-	width: 200px;
-	height: 30px;
+	width: 80%;
 	color: #116B55;
 	font-family: "Neucha Regular", sans-serif;
-	font-size: 18px;
+	font-size: 120%;
 	border-color: #FFFFFF;
 
 	display: block;
@@ -31,35 +30,36 @@
 
 .form__title {
 	font-family: cursive;
-	font-size: 40px;
+	font-size: 190%;
 	color: #1C5253;
-	margin-bottom: 10px;
-	margin-top: 10px;
+	margin-bottom: 3%;
+	margin-top: 3%;
 	text-align: center;
 }
 
 .form__message {
 	width: 220px;
-	font-family:cursive;
+	font-family: cursive;
 	color: #B6174B;
-	font-size: 17px;
+	font-size: 100%;
     text-align: center;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 
 .form__button {
 	height: 55px;
-	width: 216px;
-	font-size: 18px;
+	width: 80%;
+	font-size: 120%;
 	font-family: "Neucha Regular", sans-serif;
 	color: #C3EB78;
 	background-color: #306B34;
-	/*margin: 5%;*/
 	display: block;
 	margin-left: auto;
 	margin-right: auto;
 
-	margin-bottom: 10px;
+	margin-bottom: 5%;
 }
 
 .form__button:hover {
@@ -71,5 +71,5 @@
 .auth-form__form, .registration-form__form {
 	display: table-cell;
 	vertical-align: middle;
-	width: 240px;
+	width: 80%;
 }

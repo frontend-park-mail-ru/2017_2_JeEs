@@ -11,30 +11,27 @@
 }
 
 .main-block__authors {
-    display: flex;
-    flex-direction: column;
-    background-color: rgba(192, 192, 192, 0.7);
     color: #116B55;
-    font-size: 36px;
+    font-size: 170%;
     font-family: cursive;
     text-align: center;
 }
 
 .main-block__authors > h3 {
-    margin-top: 0px;
-    margin-bottom: 0px;
+    margin-top: 0;
+    margin-bottom: 0;
 }
 
 .main-block__authors > ul > li {
     font-family: "Neucha Regular", sans-serif;
-    font-size: 26px;
     list-style-type: none;
     text-align: center;
 }
 
 .main-block__authors > ul {
     list-style-type: none;
-    margin-left: 0;
+    margin-left: auto;
+    margin-right: auto;
     padding-left: 0;
-    width: 220px;
+
 }

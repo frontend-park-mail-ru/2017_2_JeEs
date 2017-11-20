@@ -1,12 +1,11 @@
 .main-menu__menu-button {
     height: 55px;
-    width: 216px;
-    font-size: 24px;
+    width: 100%;
+    font-size: 150%;
     font-family: "Neucha Regular", sans-serif;
     color: #116B55;
     background-color: #C3EB78;
-    margin-top: 10px;
-    border-radius: 2px;
+    margin-top: 5%;
 
 
 }
@@ -19,17 +18,18 @@
 
 .change-theme {
     height: 40px;
-    width: 121px;
-    font-size: 18px;
+    width: 60%;
+    font-size: 120%;
 
     font-family: "Neucha Regular", sans-serif;
     color: #C3EB78;
     background-color: #306B34;
-    margin-top: 10px;
+    margin-top: 5%;
+    margin-bottom: 5%;
 
     display: block;
     margin-left: auto;
-    margin-right: 57px;
+    margin-right: auto;
 }
 
 

@@ -1,11 +1,8 @@
-
-
 .main-block__notfound {
     color: #B6174B;
-    font-size: 36px;
+    font-size: 200%;
     font-family: cursive;
-    margin-top: 10px;
-
+    margin-bottom: 5%;
 }
 
 div {
@@ -19,13 +16,9 @@ div {
     background-repeat: no-repeat;
     background-size: cover;
     display: block;
-    width: 240px;
+    width: 80%;
     height: 240px;
-    margin-left: 30px;
+    margin-left: 10%;
     filter : blur(0px);
 }
 
-h2 {
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
