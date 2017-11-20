@@ -123,10 +123,12 @@ export default class HeroManager {
     }
 
     public IsMainHeroTurn(): boolean {
-        return this._currentHero === this._mainHero
+        return this._currentHero === this._mainHero;
     }
 
-
+    public OpponentsMove(position: Point) {
+        this._opponentHero.SetPosition(position);
+    }
 
     private _addGhostHeroes(hero: Hero) {
         this._availableForMovementPoints.forEach(_point => {

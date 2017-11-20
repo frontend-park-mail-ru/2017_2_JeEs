@@ -48,7 +48,7 @@ export default class GameViewManager {
         canvas.height = WINDOW_HEIGHT;
 
         this._engine = new BABYLON.Engine(canvas, true);
-        this._scene = new BABYLON.Scene(this._engine);        
+        this._scene = new BABYLON.Scene(this._engine);
 
         const gameFieldHalf = this._gameFieldSize / 2 - 0.5;
         const cameraPosition = new BABYLON.Vector3(BASE_SIZE * gameFieldHalf, 0, BASE_SIZE * gameFieldHalf);
@@ -79,6 +79,23 @@ export default class GameViewManager {
             this._myTurn = true;
         });
 
+        this._eventBus.on(Events.TURN_BEGAN, (data) => {
+            this._HeroManaher.NewTurn(data.availableForMovementPoints)
+            this._wallView.NewTurn(data.engagedPoints, this._HeroManaher.IsMainHeroTurn())
+            this._myTurn = true;
+        });
+
+        this._eventBus.on(Events.OPPONENTS_FIGURE_MOVED, (data) => {
+            this._HeroManaher.OpponentsMove(data);
+        });
+
+        this._eventBus.on(Events.OPPONENTS_WALL_PLACED, (data) => {
+            this._wallView.OpponentsWallPlaced(data);
+        });
+
+        // this._eventBus.on(Events.OPPONENTS_TURN_BEGAN, (data) => {
+        // });
+
         this._eventBus.on(Events.GAME_OVER, (data) => {
             alert("Вы победили!");
         });
@@ -92,7 +109,7 @@ export default class GameViewManager {
     public OnSceneClick = event => {
         if (this._myTurn) {
             let pickResult = this._scene.pick(event.offsetX, event.offsetY);
-            
+
             if (pickResult.pickedMesh !== null && this._HeroManaher.IsCurrentHero(pickResult.pickedMesh)) {
                 if (this._HeroManaher.IsHeroMoving()) {
                     this._HeroManaher.CancelMove();
