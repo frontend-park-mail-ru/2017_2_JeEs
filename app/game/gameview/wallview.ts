@@ -15,7 +15,8 @@ export default class WallView {
     private _scene: BABYLON.Scene
     private _eventBus;
     private _engagedPoints: Point[] = []
-    private _defaultPosition: Vector3 = new Vector3(1.1246, 2.9217, 7.7905);
+
+    private readonly DefaultHeightPosition: number = 0// BASE_SIZE / 8;
 
     constructor(scene: BABYLON.Scene) {
         this._scene = scene;
@@ -56,8 +57,8 @@ export default class WallView {
         }
 
         if (this._checkСollisions([upperOrLeft, transformedCoordinate, lowerOrRight])) {
-            this._ghostWall[0].position.x = this._defaultPosition.x + transformedCoordinate.x * BASE_SIZE;
-            this._ghostWall[0].position.z = this._defaultPosition.z + transformedCoordinate.y * BASE_SIZE;
+            this._ghostWall[0].position.x = transformedCoordinate.x * BASE_SIZE;
+            this._ghostWall[0].position.z = transformedCoordinate.y * BASE_SIZE;
             this._ghostWall[0].rotation.y = rotation;
             this._ghostWall[0].isVisible = true;
         }
@@ -92,11 +93,11 @@ export default class WallView {
         let upperOrLeft: Point = wallPoints[0];
         let lowerOrRight: Point = wallPoints[1];
 
-        this._addWall(upperOrLeft, lowerOrRight, 1 / 8 + 1 / 2)
+        this._addWall(upperOrLeft, lowerOrRight)
     }
 
 
-    private _rotation(point: Point): number {
+    private _rotation(point: Point): number { //хардкод
         let needRotation = Math.floor((point.x - point.y + BASE_SIZE * 17) / BASE_SIZE) % 2
             != Math.floor((point.x + point.y + BASE_SIZE * 17) / BASE_SIZE) % 2;
         return needRotation ? 0 : Math.PI / 2;
@@ -104,40 +105,24 @@ export default class WallView {
 
 
     private _createGhostWall() {
-        // const wallMaterial = new BABYLON.StandardMaterial("wallMaterial", this._scene);
-        // wallMaterial.diffuseColor = BABYLON.Color3.Purple();
-        // wallMaterial.alpha = 0.5;
-        this._addWall(new Point(0, 2), new Point(0, 0), 1 / 8 + 1 / 2);
+        this._addWall(new Point(0, 2), new Point(0, 0));
     }
 
-    private _addWall(point1: Point, point2: Point, z: number) {
+    private _addWall(point1: Point, point2: Point) {
 
         BABYLON.SceneLoader.ImportMesh("Wall", "./", "wall.babylon", this._scene, newMeshes => {
             const position = new Point((point1.x + point2.x) / 2, (point1.y + point2.y) / 2);
             position.x = (point1.x + point2.x) / 2;
             position.y = (point1.y + point2.y) / 2;
             this._ghostWall = <BABYLON.Mesh[]>newMeshes;
+            
 
-            // if (isGhost) {
-            //     const ghostHeroMaterial = new BABYLON.StandardMaterial("ghostHeroMaterial", scene);
-            //     ghostHeroMaterial.diffuseColor = BABYLON.Color3.Gray();
-            //     ghostHeroMaterial.alpha = 0.3;
-            //     newMeshes.forEach(element => {
-            //         element.name = name;
-            //         element.material = ghostHeroMaterial;
-            //     });
-            // } else {
-            //     newMeshes.forEach(element => {
-            //         element.name = name;
-            //     });
-            // }
-
-            this._ghostWall[0].scaling = new BABYLON.Vector3(1, 1, 1);
+            // this._ghostWall[0].scaling = new BABYLON.Vector3(0.47, 0.47, 0.47);
             if ((point1.y - point2.y) !== 0) {
                 this._ghostWall[0].rotation.y = Math.PI / 2
             }
 
-            this._ghostWall[0].position = new BABYLON.Vector3(BASE_SIZE * position.x, BASE_SIZE * z, BASE_SIZE * position.y);
+            this._ghostWall[0].position = new BABYLON.Vector3(BASE_SIZE * position.x, this.DefaultHeightPosition, BASE_SIZE * position.y);
 
             this._ghostWall[0].isVisible = false;
 

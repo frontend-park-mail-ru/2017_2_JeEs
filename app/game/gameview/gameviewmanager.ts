@@ -79,19 +79,13 @@ export default class GameViewManager {
             this._myTurn = true;
         });
 
-        this._eventBus.on(Events.TURN_BEGAN, (data) => {
-            this._HeroManaher.NewTurn(data.availableForMovementPoints)
-            this._wallView.NewTurn(data.engagedPoints, this._HeroManaher.IsMainHeroTurn())
-            this._myTurn = true;
-        });
+        // this._eventBus.on(Events.OPPONENTS_FIGURE_MOVED, (data) => {
+        //     this._HeroManaher.OpponentsMove(data);
+        // });
 
-        this._eventBus.on(Events.OPPONENTS_FIGURE_MOVED, (data) => {
-            this._HeroManaher.OpponentsMove(data);
-        });
-
-        this._eventBus.on(Events.OPPONENTS_WALL_PLACED, (data) => {
-            this._wallView.OpponentsWallPlaced(data);
-        });
+        // this._eventBus.on(Events.OPPONENTS_WALL_PLACED, (data) => {
+        //     this._wallView.OpponentsWallPlaced(data);
+        // });
 
         // this._eventBus.on(Events.OPPONENTS_TURN_BEGAN, (data) => {
         // });
