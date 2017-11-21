@@ -1,0 +1,69 @@
+@import "../colors.scss";
+@import "../fonts.scss";
+@import "../sizes.scss";
+
+@font-face {
+  font-family: Lombardia Regular;
+  src: url("../../../public/static/fonts/lombardia.ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+
+html {
+  background-image: url('../../../public/static/images/wall.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+
+html, body, #root {
+
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.top-bar {
+  width: 90%;
+
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.game-name-block {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.game-name-block__game-name {
+  transition: border-radius .3s ease-in-out;
+}
+
+.game-name-block__game-name {
+  font-family: $game-name-font;
+  text-shadow: $game-name-shadow;
+  font-size: 800%;
+  color: $dark-green;
+  margin-bottom: 1%;
+}
+
+.game-name-block__game-name:hover {
+  color: $game-name-hover;
+  cursor: pointer;
+}
+
+.main-block {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}

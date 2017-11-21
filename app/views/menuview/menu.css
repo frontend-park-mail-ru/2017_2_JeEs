@@ -1,39 +1,32 @@
 .main-menu__menu-button {
-    height: 55px;
-    width: 100%;
-    font-size: 150%;
-    font-family: "Neucha Regular", sans-serif;
-    color: #116B55;
-    background-color: #C3EB78;
-    margin-top: 5%;
-
-
-}
+  height: 55px;
+  width: 100%;
+  font-size: 150%;
+  font-family: "Neucha Regular", sans-serif;
+  color: #116B55;
+  background-color: #C3EB78;
+  margin-top: 5%; }
 
 .main-menu__menu-button:hover {
-    border-color: #116B55;
-    background-color: #BEEC63;
-    border-radius: 8px;
-}
+  border-color: #116B55;
+  background-color: #BEEC63;
+  border-radius: 8px; }
 
 .change-theme {
-    height: 40px;
-    width: 60%;
-    font-size: 120%;
-
-    font-family: "Neucha Regular", sans-serif;
-    color: #C3EB78;
-    background-color: #306B34;
-    margin-top: 5%;
-    margin-bottom: 5%;
-
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-}
-
+  height: 40px;
+  width: 60%;
+  font-size: 120%;
+  font-family: "Neucha Regular", sans-serif;
+  color: #C3EB78;
+  background-color: #116B55;
+  margin-top: 5%;
+  margin-bottom: 5%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto; }
 
 .change-theme:hover {
-    background-color: #428D47;
-    border-color: #C3EB78;
-}
+  background-color: #428D47;
+  border-color: #C3EB78; }
+
+/*# sourceMappingURL=menu.css.map */

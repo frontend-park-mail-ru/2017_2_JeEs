@@ -1,31 +1,39 @@
+@import "../fonts.scss";
+@import "../sizes.scss";
+@import "../colors.scss";
+
 @font-face {
   font-family: Neucha Regular;
   src: url(/public/static/fonts/Neucha.ttf);
   font-weight: normal;
-  font-style: normal; }
+  font-style: normal;
+}
+
 .main-block__rating {
   display: flex;
   flex-direction: column;
-  background-color: rgba(192, 192, 192, 0.7);
-  color: #1C5253;
+  background-color: $grey-background ;
+  color: $blue-green;
   font-size: 170%;
   margin-top: 0;
-  width: 180px; }
+  width : $rating-width;
+}
 
 .main-block__rating > h3 {
   margin-top: 0;
-  margin-bottom: 0; }
+  margin-bottom: 0;
+}
 
 .main-block__rating > ul > li {
-  font-family: "Neucha Regular", sans-serif;
+  font-family: $main-menu-font;
   font-size: 90%;
   list-style-type: none;
-  text-align: center; }
+  text-align: center;
+}
 
 .main-block__rating > ul {
   list-style-type: none;
   margin-left: 0;
   padding-left: 0;
-  width: 80%; }
-
-/*# sourceMappingURL=rating.css.map */
+  width: 80%;
+}

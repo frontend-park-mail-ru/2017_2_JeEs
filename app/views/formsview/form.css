@@ -1,75 +1,64 @@
 @font-face {
-	font-family: Neucha Regular;
-	src: url(/public/static/fonts/Neucha.ttf);
-	font-weight: normal;
-	font-style: normal;
-}
+  font-family: Neucha Regular;
+  src: url(/public/static/fonts/Neucha.ttf);
+  font-weight: normal;
+  font-style: normal; }
+.form__field {
+  transition: border-radius .3s ease-in-out; }
 
 .form__field {
-	transition: border-radius .3s ease-in-out;
-}
-
-.form__field {
-	margin-bottom: 5%;
-	text-align: center;
-	width: 80%;
-	color: #116B55;
-	font-family: "Neucha Regular", sans-serif;
-	font-size: 120%;
-	border-color: #FFFFFF;
-
-	display: block;
-	margin-left: auto;
-	margin-right: auto;
-}
+  margin-bottom: 5%;
+  text-align: center;
+  width: 80%;
+  color: #116B55;
+  font-family: "Neucha Regular", sans-serif;
+  font-size: 120%;
+  border-color: #FFFFFF;
+  display: block;
+  margin-left: auto;
+  margin-right: auto; }
 
 .form__field:hover {
-	border-color: #116B55;
-	border-radius: 3px;
-}
+  border-color: #116B55;
+  border-radius: 3px; }
 
 .form__title {
-	font-family: cursive;
-	font-size: 190%;
-	color: #1C5253;
-	margin-bottom: 3%;
-	margin-top: 3%;
-	text-align: center;
-}
+  font-family: cursive;
+  font-size: 190%;
+  color: #1C5253;
+  margin-bottom: 3%;
+  margin-top: 3%;
+  text-align: center; }
 
 .form__message {
-	width: 220px;
-	font-family: cursive;
-	color: #B6174B;
-	font-size: 100%;
-    text-align: center;
-	margin-left: auto;
-	margin-right: auto;
-}
-
+  width: 220px;
+  font-family: cursive;
+  color: #B6174B;
+  font-size: 100%;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto; }
 
 .form__button {
-	height: 55px;
-	width: 80%;
-	font-size: 120%;
-	font-family: "Neucha Regular", sans-serif;
-	color: #C3EB78;
-	background-color: #306B34;
-	display: block;
-	margin-left: auto;
-	margin-right: auto;
-
-	margin-bottom: 5%;
-}
+  height: 55px;
+  width: 80%;
+  font-size: 120%;
+  font-family: "Neucha Regular", sans-serif;
+  color: #C3EB78;
+  background-color: #306B34;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 5%; }
 
 .form__button:hover {
-	background-color: #428D47;
-	border-color: #C3EB78;
-	border-radius: 8px;
-}
+  background-color: #428D47;
+  border-color: #C3EB78;
+  border-radius: 8px; }
 
 .auth-form__form, .registration-form__form {
-	display: table-cell;
-	vertical-align: middle;
-	width: 80%;
-}
+  display: table-cell;
+  vertical-align: middle;
+  width: 80%; }
+
+/*# sourceMappingURL=form.css.map */

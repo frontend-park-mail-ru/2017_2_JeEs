@@ -1,0 +1,18 @@
+@import "../colors.scss";
+@import "../fonts.scss";
+@import "../sizes.scss";
+
+.user-block__button {
+  height: $user-block-height;
+  width: $user-block-width;
+  font-size: 110%;
+  font-family: $main-menu-font;
+  color: $light-green;
+  background-color: $form-button-background;
+  margin-top: 3%;
+}
+
+.user-block__button:hover {
+  background-color: $dark-green-hover;
+  border-color: $light-green;
+}

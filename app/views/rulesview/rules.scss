@@ -1,0 +1,24 @@
+@import "../colors.scss";
+@import "../fonts.scss";
+@import "../sizes.scss";
+
+.main-block__rules {
+  color: $blue-green;
+  text-shadow: $text-shadow;
+  font-family: $main-menu-font;
+
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+
+  background-color: $grey-background;
+  align-items: center;
+  padding: 1% 3%;
+  margin-top: 2%;
+  margin-bottom: 2%;
+
+  width: $rules-width;
+  height: $rules-height;
+  flex-direction: column;
+  justify-content: space-between
+}

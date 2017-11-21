@@ -1,0 +1,41 @@
+@import "../colors.scss";
+@import "../fonts.scss";
+@import "../sizes.scss";
+
+
+.main-menu__menu-button {
+    height: $menu-button-height;
+    width: 100%;
+    font-size: 150%;
+    font-family: $main-menu-font;
+    color: $dark-green;
+    background-color: $light-green;
+    margin-top: 5%;
+}
+
+.main-menu__menu-button:hover {
+    border-color: $dark-green;
+    background-color: $light-green-hover ;
+    border-radius: 8px;
+}
+
+.change-theme {
+    height: $change-theme-button-height;
+    width: 60%;
+    font-size: 120%;
+
+    font-family: $main-menu-font;
+    color: $light-green;
+    background-color: $dark-green;
+    margin-top: 5%;
+    margin-bottom: 5%;
+
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.change-theme:hover {
+    background-color: $dark-green-hover;
+    border-color: $light-green;
+}

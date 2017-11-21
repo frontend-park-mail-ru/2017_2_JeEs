@@ -1,24 +1,21 @@
 .main-block__notfound {
-    color: #B6174B;
-    font-size: 200%;
-    font-family: cursive;
-    margin-bottom: 5%;
-}
+  color: #B6174B;
+  font-size: 200%;
+  font-family: cursive;
+  margin-bottom: 2%; }
 
 div {
-    flex-direction: row;
-    margin-top: 0;
-}
+  flex-direction: row;
+  margin-top: 0; }
 
 .cry-image {
-    background-image: url('../../../public/static/images/404.png');
+  background-image: url("../../../public/static/images/404.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: block;
+  width: 80%;
+  height: 240px;
+  margin-left: 10%;
+  filter: blur(0px); }
 
-    background-repeat: no-repeat;
-    background-size: cover;
-    display: block;
-    width: 80%;
-    height: 240px;
-    margin-left: 10%;
-    filter : blur(0px);
-}
-
+/*# sourceMappingURL=notfound.css.map */

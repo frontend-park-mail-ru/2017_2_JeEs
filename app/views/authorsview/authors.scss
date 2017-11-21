@@ -1,0 +1,41 @@
+@import "../colors.scss";
+@import "../fonts.scss";
+@import "../sizes.scss";
+
+.authors__author {
+  transition: border-radius .3s ease-in-out;
+}
+
+.authors__author {
+  color: $dark-green;
+}
+
+.authors__author:hover {
+  color: $light-green;
+}
+
+.main-block__authors {
+  color: $dark-green;
+  font-size: 170%;
+  font-family: $cursive-font;
+  text-align: center;
+}
+
+.main-block__authors > h3 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.main-block__authors > ul > li {
+  font-family: $main-menu-font;
+  list-style-type: none;
+  text-align: center;
+}
+
+.main-block__authors > ul {
+  list-style-type: none;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 0;
+
+}
