@@ -25,7 +25,7 @@ export default class MultiPlayerGameStrategy {
 
         this.eventBus.on(EVENTS.GAME_STARTED, this.onGameStarted.bind(this));
         this.eventBus.on(EVENTS.TURN_ENDED, this.onTurnEnded.bind(this));
-        this.eventBus.on(EVENTS.COORDINATES_PARSED, () => {
+        this.eventBus.on(EVENTS.YOUR_TURN, () => {
             this.gameStrategy.emitTurnBegan();
         });
     }

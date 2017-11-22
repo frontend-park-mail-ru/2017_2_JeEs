@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/frontend-park-mail-ru/2017_2_JeEs#readme",
   "dependencies": {
-    "@types/jest": "^21.1.6",
+    "@types/jest": "^21.1.7",
     "awesome-typescript-loader": "^3.3.0",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
@@ -48,7 +48,7 @@
     "pug-cli": "^1.0.0-alpha6",
     "pug-loader": "^2.3.0",
     "style-loader": "^0.18.2",
-    "ts-jest": "^21.2.2",
+    "ts-jest": "^21.2.3",
     "ts-loader": "^3.1.1",
     "typescript": "^2.6.1",
     "url-loader": "^0.5.9",

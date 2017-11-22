@@ -8,6 +8,7 @@ export default class Transport {
     private webSocket: WebSocket;
     private messagesQueue: Array<string>;
     private eventBus: EventBus;
+    private updateInterval: number;
 
     constructor() {
         if (Transport.__instance) {
@@ -16,6 +17,25 @@ export default class Transport {
 
         Transport.__instance = this;
 
+        this.initialize();
+
+        this.eventBus = new EventBus;
+        this.eventBus.on(EVENTS.WEBSOCKET_OPEN, () => { // sry for this
+            if (this.webSocket.readyState === WebSocket.CLOSED) {
+                this.webSocket.onerror = null;
+                this.webSocket.onmessage = null;
+                this.webSocket.onopen = null;
+                this.webSocket.onclose = null;
+                this.webSocket = null;
+                this.initialize();
+            }
+        });
+        this.eventBus.on(EVENTS.WEBSOCKET_CLOSE, () => {
+            this.webSocket.close();
+        });
+    }
+
+    private initialize() {
         let [protocol, host]: Array<string> = window.localStorage["backendUrl"].split("://");
         let address: string = (protocol === "https") ? `wss://${host}/game` : `ws://${host}/game`;
 
@@ -27,6 +47,7 @@ export default class Transport {
         };
         this.webSocket.onclose = (event: CloseEvent) => {
             console.log(`WebSocket closed with code ${event.code} (${event.reason})`);
+            clearInterval(this.updateInterval);
         };
         this.webSocket.onopen = () => {
             console.log(`WebSocket on address ${address} opened`);
@@ -35,13 +56,18 @@ export default class Transport {
             while (this.messagesQueue.length > 0) {
                 this.sendMessage(this.messagesQueue.shift());
             }
-        };
 
-        this.eventBus = new EventBus;
+            // pinging
+            this.updateInterval = setInterval(() => {
+                this.webSocket.send(JSON.stringify({
+                    class:"InfoMessage",
+                    message:""
+                }))}, 5 * 1000);
+        };
     }
 
     private handleMessage(event: MessageEvent): void {
-        console.log(`Accepted message ${event.data}`);
+        console.log(`Received message ${event.data}`);
 
         const data = JSON.parse(event.data);
         switch (data.class) {
@@ -106,7 +132,7 @@ export default class Transport {
                 }
             }
         }).then(() => {
-            this.eventBus.emit(EVENTS.COORDINATES_PARSED);
+            this.eventBus.emit(EVENTS.YOUR_TURN);
         });
     }
 

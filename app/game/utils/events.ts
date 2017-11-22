@@ -22,5 +22,9 @@ export default abstract class EVENTS {
 
     // emitted in transport, handled in MultiPlayerGameStrategy
     public static readonly GAME_STARTED: string = "game:game_started";
-    public static readonly COORDINATES_PARSED: string = "game:coordinates_parsed";
+    public static readonly YOUR_TURN: string = "game:your_turn";
+
+    // emitted in gameviewview (!), handled in transport
+    public static readonly WEBSOCKET_OPEN: string = "network:websocket_open";
+    public static readonly WEBSOCKET_CLOSE: string = "network:websocket_close";
 }
