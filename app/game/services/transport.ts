@@ -9,6 +9,7 @@ export default class Transport {
     private messagesQueue: Array<string>;
     private eventBus: EventBus;
     private updateInterval: number;
+    private handlersMap: Map<string, (data: messages.Message) => void>;
 
     constructor() {
         if (Transport.__instance) {
@@ -33,6 +34,11 @@ export default class Transport {
         this.eventBus.on(EVENTS.WEBSOCKET_CLOSE, () => {
             this.webSocket.close();
         });
+
+        this.handlersMap = new Map();
+        this.handlersMap.set("InitGame", this.handleInitGameMessage);
+        this.handlersMap.set("Coordinates", this.parseCoordinates);
+        this.handlersMap.set("FinishGame", this.handleFinishGameMessage);
     }
 
     private initialize() {
@@ -69,17 +75,8 @@ export default class Transport {
     private handleMessage(event: MessageEvent): void {
         console.log(`Received message ${event.data}`);
 
-        const data = JSON.parse(event.data);
-        switch (data.class) {
-            case "InitGame": {
-                this.handleInitGameMessage(data);
-                break;
-            }
-            case "Coordinates": {
-                this.parseCoordinates(data);
-                break;
-            }
-        }
+        const data: messages.Message = JSON.parse(event.data);
+        this.handlersMap.get(data.class).call(this, data);
     }
 
     public sendMessage(message: string): void {
@@ -99,7 +96,7 @@ export default class Transport {
         });
         this.sendMessage(JSON.stringify({
             class: "Coordinates",
-            coordinates: pointsString.slice(0, -1) // remove trailing whitespace
+            coordinates: pointsString.slice(0, -1) // removing trailing whitespace
         }));
     }
 
@@ -138,5 +135,11 @@ export default class Transport {
 
     private handleInitGameMessage(message: messages.InitGameMessage): void {
         this.eventBus.emit(EVENTS.GAME_STARTED, { isFirst: message.isFirst })
+    }
+
+    private handleFinishGameMessage(message: messages.FinishGameMessage): void {
+        if (message.won) {
+            alert("Вы выиграли");
+        }
     }
 }

@@ -12,4 +12,8 @@ interface CoordinatesMessage extends Message {
     coordinates: string;
 }
 
-export {Message, InitGameMessage, CoordinatesMessage}
+interface FinishGameMessage extends Message {
+    won: boolean;
+}
+
+export {Message, InitGameMessage, CoordinatesMessage, FinishGameMessage}
