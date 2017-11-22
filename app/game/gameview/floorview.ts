@@ -29,6 +29,11 @@ export default class FloorView {
 
         this._addAllAvailablePositionOnFloor()
 
+        // тени
+        // var shadowGenerator = new BABYLON.ShadowGenerator(1024, light);
+        // shadowGenerator.getShadowMap().renderList.push(torus);
+        // floor.receiveShadows = true;
+
     }
 
     private _addAllAvailablePositionOnFloor() {

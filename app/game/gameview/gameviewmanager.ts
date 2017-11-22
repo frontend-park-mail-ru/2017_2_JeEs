@@ -4,12 +4,13 @@ import * as FieldState from "../utils/field-state"
 import Constants from "./constants"
 import EventBus from "../../modules/event-bus"
 
-import HeroView from "./heroview"
+import HeroManaher from "./heroview/heroManager"
 import WallView from "./wallview"
 import FloorView from "./floorview"
 import Events from "../utils/events"
 
 import FullScreen from "../../services/fullscreenlogic"
+import HeroManager from './heroview/heroManager';
 
 
 
@@ -22,22 +23,26 @@ const BASE_SIZE = Constants.BASE_SIZE;
 export default class GameViewManager {
     private _engine: BABYLON.Engine;
     private _scene: BABYLON.Scene;
-    private _camera: BABYLON.Camera;
+    private _camera: BABYLON.ArcRotateCamera;
 
-    private _heroView: HeroView;
+    private _HeroManaher: HeroManaher;
     private _wallView: WallView;
     private _floorView: FloorView;
 
     private _myTurn: boolean = false;
 
+    private _gameFieldSize: number;
+
     private _eventBus;
 
     constructor(gameFieldSize: number) {
+        this._gameFieldSize = gameFieldSize;
+
         this._eventBus = new EventBus;
 
         const canvas = <HTMLCanvasElement>document.getElementsByClassName("renderCanvas")[0];
 
-        // FullScreen.addFullScreen(canvas) мб потом допилим
+        // TODO FullScreen.addFullScreen(canvas)
 
         canvas.width = WINDOW_WIDTH;
         canvas.height = WINDOW_HEIGHT;
@@ -45,23 +50,23 @@ export default class GameViewManager {
         this._engine = new BABYLON.Engine(canvas, true);
         this._scene = new BABYLON.Scene(this._engine);
 
-        const gameFieldHalf = gameFieldSize / 2 - 0.5;
+        const gameFieldHalf = this._gameFieldSize / 2 - 0.5;
         const cameraPosition = new BABYLON.Vector3(BASE_SIZE * gameFieldHalf, 0, BASE_SIZE * gameFieldHalf);
-        this._camera = new BABYLON.ArcRotateCamera("Camera", -Math.PI / 2, Math.PI / 2.5, 200, cameraPosition, this._scene);
+        this._camera = new BABYLON.ArcRotateCamera("Camera", -Math.PI / 2, Math.PI / 2.5, BASE_SIZE * 25, cameraPosition, this._scene);
         this._camera.attachControl(canvas, false);
-        this._camera.minZ = 0.1;
+        this._camera.lowerRadiusLimit = BASE_SIZE * 15;
+        this._camera.upperBetaLimit = Math.PI / 2.1;
+        this._camera.upperRadiusLimit = BASE_SIZE * 30;
 
-        const light = new BABYLON.DirectionalLight("light", new BABYLON.Vector3(0, -BASE_SIZE * gameFieldHalf, 0), this._scene);
-        light.position = new BABYLON.Vector3(BASE_SIZE * gameFieldHalf, -BASE_SIZE * gameFieldHalf, BASE_SIZE * gameFieldHalf);
+        this._addLights()
 
-
-        this._heroView = new HeroView(gameFieldSize, this._scene);
+        this._HeroManaher = new HeroManager(gameFieldSize, this._scene);
         this._wallView = new WallView(this._scene);
         this._floorView = new FloorView(gameFieldSize, this._scene);
 
         this._floorView.AddFloor();
 
-        this._heroView.CreateHeroes();
+        this._HeroManaher.CreateHeroes();
 
         canvas.addEventListener("click", this.OnSceneClick);
 
@@ -69,9 +74,20 @@ export default class GameViewManager {
 
 
         this._eventBus.on(Events.TURN_BEGAN, (data) => {
-            this._heroView.NewTurn(data.availableForMovementPoints)
-            this._wallView.NewTurn(data.engagedPoints, this._heroView.isMainHeroTurn())
+            this._HeroManaher.NewTurn(data.availableForMovementPoints)
+            this._wallView.NewTurn(data.engagedPoints, this._HeroManaher.IsMainHeroTurn())
             this._myTurn = true;
+        });
+
+
+        this._eventBus.on(Events.MULTIPLAYER, (data) => {
+            this._eventBus.on(Events.OPPONENTS_FIGURE_MOVED, (data) => {
+                this._HeroManaher.OpponentsMove(data);
+            });
+
+            this._eventBus.on(Events.OPPONENTS_WALL_PLACED, (data) => {
+                this._wallView.OpponentsWallPlaced(data);
+            });
         });
 
         this._eventBus.on(Events.GAME_OVER, (data) => {
@@ -86,19 +102,27 @@ export default class GameViewManager {
 
     public OnSceneClick = event => {
         if (this._myTurn) {
-            let pickResult = this._scene.pick(event.offsetX , event.offsetY);
-            if (pickResult.pickedMesh !== null && this._heroView.IsCurrentHero(pickResult.pickedMesh)) {
-                this._heroView.HeroMovementStart(pickResult.pickedMesh)
+            let pickResult = this._scene.pick(event.offsetX, event.offsetY);
+
+            if (pickResult.pickedMesh !== null && this._HeroManaher.IsCurrentHero(pickResult.pickedMesh)) {
+                if (this._HeroManaher.IsHeroMoving()) {
+                    this._HeroManaher.CancelMove();
+                    return;
+                }
+                this._HeroManaher.HeroMovementStart()
+                return;
             }
 
-            if (pickResult.pickedMesh !== null && pickResult.pickedMesh.name === "ghostHero") {
+            if (pickResult.pickedMesh !== null && this._HeroManaher.IsGhostHero(pickResult.pickedMesh)) {
                 this._myTurn = false;
-                this._heroView.MoveOnGhostHero(pickResult.pickedMesh)
+                this._HeroManaher.MoveOnGhostHero(<BABYLON.Mesh>pickResult.pickedMesh)
+                return;
             }
 
             if (pickResult.pickedMesh !== null && this._wallView.IsGhostWall(pickResult.pickedMesh)) {
                 this._myTurn = false;
                 this._wallView.AddWallByGhosWall()
+                return;
             }
         }
     };
@@ -110,16 +134,22 @@ export default class GameViewManager {
             let pickResult = this._scene.pick(event.offsetX, event.offsetY);
 
             if (pickResult.pickedPoint === null) {
-                return
+                return;
             }
             let x = pickResult.pickedPoint.x;
             let y = pickResult.pickedPoint.z;
 
-            if (!this._heroView.IsHeroMoving()) {
-                //не выполнять следующую пока не выполнится эта
+            if (!this._HeroManaher.IsHeroMoving()) {
                 this._wallView.AddGhostWall(new Point(x, y))
             }
         }
+    }
+
+    private _addLights() {
+        const gameFieldHalf = this._gameFieldSize / 2 - 0.5;
+
+        const lightOne = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, BASE_SIZE * gameFieldHalf, 0), this._scene);
+
     }
 
 
