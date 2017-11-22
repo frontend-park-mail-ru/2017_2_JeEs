@@ -28,6 +28,8 @@ export default class MultiPlayerGameStrategy {
         this.eventBus.on(EVENTS.YOUR_TURN, () => {
             this.gameStrategy.emitTurnBegan();
         });
+
+        this.eventBus.emit(EVENTS.MULTIPLAYER);
     }
 
     private onGameStarted(data): void {
