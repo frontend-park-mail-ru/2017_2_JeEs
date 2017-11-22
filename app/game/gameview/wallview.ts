@@ -16,7 +16,7 @@ export default class WallView {
     private _eventBus;
     private _engagedPoints: Point[] = []
 
-    private readonly DefaultHeightPosition: number = 0// BASE_SIZE / 8;
+    private readonly DefaultHeightPosition: number = 0;
 
     constructor(scene: BABYLON.Scene) {
         this._scene = scene;
@@ -117,7 +117,6 @@ export default class WallView {
             this._ghostWall = <BABYLON.Mesh[]>newMeshes;
             
 
-            // this._ghostWall[0].scaling = new BABYLON.Vector3(0.47, 0.47, 0.47);
             if ((point1.y - point2.y) !== 0) {
                 this._ghostWall[0].rotation.y = Math.PI / 2
             }
@@ -126,6 +125,13 @@ export default class WallView {
 
             this._ghostWall[0].isVisible = false;
 
+            const wallMaterial = new BABYLON.StandardMaterial("wallMaterial", this._scene);
+            wallMaterial.diffuseColor = BABYLON.Color3.Gray();
+            wallMaterial.alpha = 0.5;
+
+            newMeshes.forEach(element => {
+                element.material = wallMaterial;
+            });
         });
     }
 
