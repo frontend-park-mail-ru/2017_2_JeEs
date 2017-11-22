@@ -2,6 +2,16 @@
 @import "../fonts.scss";
 @import "../sizes.scss";
 
+@mixin size($size) {
+  height : $size;
+  width : $size;
+}
+
+@mixin aligment($aligment) {
+  justify-content: $aligment;
+  align-items: $aligment;
+}
+
 @font-face {
   font-family: Lombardia Regular;
   src: url("../../../public/static/fonts/lombardia.ttf");
@@ -18,8 +28,8 @@ html {
 
 html, body, #root {
 
-  width: 100%;
-  height: 100%;
+  @include size(100%);
+
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -36,11 +46,11 @@ html, body, #root {
 }
 
 .game-name-block {
+  @include aligment(center);
+
   width: 100%;
   display: flex;
   flex-direction: row;
-  justify-content: center;
-  align-items: center;
 }
 
 .game-name-block__game-name {
@@ -61,9 +71,9 @@ html, body, #root {
 }
 
 .main-block {
+  @include aligment(center);
+
   display: flex;
   flex-direction: row;
-  justify-content: center;
-  align-items: center;
   width: 100%;
 }

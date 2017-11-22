@@ -12,20 +12,17 @@
   font-size: 170%;
   font-family: cursive;
   text-align: center; }
-
-.main-block__authors > h3 {
-  margin-top: 0;
-  margin-bottom: 0; }
-
-.main-block__authors > ul > li {
-  font-family: "Neucha Regular", sans-serif;
-  list-style-type: none;
-  text-align: center; }
-
-.main-block__authors > ul {
-  list-style-type: none;
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 0; }
+  .main-block__authors h3 {
+    margin-top: 0;
+    margin-bottom: 0; }
+  .main-block__authors ul {
+    margin-left: auto;
+    margin-right: auto;
+    list-style-type: none;
+    padding-left: 0; }
+    .main-block__authors ul li {
+      font-family: "Neucha Regular", sans-serif;
+      list-style-type: none;
+      text-align: center; }
 
 /*# sourceMappingURL=authors.css.map */

@@ -2,11 +2,25 @@
 @import "../colors.scss";
 @import "../sizes.scss";
 
+@mixin margin-lr($margin) {
+  margin-left: $margin;
+  margin-right: $margin;
+}
+
+@mixin margin-bt($margin) {
+  margin-top: $margin;
+  margin-bottom: $margin;
+}
+
+@mixin font($font) {
+  font-weight: $font;
+  font-style: $font;
+}
+
 @font-face {
+  @include font(normal);
   font-family: Neucha Regular;
   src: url(/public/static/fonts/Neucha.ttf);
-  font-weight: normal;
-  font-style: normal;
 }
 
 .form__field {
@@ -14,6 +28,7 @@
 }
 
 .form__field {
+  @include margin-lr(auto);
   margin-bottom: 5%;
   text-align: center;
   width: 80%;
@@ -21,10 +36,7 @@
   font-family: $main-menu-font;
   font-size: 120%;
   border-color: $white-border;
-
   display: block;
-  margin-left: auto;
-  margin-right: auto;
 }
 
 .form__field:hover {
@@ -33,26 +45,25 @@
 }
 
 .form__title {
+  @include margin-bt(3%);
   font-family: $cursive-font;
   font-size: 190%;
   color: $blue-green;
-  margin-bottom: 3%;
-  margin-top: 3%;
   text-align: center;
 }
 
 .form__message {
+  @include margin-lr(auto);
   width : $message-width;
   font-family: $cursive-font;
   color: $message-red;
   font-size: 100%;
   text-align: center;
-  margin-left: auto;
-  margin-right: auto;
 }
 
 
 .form__button {
+  @include margin-lr(auto);
   height: $menu-button-height;
   width: 80%;
   font-size: 120%;
@@ -60,9 +71,6 @@
   color: $light-green;
   background-color: $form-button-background;
   display: block;
-  margin-left: auto;
-  margin-right: auto;
-
   margin-bottom: 5%;
 }
 

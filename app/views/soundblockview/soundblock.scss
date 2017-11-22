@@ -1,3 +1,8 @@
+@mixin size($size) {
+  height : $size;
+  width : $size;
+}
+
 .sound-block
 {
   width: 15%;
@@ -9,7 +14,6 @@
 
 .sound-block__mute
 {
-  width: 15%;
-  height: 15%;
+  @include size(15%);
   margin-right: 3%;
 }

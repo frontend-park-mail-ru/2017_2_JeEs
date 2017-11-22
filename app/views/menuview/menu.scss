@@ -2,6 +2,15 @@
 @import "../fonts.scss";
 @import "../sizes.scss";
 
+@mixin margin-lr($margin) {
+    margin-left: $margin;
+    margin-right: $margin;
+}
+
+@mixin margin-bt($margin) {
+    margin-top: $margin;
+    margin-bottom: $margin;
+}
 
 .main-menu__menu-button {
     height: $menu-button-height;
@@ -20,19 +29,15 @@
 }
 
 .change-theme {
+    @include margin-bt(5%);
+    @include margin-lr(auto);
     height: $change-theme-button-height;
     width: 60%;
     font-size: 120%;
-
     font-family: $main-menu-font;
     color: $light-green;
     background-color: $dark-green;
-    margin-top: 5%;
-    margin-bottom: 5%;
-
     display: block;
-    margin-left: auto;
-    margin-right: auto;
 }
 
 .change-theme:hover {

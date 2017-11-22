@@ -2,6 +2,16 @@
 @import "../fonts.scss";
 @import "../sizes.scss";
 
+@mixin margin-lr($margin) {
+  margin-left: $margin;
+  margin-right: $margin;
+}
+
+@mixin margin-bt($margin) {
+  margin-top: $margin;
+  margin-bottom: $margin;
+}
+
 .authors__author {
   transition: border-radius .3s ease-in-out;
 }
@@ -19,23 +29,21 @@
   font-size: 170%;
   font-family: $cursive-font;
   text-align: center;
-}
 
-.main-block__authors > h3 {
-  margin-top: 0;
-  margin-bottom: 0;
-}
+  h3 {
+    @include margin-bt(0);
+  }
 
-.main-block__authors > ul > li {
-  font-family: $main-menu-font;
-  list-style-type: none;
-  text-align: center;
-}
+  ul {
+    @include margin-lr(auto);
+    list-style-type: none;
+    padding-left: 0;
 
-.main-block__authors > ul {
-  list-style-type: none;
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 0;
+    li {
+      font-family: $main-menu-font;
+      list-style-type: none;
+      text-align: center;
+    }
 
+  }
 }

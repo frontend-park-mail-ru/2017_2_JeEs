@@ -13,17 +13,17 @@
   border-radius: 8px; }
 
 .change-theme {
+  margin-top: 5%;
+  margin-bottom: 5%;
+  margin-left: auto;
+  margin-right: auto;
   height: 40px;
   width: 60%;
   font-size: 120%;
   font-family: "Neucha Regular", sans-serif;
   color: #C3EB78;
   background-color: #116B55;
-  margin-top: 5%;
-  margin-bottom: 5%;
-  display: block;
-  margin-left: auto;
-  margin-right: auto; }
+  display: block; }
 
 .change-theme:hover {
   background-color: #428D47;

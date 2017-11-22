@@ -2,6 +2,11 @@
 @import "../sizes.scss";
 @import "../colors.scss";
 
+@mixin margin-bt($margin) {
+  margin-top: $margin;
+  margin-bottom: $margin;
+}
+
 @font-face {
   font-family: Neucha Regular;
   src: url(/public/static/fonts/Neucha.ttf);
@@ -17,23 +22,24 @@
   font-size: 170%;
   margin-top: 0;
   width : $rating-width;
+
+  h3 {
+    @include margin-bt(0);
+  }
+
+  ul {
+    list-style-type: none;
+    margin-left: 0;
+    padding-left: 0;
+    width: 80%;
+
+    li {
+      font-family: $main-menu-font;
+      font-size: 90%;
+      list-style-type: none;
+      text-align: center;
+    }
+  }
 }
 
-.main-block__rating > h3 {
-  margin-top: 0;
-  margin-bottom: 0;
-}
 
-.main-block__rating > ul > li {
-  font-family: $main-menu-font;
-  font-size: 90%;
-  list-style-type: none;
-  text-align: center;
-}
-
-.main-block__rating > ul {
-  list-style-type: none;
-  margin-left: 0;
-  padding-left: 0;
-  width: 80%;
-}
