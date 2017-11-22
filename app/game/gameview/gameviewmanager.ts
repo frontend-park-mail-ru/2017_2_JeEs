@@ -42,7 +42,7 @@ export default class GameViewManager {
 
         const canvas = <HTMLCanvasElement>document.getElementsByClassName("renderCanvas")[0];
 
-        // FullScreen.addFullScreen(canvas) мб потом допилим
+        // TODO FullScreen.addFullScreen(canvas)
 
         canvas.width = WINDOW_WIDTH;
         canvas.height = WINDOW_HEIGHT;
@@ -79,16 +79,16 @@ export default class GameViewManager {
             this._myTurn = true;
         });
 
-        // this._eventBus.on(Events.OPPONENTS_FIGURE_MOVED, (data) => {
-        //     this._HeroManaher.OpponentsMove(data);
-        // });
 
-        // this._eventBus.on(Events.OPPONENTS_WALL_PLACED, (data) => {
-        //     this._wallView.OpponentsWallPlaced(data);
-        // });
+        this._eventBus.on(Events.MULTIPLAYER, (data) => {
+            this._eventBus.on(Events.OPPONENTS_FIGURE_MOVED, (data) => {
+                this._HeroManaher.OpponentsMove(data);
+            });
 
-        // this._eventBus.on(Events.OPPONENTS_TURN_BEGAN, (data) => {
-        // });
+            this._eventBus.on(Events.OPPONENTS_WALL_PLACED, (data) => {
+                this._wallView.OpponentsWallPlaced(data);
+            });
+        });
 
         this._eventBus.on(Events.GAME_OVER, (data) => {
             alert("Вы победили!");

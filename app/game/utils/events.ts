@@ -1,5 +1,8 @@
 export default abstract class EVENTS {
 
+    public static readonly SIGNLEPLAYER: string = "game:singleplayer";
+    public static readonly MULTIPLAYER: string = "game:multiplayer";
+
     // emitted in view, handled in GameStrategy
     public static readonly YOUR_FIGURE_MOVED: string = "game:figure_moved";
     public static readonly YOUR_WALL_PLACED: string = "game:wall_placed";
