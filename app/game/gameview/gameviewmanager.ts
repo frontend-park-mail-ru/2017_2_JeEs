@@ -84,6 +84,9 @@ export default class GameViewManager {
         });
 
         this._eventBus.on(Events.MULTIPLAYER, (data) => {
+
+            this._HeroManaher.SetMultiplayerLogic();
+
             this._eventBus.on(Events.OPPONENTS_FIGURE_MOVED, (data) => {
                 this._HeroManaher.OpponentsMove(data.point);
             });

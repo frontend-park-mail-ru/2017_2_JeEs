@@ -30,6 +30,8 @@ export default class HeroManager {
 
     private _eventBus;
 
+    private _singleplayerFlag: boolean = true;
+
     constructor(gameFieldSize: number, scene: BABYLON.Scene) {
         this._gameFieldSize = gameFieldSize;
         this._scene = scene;
@@ -50,8 +52,15 @@ export default class HeroManager {
         });
     }
 
+    public SetMultiplayerLogic() {
+        this._currentHero = this._mainHero;
+        this._singleplayerFlag = false;
+    }
+
     public NewTurn(availableForMovementPoints: Point[]) {
-        this._changeHero();
+        if (this._singleplayerFlag) {
+            this._changeHero();
+        }
         this._availableForMovementPoints = availableForMovementPoints;
     }
 
@@ -69,9 +78,6 @@ export default class HeroManager {
         return this._heroMoved;
     }
 
-    // public GetCurrentHero(): BABYLON.Mesh {
-    //     return this._currentHero;
-    // }
 
     public HeroMovementStart() {
         this._heroMoved = true;
