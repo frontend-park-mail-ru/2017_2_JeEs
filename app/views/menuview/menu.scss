@@ -1,0 +1,46 @@
+@import "../colors.scss";
+@import "../fonts.scss";
+@import "../sizes.scss";
+
+@mixin margin-lr($margin) {
+    margin-left: $margin;
+    margin-right: $margin;
+}
+
+@mixin margin-bt($margin) {
+    margin-top: $margin;
+    margin-bottom: $margin;
+}
+
+.main-menu__menu-button {
+    height: $menu-button-height;
+    width: 100%;
+    font-size: 150%;
+    font-family: $main-menu-font;
+    color: $dark-green;
+    background-color: $light-green;
+    margin-top: 5%;
+}
+
+.main-menu__menu-button:hover {
+    border-color: $dark-green;
+    background-color: $light-green-hover ;
+    border-radius: 8px;
+}
+
+.change-theme {
+    @include margin-bt(5%);
+    @include margin-lr(auto);
+    height: $change-theme-button-height;
+    width: 60%;
+    font-size: 120%;
+    font-family: $main-menu-font;
+    color: $light-green;
+    background-color: $dark-green;
+    display: block;
+}
+
+.change-theme:hover {
+    background-color: $dark-green-hover;
+    border-color: $light-green;
+}

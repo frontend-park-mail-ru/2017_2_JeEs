@@ -19,6 +19,7 @@ import NotFoundView from './views/notfoundview/notfoundview';
 import CreatorsView from './views/authorsview/authorsview';
 import GameView from './views/gameview/gameview';
 import RulesView from './views/rulesview/rulesview';
+import GameModeView from './views/gamemodeview/gamemodeview';
 
 
 
@@ -50,6 +51,8 @@ const menuView = new MenuView(mainBlock);
 const ratingView = new RatingView(mainBlock);
 const authView = new AuthView(mainBlock);
 const registrationView = new RegistrationView(mainBlock);
+const gameModeView = new GameModeView(mainBlock);
+
 
 const router = new Router();
 
@@ -57,6 +60,7 @@ router.setNotFoundPage(notFoundView);
 
 router.register('/', menuView)
     .register('/game', gameView)
+    .register('/gamemode', gameModeView)
     .register('/rating', ratingView)
     .register('/signin', authView)
     .register('/signup', registrationView)

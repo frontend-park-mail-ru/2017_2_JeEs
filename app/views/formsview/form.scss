@@ -1,0 +1,87 @@
+@import "../fonts.scss";
+@import "../colors.scss";
+@import "../sizes.scss";
+
+@mixin margin-lr($margin) {
+  margin-left: $margin;
+  margin-right: $margin;
+}
+
+@mixin margin-bt($margin) {
+  margin-top: $margin;
+  margin-bottom: $margin;
+}
+
+@mixin font($font) {
+  font-weight: $font;
+  font-style: $font;
+}
+
+@font-face {
+  @include font(normal);
+  font-family: Neucha Regular;
+  src: url(/public/static/fonts/Neucha.ttf);
+}
+
+.form__field {
+  transition: border-radius .3s ease-in-out;
+}
+
+.form__field {
+  @include margin-lr(auto);
+  margin-bottom: 5%;
+  text-align: center;
+  width: 80%;
+  color: $dark-green;
+  font-family: $main-menu-font;
+  font-size: 120%;
+  border-color: $white-border;
+  display: block;
+}
+
+.form__field:hover {
+  border-color: $dark-green;
+  border-radius: 3px;
+}
+
+.form__title {
+  @include margin-bt(3%);
+  font-family: $cursive-font;
+  font-size: 190%;
+  color: $blue-green;
+  text-align: center;
+}
+
+.form__message {
+  @include margin-lr(auto);
+  width : $message-width;
+  font-family: $cursive-font;
+  color: $message-red;
+  font-size: 100%;
+  text-align: center;
+}
+
+
+.form__button {
+  @include margin-lr(auto);
+  height: $menu-button-height;
+  width: 80%;
+  font-size: 120%;
+  font-family: $main-menu-font;
+  color: $light-green;
+  background-color: $form-button-background;
+  display: block;
+  margin-bottom: 5%;
+}
+
+.form__button:hover {
+  background-color: $dark-green-hover;
+  border-color: $light-green;
+  border-radius: 8px;
+}
+
+.auth-form__form, .registration-form__form {
+  display: table-cell;
+  vertical-align: middle;
+  width: 80%;
+}

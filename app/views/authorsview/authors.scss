@@ -1,0 +1,49 @@
+@import "../colors.scss";
+@import "../fonts.scss";
+@import "../sizes.scss";
+
+@mixin margin-lr($margin) {
+  margin-left: $margin;
+  margin-right: $margin;
+}
+
+@mixin margin-bt($margin) {
+  margin-top: $margin;
+  margin-bottom: $margin;
+}
+
+.authors__author {
+  transition: border-radius .3s ease-in-out;
+}
+
+.authors__author {
+  color: $dark-green;
+}
+
+.authors__author:hover {
+  color: $light-green;
+}
+
+.main-block__authors {
+  color: $dark-green;
+  font-size: 170%;
+  font-family: $cursive-font;
+  text-align: center;
+
+  h3 {
+    @include margin-bt(0);
+  }
+
+  ul {
+    @include margin-lr(auto);
+    list-style-type: none;
+    padding-left: 0;
+
+    li {
+      font-family: $main-menu-font;
+      list-style-type: none;
+      text-align: center;
+    }
+
+  }
+}
