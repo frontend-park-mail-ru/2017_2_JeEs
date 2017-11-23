@@ -64,15 +64,15 @@ router.register('/', menuView)
     .register('/rules', rulesView)
     .start();
 
-// if ('serviceWorker' in navigator) {
-//     navigator.serviceWorker.register("/service-worker.js", { scope: "/" })
-//         .then((registration) => {
-//             console.log('ServiceWorker registration', registration);
-//         })
-//         .catch((error) => {
-//             throw new Error(`ServiceWorker error: ${error}`);
-//         });
-// }
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/service-worker.js', { scope: '/' })
+        .then((registration) => {
+            console.log('ServiceWorker registration', registration);
+        })
+        .catch((error) => {
+            throw new Error(`ServiceWorker error: ${error}`);
+        });
+}
 
 userService.getData()
     .then(() => authUserView.create())
