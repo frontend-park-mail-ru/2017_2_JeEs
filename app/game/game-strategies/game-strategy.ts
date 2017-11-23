@@ -47,7 +47,9 @@ class GameStrategy {
             ...data,
             event: TURN_ENDING_EVENTS.FIGURE_MOVED
         });
-        this.emitTurnBegan();
+        if (window.sessionStorage.getItem("gameMode") === "singleplayer") {
+            this.emitTurnBegan();
+        }
     }
 
     private onOpponentsFigureMoved(data): void {
@@ -66,7 +68,9 @@ class GameStrategy {
             ...data,
             event: TURN_ENDING_EVENTS.WALL_PLACED
         });
-        this.emitTurnBegan();
+        if (window.sessionStorage.getItem("gameMode") === "singleplayer") {
+            this.emitTurnBegan();
+        }
     }
 
     private onOpponentsWallPlaced(data): void {

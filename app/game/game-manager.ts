@@ -8,8 +8,10 @@ class GameManager {
     constructor(gameMode: string) {
         if (gameMode === "singleplayer") {
             this.singlePlayerGameStrategy = new SinglePlayerGameStrategy;
+            window.sessionStorage.setItem("gameMode", "singleplayer");
         } else if (gameMode === "multiplayer") {
             this.multiPlayerGameStrategy = new MultiPlayerGameStrategy;
+            window.sessionStorage.setItem("gameMode", "multiplayer");
         }
     }
 
