@@ -4,7 +4,6 @@ import * as FieldState from "../utils/field-state"
 import Constants from "./constants"
 import EventBus from "../../modules/event-bus"
 
-import HeroManaher from "./heroview/heroManager"
 import WallView from "./wallview"
 import FloorView from "./floorview"
 import Events from "../utils/events"
@@ -25,7 +24,7 @@ export default class GameViewManager {
     private _scene: BABYLON.Scene;
     private _camera: BABYLON.ArcRotateCamera;
 
-    private _HeroManaher: HeroManaher;
+    private _HeroManaher: HeroManager;
     private _wallView: WallView;
     private _floorView: FloorView;
 
@@ -36,6 +35,7 @@ export default class GameViewManager {
     private _eventBus;
 
     constructor(gameFieldSize: number) {
+
         this._gameFieldSize = gameFieldSize;
 
         this._eventBus = new EventBus;

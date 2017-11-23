@@ -11,13 +11,12 @@ export default class GameView extends BaseView {
         this.template = require('./game.pug');
     }
 
-    create() {
+    create(getParamsObject) {
         this.element.innerHTML = this.template({});
         this.game = new Game(17);
 
         window.sessionStorage['fieldDimension'] = '9';
-        let gameManager = new GameManager();
-        gameManager.gameView = this.game;
+        this.gameManager = new GameManager(getParamsObject.mode);
 
         this.eventBus = new EventBus;
         this.eventBus.emit(EVENTS.WEBSOCKET_OPEN);
@@ -25,6 +24,9 @@ export default class GameView extends BaseView {
 
     destroy() {
         this.eventBus.emit(EVENTS.WEBSOCKET_CLOSE);
+        this.gameManager.destroy();
+        this.gameManager = null;
+        this.game = null;
     }
 
 }

@@ -4,5 +4,5 @@ mixin item(title, href)
 
 .main-block__gamemode.element-area
     p= "Режим игры"
-    +item('Нет друзей:(', '/game')
-    +item('Есть друзья:)', '/game')
+    +item('Нет друзей:(', '/game?mode=singleplayer')
+    +item('Есть друзья:)', '/game?mode=multiplayer')

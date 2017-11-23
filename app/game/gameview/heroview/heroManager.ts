@@ -30,15 +30,7 @@ export default class HeroManager {
 
     private _eventBus;
 
-    private static __instance: HeroManager;
-
-
-
     constructor(gameFieldSize: number, scene: BABYLON.Scene) {
-        if (HeroManager.__instance) {
-            return HeroManager.__instance;
-        }
-
         this._gameFieldSize = gameFieldSize;
         this._scene = scene;
 
@@ -56,8 +48,6 @@ export default class HeroManager {
                 })
             }
         });
-
-        HeroManager.__instance = this;
     }
 
     public NewTurn(availableForMovementPoints: Point[]) {
