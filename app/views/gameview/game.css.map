@@ -1,6 +1,6 @@
 {
 "version": 3,
-"mappings": "AAGA,iBAAkB;EAChB,KAAK,ECEO,OAAO;EDDnB,WAAW,ECMC,4DAA4D;EDLxE,WAAW,EELG,OAAO;;AFQvB,aAAc;EACZ,KAAK,EAAE,GAAG;EACV,MAAM,EAAE,GAAG",
+"mappings": "AAGA,iBAAkB;EAChB,KAAK,ECGO,OAAO;EDFnB,WAAW,ECOC,4DAA4D;EDNxE,WAAW,EELG,OAAO;;AFQvB,aAAc;EACZ,KAAK,EAAE,GAAG;EACV,MAAM,EAAE,GAAG",
 "sources": ["game.scss","../colors.scss","../fonts.scss"],
 "names": [],
 "file": "game.css"
