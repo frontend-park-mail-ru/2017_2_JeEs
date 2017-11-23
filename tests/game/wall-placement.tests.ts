@@ -13,7 +13,7 @@ window.sessionStorage["fieldDimension"] = "5";
 
 describe("Wall placements", () => {
     beforeEach(() => {
-        singlePlayerGameStrategy = new SinglePlayerGameStrategy(5);
+        singlePlayerGameStrategy = new SinglePlayerGameStrategy;
     });
 
     afterEach(() => {

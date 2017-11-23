@@ -7,9 +7,11 @@ import Point from "../../app/game/utils/point"
 const eventBus: EventBus = new EventBus;
 let singlePlayerGameStrategy: SinglePlayerGameStrategy;
 
+window.sessionStorage["fieldDimension"] = "5";
+
 describe("Figure movements", () => {
     beforeEach(() => {
-        singlePlayerGameStrategy = new SinglePlayerGameStrategy(5);
+        singlePlayerGameStrategy = new SinglePlayerGameStrategy;
     });
 
     afterEach(() => {
