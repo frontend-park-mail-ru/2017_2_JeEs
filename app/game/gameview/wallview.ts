@@ -93,7 +93,19 @@ export default class WallView {
         let upperOrLeft: Point = wallPoints[0];
         let lowerOrRight: Point = wallPoints[1];
 
-        this._addWall(upperOrLeft, lowerOrRight)
+        const position = new Point((upperOrLeft.x + lowerOrRight.x) / 2, (upperOrLeft.y + lowerOrRight.y) / 2);
+
+
+        if ((upperOrLeft.y - lowerOrRight.y) === 0) {
+            this._ghostWall[0].rotation.y = Math.PI / 2
+        }
+
+        this._ghostWall[0].position = new BABYLON.Vector3(BASE_SIZE * position.x, this.DefaultHeightPosition, BASE_SIZE * position.y);
+
+        this._ghostWall[0].isVisible = true;
+
+        this._ghostWall[0].material.alpha = 1;
+        
     }
 
 
@@ -112,12 +124,11 @@ export default class WallView {
 
         BABYLON.SceneLoader.ImportMesh("Wall", "./", "wall.babylon", this._scene, newMeshes => {
             const position = new Point((point1.x + point2.x) / 2, (point1.y + point2.y) / 2);
-            position.x = (point1.x + point2.x) / 2;
-            position.y = (point1.y + point2.y) / 2;
-            this._ghostWall = <BABYLON.Mesh[]>newMeshes;
-            
 
-            if ((point1.y - point2.y) !== 0) {
+            this._ghostWall = <BABYLON.Mesh[]>newMeshes;
+
+
+            if ((point1.y - point2.y) === 0) {
                 this._ghostWall[0].rotation.y = Math.PI / 2
             }
 
