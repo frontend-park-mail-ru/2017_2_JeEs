@@ -79,6 +79,9 @@ export default class GameViewManager {
             this._myTurn = true;
         });
 
+        this._eventBus.on(Events.TURN_ENDED, (data) => {
+            this._myTurn = false;
+        });
 
         this._eventBus.on(Events.MULTIPLAYER, (data) => {
             this._eventBus.on(Events.OPPONENTS_FIGURE_MOVED, (data) => {
@@ -114,13 +117,11 @@ export default class GameViewManager {
             }
 
             if (pickResult.pickedMesh !== null && this._HeroManaher.IsGhostHero(pickResult.pickedMesh)) {
-                this._myTurn = false;
                 this._HeroManaher.MoveOnGhostHero(<BABYLON.Mesh>pickResult.pickedMesh)
                 return;
             }
 
             if (pickResult.pickedMesh !== null && this._wallView.IsGhostWall(pickResult.pickedMesh)) {
-                this._myTurn = false;
                 this._wallView.AddWallByGhosWall()
                 return;
             }
