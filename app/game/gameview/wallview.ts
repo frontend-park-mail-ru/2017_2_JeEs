@@ -106,6 +106,7 @@ export default class WallView {
 
         this._ghostWall[0].material.alpha = 1;
         
+        this._createGhostWall()
     }
 
 
