@@ -6,7 +6,8 @@
 html {
   background-image: url("../../../public/static/images/wall.jpg");
   background-repeat: no-repeat;
-  background-size: cover; }
+  background-size: cover;
+  height: 100%; }
 
 html, body, #root {
   height: 100%;
@@ -50,5 +51,8 @@ html, body, #root {
   display: flex;
   flex-direction: row;
   width: 100%; }
+
+h1 {
+  margin-top: 5%; }
 
 /*# sourceMappingURL=application.css.map */
