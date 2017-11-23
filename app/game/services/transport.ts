@@ -39,6 +39,7 @@ export default class Transport {
         this.handlersMap.set("InitGame", this.handleInitGameMessage);
         this.handlersMap.set("Coordinates", this.parseCoordinates);
         this.handlersMap.set("FinishGame", this.handleFinishGameMessage);
+        this.handlersMap.set("InfoMessage", this.handleInfoMessage);
     }
 
     private initialize() {
@@ -72,10 +73,10 @@ export default class Transport {
         };
     }
 
-    private handleMessage(event: MessageEvent): void {
-        console.log(`Received message ${event.data}`);
+    private handleMessage(messageEvent: MessageEvent): void {
+        console.log(`Received message "${messageEvent.data}"`);
 
-        const data: messages.Message = JSON.parse(event.data);
+        const data: messages.Message = JSON.parse(messageEvent.data);
         this.handlersMap.get(data.class).call(this, data);
     }
 
@@ -100,9 +101,9 @@ export default class Transport {
         }));
     }
 
-    private parseCoordinates(data: messages.CoordinatesMessage): void {
+    private parseCoordinates(coordinatesMessage: messages.CoordinatesMessage): void {
         new Promise((resolve, reject) => {
-            const points: Array<Point> = data.coordinates
+            const points: Array<Point> = coordinatesMessage.coordinates
                 .split(" ")
                 .reduce((result: Array<Point>, value: string, index: number, array: string[]) => {
                     if (index % 2 === 0)
@@ -133,13 +134,17 @@ export default class Transport {
         });
     }
 
-    private handleInitGameMessage(message: messages.InitGameMessage): void {
-        this.eventBus.emit(EVENTS.GAME_STARTED, { isFirst: message.isFirst })
+    private handleInitGameMessage(initGameMessage: messages.InitGameMessage): void {
+        this.eventBus.emit(EVENTS.GAME_STARTED, { isFirst: initGameMessage.isFirst })
     }
 
-    private handleFinishGameMessage(message: messages.FinishGameMessage): void {
-        if (message.won) {
+    private handleFinishGameMessage(finishGameMessage: messages.FinishGameMessage): void {
+        if (finishGameMessage.won) {
             alert("Вы выиграли");
         }
+    }
+
+    private handleInfoMessage(infoMessage: messages.InfoMessage): void {
+        alert(infoMessage.message);
     }
 }

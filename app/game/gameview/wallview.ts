@@ -89,23 +89,17 @@ export default class WallView {
         return mesh === this._ghostWall[0];
     }
 
-    public OpponentsWallPlaced(wallPoints: Point[]) {
-        let upperOrLeft: Point = wallPoints[0];
-        let lowerOrRight: Point = wallPoints[1];
+    public OpponentsWallPlaced(...wallPoints) {
+        let [upperOrLeft, lowerOrRight] = wallPoints;
 
         const position = new Point((upperOrLeft.x + lowerOrRight.x) / 2, (upperOrLeft.y + lowerOrRight.y) / 2);
 
-
-        if ((upperOrLeft.y - lowerOrRight.y) === 0) {
-            this._ghostWall[0].rotation.y = Math.PI / 2
-        }
+        let rotation: number = (upperOrLeft.y - lowerOrRight.y === 0) ? Math.PI / 2 : 0;
+        this._ghostWall[0].rotation.y = rotation;
 
         this._ghostWall[0].position = new BABYLON.Vector3(BASE_SIZE * position.x, this.DefaultHeightPosition, BASE_SIZE * position.y);
-
         this._ghostWall[0].isVisible = true;
-
         this._ghostWall[0].material.alpha = 1;
-        
         this._createGhostWall()
     }
 

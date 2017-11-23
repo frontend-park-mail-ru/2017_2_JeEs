@@ -16,4 +16,8 @@ interface FinishGameMessage extends Message {
     won: boolean;
 }
 
-export {Message, InitGameMessage, CoordinatesMessage, FinishGameMessage}
+interface InfoMessage extends Message {
+    message: string;
+}
+
+export {Message, InitGameMessage, CoordinatesMessage, FinishGameMessage, InfoMessage}

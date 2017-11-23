@@ -82,11 +82,11 @@ export default class GameViewManager {
 
         this._eventBus.on(Events.MULTIPLAYER, (data) => {
             this._eventBus.on(Events.OPPONENTS_FIGURE_MOVED, (data) => {
-                this._HeroManaher.OpponentsMove(data);
+                this._HeroManaher.OpponentsMove(data.point);
             });
 
             this._eventBus.on(Events.OPPONENTS_WALL_PLACED, (data) => {
-                this._wallView.OpponentsWallPlaced(data);
+                this._wallView.OpponentsWallPlaced(data.upperOrLeft, data.lowerOrRight);
             });
         });
 
