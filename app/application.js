@@ -4,6 +4,8 @@ function requireAll(r) { r.keys().forEach(r); }
 
 requireAll(require.context('../public/static/fonts/', true, /\.(ttf)$/));
 requireAll(require.context('../public/static/images/', true, /\.(png)$/));
+requireAll(require.context('../public/', true, /\.(babylon)$/));
+
 requireAll(require.context('./views/', true, /\.(scss)$/));
 requireAll(require.context('./views/', true, /\.(pug|jade)$/));
 requireAll(require.context('./game/', true, /\.(ts)$/));

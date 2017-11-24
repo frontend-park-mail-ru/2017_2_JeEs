@@ -1,6 +1,7 @@
 'use strict';
 
 const fallback = require('express-history-api-fallback');
+const fs = require('fs');
 const express = require('express');
 const body = require('body-parser');
 const cors = require('cors');
@@ -9,15 +10,14 @@ const morgan = require('morgan');
 const uuid = require('uuid/v4');
 const app = express();
 
-
 app.use(cors({
     origin: true,
     credentials: true,
 }));
 
 app.use(morgan('dev'));
-app.use(express.static('public'));
 app.use(express.static('dist'));
+app.use(express.static('public/service-worker')); //TODO
 app.use(fallback('index.html', { root: 'public' }));
 app.use(body.json());
 app.use(cookie());
@@ -36,19 +36,19 @@ app.post('/signup', function (req, res) {
         !password.match(/^\S{4,}$/)
 
     ) {
-        return res.status(400).json({error: 'Невалидные данные пользователя'});
+        return res.status(400).json({ error: 'Невалидные данные пользователя' });
     }
     if (users[login]) {
-        return res.status(400).json({error: 'Пользователь уже существует'});
+        return res.status(400).json({ error: 'Пользователь уже существует' });
     }
 
     const id = uuid();
     ids[id] = login;
-    users[login] = {password, email, score: 0};
+    users[login] = { password, email, score: 0 };
 
 
-    res.cookie('cookie', id, {expires: new Date(Date.now() + 1000 * 60 * 10)});
-    res.json({id});
+    res.cookie('cookie', id, { expires: new Date(Date.now() + 1000 * 60 * 10) });
+    res.json({ id });
 });
 
 app.post('/signin', function (req, res) {
@@ -56,17 +56,17 @@ app.post('/signin', function (req, res) {
     const password = req.body.password;
 
     if (!password || !login) {
-        return res.status(400).json({error: 'Не указан E-Mail или пароль'});
+        return res.status(400).json({ error: 'Не указан E-Mail или пароль' });
     }
     if (!users[login] || users[login].password !== password) {
-        return res.status(400).json({error: 'Неверный E-Mail и/или пароль'});
+        return res.status(400).json({ error: 'Неверный E-Mail и/или пароль' });
     }
 
     const id = uuid();
     ids[id] = login;
 
-    res.cookie('cookie', id, {expires: new Date(Date.now() + 1000 * 60 * 10)});
-    res.status(201).json({id});
+    res.cookie('cookie', id, { expires: new Date(Date.now() + 1000 * 60 * 10) });
+    res.status(201).json({ id });
 });
 
 app.get('/currentUser', function (req, res) {
@@ -76,7 +76,7 @@ app.get('/currentUser', function (req, res) {
         return res.status(401).end();
     }
 
-    res.json({id});
+    res.json({ id });
 });
 
 app.get('/users', function (req, res) {
@@ -92,7 +92,7 @@ app.get('/users', function (req, res) {
 });
 
 app.delete('/signout', function (req, res) {
-    res.cookie('cookie', null, {expires: new Date(Date.now() + 1000 * 60 * 10)});
+    res.cookie('cookie', null, { expires: new Date(Date.now() + 1000 * 60 * 10) });
     res.status(200).json(null);
 });
 
