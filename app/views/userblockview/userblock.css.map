@@ -1,7 +1,0 @@
-{
-"version": 3,
-"mappings": "AAIA,mBAAoB;EAClB,MAAM,ECGa,IAAI;EDFvB,KAAK,ECGa,KAAK;EDFvB,SAAS,EAAE,IAAI;EACf,WAAW,EERK,4BAA4B;EFS5C,KAAK,EGRQ,OAAO;EHSpB,gBAAgB,EGDQ,OAAO;EHE/B,UAAU,EAAE,EAAE;;AAGhB,yBAA0B;EACxB,gBAAgB,EGZE,OAAO;EHazB,YAAY,EGfC,OAAO",
-"sources": ["userblock.scss","../sizes.scss","../fonts.scss","../colors.scss"],
-"names": [],
-"file": "userblock.css"
-}

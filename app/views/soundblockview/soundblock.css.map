@@ -1,7 +1,0 @@
-{
-"version": 3,
-"mappings": "AAKA,YACA;EACE,KAAK,EAAE,GAAG;EACV,OAAO,EAAE,IAAI;EACb,cAAc,EAAE,GAAG;EACnB,eAAe,EAAE,UAAU;EAC3B,WAAW,EAAE,MAAM;;AAGrB,kBACA;EAdE,MAAM,EAeQ,GAAG;EAdjB,KAAK,EAcS,GAAG;EACjB,YAAY,EAAE,EAAE",
-"sources": ["soundblock.scss"],
-"names": [],
-"file": "soundblock.css"
-}

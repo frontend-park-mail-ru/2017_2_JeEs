@@ -1,7 +1,0 @@
-{
-"version": 3,
-"mappings": "AAGA,qBAAsB;EACpB,OAAO,EAAE,IAAI;EACb,cAAc,EAAE,MAAM;EAEtB,KAAK,ECPO,OAAO;EDQnB,SAAS,EAAE,GAAG;EACd,WAAW,EERG,OAAO;EFSrB,UAAU,EAAE,MAAM;;AAGpB,CAAE;EACA,UAAU,EAAG,EAAE;EACf,aAAa,EAAG,EAAE;EAClB,SAAS,EAAE,IAAI",
-"sources": ["gamemode.scss","../colors.scss","../fonts.scss"],
-"names": [],
-"file": "gamemode.css"
-}

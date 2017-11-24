@@ -4,7 +4,7 @@ function requireAll(r) { r.keys().forEach(r); }
 
 requireAll(require.context('../public/static/fonts/', true, /\.(ttf)$/));
 requireAll(require.context('../public/static/images/', true, /\.(png)$/));
-requireAll(require.context('./views/', true, /\.(css)$/));
+requireAll(require.context('./views/', true, /\.(scss)$/));
 requireAll(require.context('./views/', true, /\.(pug|jade)$/));
 requireAll(require.context('./game/', true, /\.(ts)$/));
 
@@ -34,11 +34,6 @@ root.create();
 
 const mainBlock = root.getMainBlock();
 const topBar = root.getTopBar();
-
-
-// const soundView = new SoundView(topBar);
-// soundView.create();
-
 
 const authUserView = new AuthUserView(topBar);
 const unauthUserView = new UnauthUserView(topBar);

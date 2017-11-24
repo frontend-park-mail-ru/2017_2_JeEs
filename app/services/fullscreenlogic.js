@@ -21,9 +21,6 @@ export default class FullScreenLogic {
         } else if (element.msRequestFullscreen) {
             element.msRequestFullscreen();
         }
-        debugger;
-        // element.width = window.innerWidth;
-        // element.height = window.innerHeight;
     }
 
     static _exitFullScreen(element) {

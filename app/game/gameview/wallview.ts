@@ -56,7 +56,7 @@ export default class WallView {
             lowerOrRight = new Point(transformedCoordinate.x + 1, transformedCoordinate.y);
         }
 
-        if (this._checkСollisions([upperOrLeft, transformedCoordinate, lowerOrRight])) {
+        if (this._checkCollisions([upperOrLeft, transformedCoordinate, lowerOrRight])) {
             this._ghostWall[0].position.x = transformedCoordinate.x * BASE_SIZE;
             this._ghostWall[0].position.z = transformedCoordinate.y * BASE_SIZE;
             this._ghostWall[0].rotation.y = rotation;
@@ -141,7 +141,7 @@ export default class WallView {
         });
     }
 
-    private _checkСollisions(points: Point[]) {
+    private _checkCollisions(points: Point[]) {
         if (points[1].x % 2 === 1 && points[1].y % 2 === 1) {
             for (const _point of points) {
                 if (_point.x < 0 || _point.y < 0 || _point.x > 16 || _point.y > 16 ||

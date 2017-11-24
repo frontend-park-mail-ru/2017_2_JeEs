@@ -45,26 +45,26 @@ export default class Wall {
     }
 
     private static getValidationResult(upperOrLeft: Point, lowerOrRight: Point): any {
-        let isVertical: boolean =
+        const isVertical: boolean =
             (upperOrLeft.x === lowerOrRight.x) &&
             (upperOrLeft.x % 2 === 1) &&
             (upperOrLeft.y % 2 === 0) && (lowerOrRight.y % 2 === 0) &&
             (Math.abs(upperOrLeft.y - lowerOrRight.y ) === Wall._length - 1);
 
-        let isHorizontal: boolean =
+        const isHorizontal: boolean =
             (upperOrLeft.x % 2 === 0) && (lowerOrRight.x % 2 === 0) &&
             (Math.abs(upperOrLeft.x - lowerOrRight.x) === Wall._length - 1) &&
             (upperOrLeft.y === lowerOrRight.y) &&
             (upperOrLeft.y % 2 === 1);
 
-        let maxCellIndex: number = 2 * (parseInt(window.sessionStorage["fieldDimension"]) - 1);
-        let coordinatesDontViolateExtremeValues: boolean =
-            (upperOrLeft.x >= 0 && upperOrLeft.x <= maxCellIndex) &&
-            (upperOrLeft.y >= 0 && upperOrLeft.y <= maxCellIndex) &&
-            (lowerOrRight.x >= 0 && lowerOrRight.x <= maxCellIndex) &&
-            (lowerOrRight.y >= 0 && lowerOrRight.y <= maxCellIndex);
+        const maxCellIndex: number = 2 * (parseInt(window.sessionStorage["fieldDimension"]) - 1);
+        const coordinatesAreInValidRange: boolean =
+            [...(<any>Object).values(upperOrLeft), ...(<any>Object).values(lowerOrRight)]
+                .every((coordinate: number): boolean => {
+                    return (coordinate >= 0) && (coordinate <= maxCellIndex)
+                });
 
-        let isValid: boolean = coordinatesDontViolateExtremeValues && (isVertical || isHorizontal);
+        const isValid: boolean = coordinatesAreInValidRange && (isVertical || isHorizontal);
 
         return {isValid, isVertical, isHorizontal};
     }

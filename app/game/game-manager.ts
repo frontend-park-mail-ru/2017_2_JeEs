@@ -6,13 +6,17 @@ class GameManager {
     private multiPlayerGameStrategy: MultiPlayerGameStrategy;
 
     constructor(gameMode: string) {
-        if (gameMode === "singleplayer") {
-            this.singlePlayerGameStrategy = new SinglePlayerGameStrategy;
-            window.sessionStorage.setItem("gameMode", "singleplayer");
-        } else if (gameMode === "multiplayer") {
-            this.multiPlayerGameStrategy = new MultiPlayerGameStrategy;
-            window.sessionStorage.setItem("gameMode", "multiplayer");
+        switch (gameMode) {
+            case "singleplayer": {
+                this.singlePlayerGameStrategy = new SinglePlayerGameStrategy;
+                break;
+            }
+            case "multiplayer": {
+                this.multiPlayerGameStrategy = new MultiPlayerGameStrategy;
+                break;
+            }
         }
+        window.sessionStorage.setItem("gameMode", gameMode);
     }
 
     destroy() {

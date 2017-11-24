@@ -32,9 +32,8 @@ function * ownerGeneratorFunction() {
 export default class Figure {
     private _position: Point;
     private static owners: IterableIterator<ACTOR> = ownerGeneratorFunction();
-    private fieldDimension: number;
 
-    constructor(fieldDimension: number) {
+    constructor(private fieldDimension: number) {
         const figureTypeIterator: IteratorResult<ACTOR> = Figure.owners.next();
         if (figureTypeIterator.done) {
             return;
