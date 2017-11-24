@@ -28,25 +28,27 @@ export default class AuthView extends BaseView {
         this.form = this.element.querySelector('.auth-form__form');
         this.formErrorTextString = this.element.querySelector('.form__message');
 
-        this.form.addEventListener('submit', (formdata) => {
+        this.form.addEventListener('submit', () => {
             event.preventDefault();
             this._onSubmit();
         });
     }
 
     _onSubmit() {
-        const formdata = {};
+        const formData = {};
         const elements = this.form.elements;
-        for (let name in elements) {
-            formdata[name] = elements[name].value;
+        for (let field in elements) {
+            if (elements[field].nodeName === 'INPUT') {
+                formData[elements[field].name] = elements[field].value;
+            }
         }
 
-        const resultValidation = validate(formdata.login, formdata.password);
+        const resultValidation = validate(formData.login, formData.password);
         if (resultValidation !== null) {
             this.formError(resultValidation);
             return;
         }
-        this.userService.login(formdata.login, formdata.password)
+        this.userService.login(formData.login, formData.password)
             .then(() => {
                 this.formReset();
                 this.eventBus.emit('user-block:auth');

@@ -11,22 +11,26 @@ function * surroundingPointsGeneratorFunction(yourFigurePosition: Point) {
     // UP
     yield { // thx, Serge Peshkofff
         pointPossiblyContainingWall: {...yourFigurePosition, y: yourFigurePosition.y + 1},
-        pointToMove: {...yourFigurePosition, y: yourFigurePosition.y + 2}
+        pointToMoveTo: {...yourFigurePosition, y: yourFigurePosition.y + 2},
+        pointToJumpTo: {...yourFigurePosition, y: yourFigurePosition.y + 4}
     };
     // RIGHT
     yield {
         pointPossiblyContainingWall: {...yourFigurePosition, x: yourFigurePosition.x + 1},
-        pointToMove: {...yourFigurePosition, x: yourFigurePosition.x + 2}
+        pointToMoveTo: {...yourFigurePosition, x: yourFigurePosition.x + 2},
+        pointToJumpTo: {...yourFigurePosition, x: yourFigurePosition.x + 4}
     };
     // DOWN
     yield {
         pointPossiblyContainingWall: {...yourFigurePosition, y: yourFigurePosition.y - 1},
-        pointToMove: {...yourFigurePosition, y: yourFigurePosition.y - 2}
+        pointToMoveTo: {...yourFigurePosition, y: yourFigurePosition.y - 2},
+        pointToJumpTo: {...yourFigurePosition, y: yourFigurePosition.y - 4}
     };
     // LEFT
     yield {
         pointPossiblyContainingWall: {...yourFigurePosition, x: yourFigurePosition.x - 1},
-        pointToMove: {...yourFigurePosition, x: yourFigurePosition.x - 2}
+        pointToMoveTo: {...yourFigurePosition, x: yourFigurePosition.x - 2},
+        pointToJumpTo: {...yourFigurePosition, x: yourFigurePosition.x - 4}
     };
     return;
 }
@@ -34,14 +38,14 @@ function * surroundingPointsGeneratorFunction(yourFigurePosition: Point) {
 class FieldState {
     private figureMap: Map<FIGURE_KEY, Figure>;
     private walls: Wall[];
-    private lastIndex: number;
+    private maxCellCoordinate: number;
 
     constructor(fieldDimension: number) {
         this.figureMap = new Map<FIGURE_KEY, Figure>();
         this.figureMap.set(FIGURE_KEY.YOUR, new Figure(fieldDimension));
         this.figureMap.set(FIGURE_KEY.OPPONENTS, new Figure(fieldDimension));
         this.walls = [];
-        this.lastIndex = 2 * (fieldDimension - 1);
+        this.maxCellCoordinate = 2 * (fieldDimension - 1);
     }
 
     public moveFigureTo(figureKey: FIGURE_KEY, point: Point): void {
@@ -49,37 +53,52 @@ class FieldState {
     }
 
     public insertWall(upperOrLeft: Point, lowerOrRight: Point) {
-        this.walls.push(new Wall(upperOrLeft, lowerOrRight));
+        let newWall: Wall = new Wall(upperOrLeft, lowerOrRight);
+        if (newWall.isValid) {
+            this.walls.push(newWall);
+        }
     }
 
-    public getEngagedPoints(): Array<Point> {
+    public getEngagedPoints(includeFiguresPosition: boolean = true): Array<Point> {
         return []
             .concat(...this.walls.map((wall) => {
                 return [wall.upperOrLeft, wall.central, wall.lowerOrRight]
             }))
-            .concat([...this.figureMap.values()].map((figure) => {
-                return figure.position
-            }));
+            .concat(
+                (includeFiguresPosition) ?
+                    [...this.figureMap.values()].map((figure) => { return figure.position}) :
+                    []
+            );
     }
 
 
     public getAvailableForMovementPoints(): Point[] {
-        let wallPoints: Point[] = this.walls.map((wall) => {return wall.central});
+        let wallPoints: Point[] = this.getEngagedPoints(false);
 
         let result: Point[] = [];
-        let surroundingPointsIterator: IterableIterator<{pointPossiblyContainingWall, pointToMove}> =
+        let surroundingPointsIterator: IterableIterator<{pointPossiblyContainingWall, pointToMoveTo, pointToJumpTo}> =
             surroundingPointsGeneratorFunction(this.figureMap.get(FIGURE_KEY.YOUR).position);
 
         for (let pointsObject of surroundingPointsIterator) {
-            // if wallPoints not contains pointsObject.pointPossiblyContainingWall
-            if (wallPoints.filter(point => point.equals(pointsObject.pointPossiblyContainingWall)).length === 0) {
-                result.push(pointsObject.pointToMove);
+            // if wallPoints array contains pointsObject.pointPossiblyContainingWall
+            if (wallPoints.filter(point => point.equals(pointsObject.pointPossiblyContainingWall)).length > 0) {
+                continue;
+            }
+            // if your opponent stays at the point you want to move to
+            if (this.figureMap.get(FIGURE_KEY.OPPONENTS).position.equals(pointsObject.pointToMoveTo)) {
+                result.push(new Point(pointsObject.pointToJumpTo.x, pointsObject.pointToJumpTo.y));
+            } else {
+                result.push(new Point(pointsObject.pointToMoveTo.x, pointsObject.pointToMoveTo.y));
             }
         }
 
         return result.filter((point) => {
-            return (point.x >= 0) && (point.y >= 0) && (point.x <= this.lastIndex) && (point.y <= this.lastIndex)
+            return (point.x >= 0) && (point.y >= 0) && (point.x <= this.maxCellCoordinate) && (point.y <= this.maxCellCoordinate)
         });
+    }
+
+    getFigure(figureKey: FIGURE_KEY): Figure {
+        return this.figureMap.get(figureKey);
     }
 }
 

@@ -1,4 +1,4 @@
-import EventBus from "../../modules/event-bus.js"
+import EventBus from "../../modules/event-bus"
 import EVENTS from "../utils/events"
 import {FieldState, FIGURE_KEY} from "../utils/field-state"
 
@@ -22,7 +22,7 @@ class GameStrategy {
         this.eventMap.set(EVENTS.OPPONENTS_FIGURE_MOVED, this.onOpponentsFigureMoved.bind(this));
         this.eventMap.set(EVENTS.YOUR_WALL_PLACED, this.onYourWallPlaced.bind(this));
         this.eventMap.set(EVENTS.OPPONENTS_WALL_PLACED, this.onOpponentsWallPlaced.bind(this));
-        this.eventMap.set(EVENTS.GAME_CLOSED, this.onDestroy.bind(this));
+        this.eventMap.set(EVENTS.GAME_CLOSED, this.destroy.bind(this));
 
         this.eventMap.forEach((eventHandler: Function, event: string) => {
             this.eventBus.on(event, eventHandler);
@@ -39,18 +39,24 @@ class GameStrategy {
 
     private onYourFigureMoved(data): void {
         this._fieldState.moveFigureTo(FIGURE_KEY.YOUR, data.point);
+        if (this._fieldState.getFigure(FIGURE_KEY.YOUR).hasReachedFinish()) {
+            this.eventBus.emit(EVENTS.GAME_OVER);
+            return;
+        }
         this.eventBus.emit(EVENTS.TURN_ENDED, {
             ...data,
             event: TURN_ENDING_EVENTS.FIGURE_MOVED
         });
-        this.emitTurnBegan();
+        if (window.sessionStorage.getItem("gameMode") === "singleplayer") {
+            this.emitTurnBegan();
+        }
     }
 
     private onOpponentsFigureMoved(data): void {
         this._fieldState.moveFigureTo(FIGURE_KEY.OPPONENTS, data.point);
     }
 
-    private onDestroy(): void {
+    public destroy(): void {
         this.eventMap.forEach((eventHandler: Function, event: string) => {
             this.eventBus.off(event, eventHandler);
         });
@@ -62,7 +68,9 @@ class GameStrategy {
             ...data,
             event: TURN_ENDING_EVENTS.WALL_PLACED
         });
-        this.emitTurnBegan();
+        if (window.sessionStorage.getItem("gameMode") === "singleplayer") {
+            this.emitTurnBegan();
+        }
     }
 
     private onOpponentsWallPlaced(data): void {

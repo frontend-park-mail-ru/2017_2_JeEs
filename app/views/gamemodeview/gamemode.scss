@@ -1,0 +1,18 @@
+@import "../colors.scss";
+@import "../fonts.scss";
+
+.main-block__gamemode {
+  display: flex;
+  flex-direction: column;
+  //background-color: $grey-background;
+  color: $dark-green;
+  font-size: 90%;
+  font-family: $cursive-font;
+  text-align: center;
+}
+
+p {
+  margin-top : 3%;
+  margin-bottom : 1%;
+  font-size: 170%;
+}

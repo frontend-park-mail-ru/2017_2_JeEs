@@ -1,0 +1,28 @@
+@import "../colors.scss";
+@import "../fonts.scss";
+@import "../sizes.scss";
+
+.main-block__notfound {
+  color: $message-red;
+  font-size: 200%;
+  font-family: $cursive-font;
+  margin-bottom: 2%;
+}
+
+div {
+  flex-direction: row;
+  margin-top: 0;
+}
+
+.cry-image {
+  background-image: url('../../../public/static/images/404.png');
+
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: block;
+  width: 80%;
+  height: $cry-image-height;
+  margin-left: 10%;
+  filter : blur(0px);
+}
+

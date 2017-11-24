@@ -33,7 +33,7 @@ export default class Figure {
     private _position: Point;
     private static owners: IterableIterator<ACTOR> = ownerGeneratorFunction();
 
-    constructor(fieldDimension: number) {
+    constructor(private fieldDimension: number) {
         const figureTypeIterator: IteratorResult<ACTOR> = Figure.owners.next();
         if (figureTypeIterator.done) {
             return;
@@ -48,6 +48,8 @@ export default class Figure {
         } else if (owner === ACTOR.OPPONENT) {
             this._position = new Point(/* lastY */ 2 * (fieldDimension - 1), /* initialY */ fieldDimension - 1);
         }
+
+        this.fieldDimension = fieldDimension;
     }
 
     public moveTo(point: Point): void {
@@ -58,5 +60,9 @@ export default class Figure {
 
     get position(): Point {
         return this._position;
+    }
+
+    hasReachedFinish(): boolean {
+        return (this._position.x === /* lastY */ 2 * (this.fieldDimension - 1));
     }
 }

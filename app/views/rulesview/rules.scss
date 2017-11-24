@@ -1,0 +1,45 @@
+@import "../colors.scss";
+@import "../fonts.scss";
+@import "../sizes.scss";
+
+@mixin size($rules-size) {
+  width : $rules-size - 10%;
+  height: $rules-size;
+}
+
+@mixin min-size($min-size) {
+  min-width: $min-size + 100px;
+  min-height: $min-size;
+}
+
+@mixin margin-lr($margin) {
+  margin-left: $margin;
+  margin-right: $margin;
+}
+
+@media screen and (max-width: 350px) {
+  .main-block__rules {
+    font-size: 14px;
+  }
+}
+
+.main-block__rules {
+  @include size(40%);
+  @include min-size($min-rules-size);
+  @include margin-lr(auto);
+
+  color: $blue-green;
+  text-shadow: $text-shadow;
+  font-family: $cursive-font;
+  font-size: $rules-font-size;
+
+  display: block;
+
+  background-color: $grey-background;
+  align-items: center;
+  padding: 1% 3%;
+  margin-top: 3%;
+  margin-bottom: 2%;
+  //flex-direction: column;
+  justify-content: space-between;
+}

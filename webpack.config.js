@@ -1,15 +1,15 @@
 'use strict';
 
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const webpack = require('webpack');
+let path = require('path');
 
 module.exports = {
     context: __dirname,
     output: {
-        filename: './bundle.js',
-        path: __dirname + '/dist'
+        filename: 'bundle.js',
+        path: path.join(__dirname, 'dist'),
     },
     entry: './app/application.js',
-    devtool: 'inline-source-map',
     resolve: {
         extensions: ['.ts', '.js']
     },
@@ -19,13 +19,16 @@ module.exports = {
                 test: /\.ts$/,
                 loader: 'ts-loader'
             }, {
-                test: /\.css$/,
-                use: ExtractTextPlugin.extract({
-                    fallback: 'style-loader',
-                    use: 'css-loader'
-                })
+                test: /\.scss$/,
+                use: [{
+                    loader: 'style-loader-es3' // creates style nodes from JS strings
+                }, {
+                    loader: 'css-loader' // translates CSS into CommonJS
+                }, {
+                    loader: 'sass-loader' // compiles Sass to CSS
+                }]
             }, {
-                test: /\.(eot|woff|woff2|ttf|svg|png|jpg)$/,
+                test: /\.(eot|woff|woff2|ttf|svg|png|jpg|babylon)$/,
                 loader: 'url-loader?limit=30000&name=./[name]-[hash].[ext]',
             }, {
                 test: /\.js$/,
@@ -39,7 +42,5 @@ module.exports = {
             },
         ],
     },
-    plugins: [
-        new ExtractTextPlugin('./bundle.css')
-    ]
+    recordsOutputPath: path.join(__dirname, 'dist', 'records.json')
 };

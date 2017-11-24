@@ -37,21 +37,26 @@ export default class Router {
         this.go(window.location.pathname);
     }
 
-    go(path) {
+    go(urlPath) {
+        let [path, getParamsString] = urlPath.split('?');
+        const getParamsObject = (getParamsString) ?
+            JSON.parse(`{"${getParamsString.replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g, '":"')}"}`) :
+            {};
+
         let view = this.routes.get(path);
         if (!view) {
             view = this.page404;
         }
 
-        if (window.location.pathname !== path) {
-            window.history.pushState({}, '', path);
+        if (window.location.pathname !== urlPath) {
+            window.history.pushState({}, '', urlPath);
         }
 
         if (this.current) {
             this.current.destroy();
         }
 
-        view.create();
+        view.create(getParamsObject);
         this.current = view;
     }
 }

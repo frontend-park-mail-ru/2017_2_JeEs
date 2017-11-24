@@ -15,8 +15,8 @@
 
 // vertical:    horizontal:
 // : upper
-// :                ::::::
-// : lower      left      right
+// :                : : :
+// : lower      left     right
 
 import Point from "../utils/point";
 
@@ -24,13 +24,14 @@ export default class Wall {
     private _upperOrLeft: Point;
     private _lowerOrRight: Point;
     private _central: Point;
+    private _isValid: boolean;
     private static readonly _length: number = 3;
 
     constructor(upperOrLeft: Point, lowerOrRight: Point) {
         let {isValid, isVertical, isHorizontal} = Wall.getValidationResult(upperOrLeft, lowerOrRight);
 
-        if (!isValid) {
-            return;
+        if (!(this._isValid = isValid)) {
+            return null;
         }
 
         this._upperOrLeft = upperOrLeft;
@@ -41,32 +42,31 @@ export default class Wall {
         } else if (isHorizontal) {
             this._central = new Point((this._upperOrLeft.x + this._lowerOrRight.x) / 2, this._upperOrLeft.y);
         }
-
     }
 
     private static getValidationResult(upperOrLeft: Point, lowerOrRight: Point): any {
-        let isVertical: boolean =
-            (upperOrLeft.x === lowerOrRight.x) && (upperOrLeft.y - lowerOrRight.y === Wall._length - 1);
-        let isHorizontal: boolean =
-            (upperOrLeft.x - lowerOrRight.x === Wall._length - 1) && (upperOrLeft.y === lowerOrRight.y);
+        const isVertical: boolean =
+            (upperOrLeft.x === lowerOrRight.x) &&
+            (upperOrLeft.x % 2 === 1) &&
+            (upperOrLeft.y % 2 === 0) && (lowerOrRight.y % 2 === 0) &&
+            (Math.abs(upperOrLeft.y - lowerOrRight.y ) === Wall._length - 1);
 
-        let centralPointAffectsFigurePoint: boolean =
-            ((upperOrLeft.x === lowerOrRight.x) && (lowerOrRight.x % 2 === 0)) ||
-            ((upperOrLeft.y === lowerOrRight.y) && (lowerOrRight.y % 2 === 0));
+        const isHorizontal: boolean =
+            (upperOrLeft.x % 2 === 0) && (lowerOrRight.x % 2 === 0) &&
+            (Math.abs(upperOrLeft.x - lowerOrRight.x) === Wall._length - 1) &&
+            (upperOrLeft.y === lowerOrRight.y) &&
+            (upperOrLeft.y % 2 === 1);
 
-        let otherPointsAffectFigurePoints: boolean = false;
-        [...arguments].forEach((point) => {
-            if ((point.x % 2 === 0) && (point.y % 2 === 0)) {
-                otherPointsAffectFigurePoints = true;
-                return;
-            }
-        });
+        const maxCellIndex: number = 2 * (parseInt(window.sessionStorage["fieldDimension"]) - 1);
+        const coordinatesAreInValidRange: boolean =
+            [...(<any>Object).values(upperOrLeft), ...(<any>Object).values(lowerOrRight)]
+                .every((coordinate: number): boolean => {
+                    return (coordinate >= 0) && (coordinate <= maxCellIndex)
+                });
 
-        let isValid = (isVertical || isHorizontal) &&
-            !centralPointAffectsFigurePoint &&
-            !otherPointsAffectFigurePoints;
+        const isValid: boolean = coordinatesAreInValidRange && (isVertical || isHorizontal);
 
-        return { isValid, isVertical, isHorizontal };
+        return {isValid, isVertical, isHorizontal};
     }
 
     get lowerOrRight(): Point {
@@ -79,5 +79,9 @@ export default class Wall {
 
     get central(): Point {
         return this._central;
+    }
+
+    get isValid(): boolean {
+        return this._isValid;
     }
 }

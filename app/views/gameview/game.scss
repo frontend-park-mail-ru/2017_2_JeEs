@@ -1,0 +1,13 @@
+@import "../colors.scss";
+@import "../fonts.scss";
+
+.main-block__game {
+  color: $blue-green;
+  text-shadow: $text-shadow;
+  font-family: $cursive-font;
+}
+
+#renderCanvas {
+  width: 900px;
+  height: 600px;
+}

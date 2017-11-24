@@ -1,0 +1,45 @@
+@import "../fonts.scss";
+@import "../sizes.scss";
+@import "../colors.scss";
+
+@mixin margin-bt($margin) {
+  margin-top: $margin;
+  margin-bottom: $margin;
+}
+
+@font-face {
+  font-family: Neucha Regular;
+  src: url(/public/static/fonts/Neucha.ttf);
+  font-weight: normal;
+  font-style: normal;
+}
+
+.main-block__rating {
+  display: flex;
+  flex-direction: column;
+  //background-color: $grey-background ;
+  color: $blue-green;
+  font-size: 170%;
+  //margin-top: 0;
+  width : $rating-width;
+
+  h3 {
+    @include margin-bt(0);
+  }
+
+  ul {
+    list-style-type: none;
+    margin-left: 0;
+    padding-left: 0;
+    width: 80%;
+
+    li {
+      font-family: $main-menu-font;
+      font-size: 90%;
+      list-style-type: none;
+      text-align: center;
+    }
+  }
+}
+
+

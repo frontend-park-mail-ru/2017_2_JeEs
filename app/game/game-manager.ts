@@ -1,23 +1,27 @@
-import SingleplayerGameStrategy from "./game-strategies/singleplayer-game-strategy"
-import GameView from "./gameview/gameviewmanager"
+import SinglePlayerGameStrategy from "./game-strategies/singleplayer-game-strategy"
+import MultiPlayerGameStrategy from "./game-strategies/multiplayer-game-strategy"
 
 class GameManager {
-    private singleplayerGameStrategy;
-    private _gameView: GameView;
-    private static __instance: GameManager = null;
+    private singlePlayerGameStrategy: SinglePlayerGameStrategy;
+    private multiPlayerGameStrategy: MultiPlayerGameStrategy;
 
-    constructor(fieldDimension: number) {
-        if (GameManager.__instance) {
-            return GameManager.__instance;
+    constructor(gameMode: string) {
+        switch (gameMode) {
+            case "singleplayer": {
+                this.singlePlayerGameStrategy = new SinglePlayerGameStrategy;
+                break;
+            }
+            case "multiplayer": {
+                this.multiPlayerGameStrategy = new MultiPlayerGameStrategy;
+                break;
+            }
         }
-
-        this.singleplayerGameStrategy = new SingleplayerGameStrategy(fieldDimension);
-
-        GameManager.__instance = this;
+        window.sessionStorage.setItem("gameMode", gameMode);
     }
 
-    set gameView(value: GameView) {
-        this._gameView = value;
+    destroy() {
+        this.multiPlayerGameStrategy = null;
+        this.singlePlayerGameStrategy = null;
     }
 }
 

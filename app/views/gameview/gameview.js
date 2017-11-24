@@ -1,6 +1,8 @@
 import BaseView from '../baseview';
 import Game from '../../game/gameview/gameviewmanager';
 import {GameManager, } from '../../game/game-manager.ts';
+import EventBus from '../../modules/event-bus.ts';
+import EVENTS from '../../game/utils/events.ts';
 
 export default class GameView extends BaseView {
     constructor(parent) {
@@ -9,13 +11,22 @@ export default class GameView extends BaseView {
         this.template = require('./game.pug');
     }
 
-    create() {
-
+    create(getParamsObject) {
         this.element.innerHTML = this.template({});
         this.game = new Game(17);
 
-        let gameManager = new GameManager(9);
-        gameManager.gameView = this.game;
+        window.sessionStorage['fieldDimension'] = '9';
+        this.gameManager = new GameManager(getParamsObject.mode);
+
+        this.eventBus = new EventBus;
+        this.eventBus.emit(EVENTS.WEBSOCKET_OPEN);
+    }
+
+    destroy() {
+        this.eventBus.emit(EVENTS.WEBSOCKET_CLOSE);
+        this.gameManager.destroy();
+        this.gameManager = null;
+        this.game = null;
     }
 
 }
