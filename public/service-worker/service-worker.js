@@ -4,12 +4,14 @@ const CACHE_NAME = 'serviceWorkerAlpha.1';
 const cacheUrls = [
     'bundle.css',
     'bundle.js',
-    'wall.jpg',
-    '404.png',
-    'lombardia.ttf',
-    'static/images/cat.png',
-    'static/images/wall3.jpg'
-//дописать все то то выгружаем на сайт (картинки и тд)
+    'images/wall.jpg',
+    'images/404.png',
+    'images/cat.png',
+    'images/wall3.jpg',
+    'fonts/lombardia.ttf',
+    'fonts/Neucha.ttf',
+    '/meshes/wall.babylon',
+    '/meshes/hero.babylon',
 ];
 
 self.addEventListener('install', (event) => {

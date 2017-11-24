@@ -117,7 +117,7 @@ export default class WallView {
 
     private _addWall(point1: Point, point2: Point) {
 
-        BABYLON.SceneLoader.ImportMesh("Wall", "./", "wall.babylon", this._scene, newMeshes => {
+        BABYLON.SceneLoader.ImportMesh("Wall", "./meshes/", "wall.babylon", this._scene, newMeshes => {
             const position = new Point((point1.x + point2.x) / 2, (point1.y + point2.y) / 2);
 
             this._ghostWall = <BABYLON.Mesh[]>newMeshes;

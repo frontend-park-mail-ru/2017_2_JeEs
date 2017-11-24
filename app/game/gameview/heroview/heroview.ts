@@ -14,7 +14,7 @@ export default class Hero {
     private _heroMeshes: BABYLON.Mesh[];
 
     constructor(name: string, scene: BABYLON.Scene, x: number, z: number, isGhost: boolean, rotation: number) {
-        BABYLON.SceneLoader.ImportMesh("Hero", "./", "hero.babylon", scene, newMeshes => {
+        BABYLON.SceneLoader.ImportMesh("Hero", "./meshes/", "hero.babylon", scene, newMeshes => {
             this._position = new Point(x, z)
             this._heroMeshes = <BABYLON.Mesh[]>newMeshes;
 
@@ -36,14 +36,7 @@ export default class Hero {
             this._heroMeshes[0].position = new BABYLON.Vector3(BASE_SIZE * x, this.DefaultHeightPosition, BASE_SIZE * z);
 
             this._heroMeshes[0].rotation.y = this.DefaultRotation;
-            this._heroMeshes[0].rotation.y += rotation;
-
-            // this._heroMeshes[3].material = ghostHeroMaterial
-            // this._heroMeshes[4].material = ghostHeroMaterial
-            // this._heroMeshes[5].material = ghostHeroMaterial
-            // this._heroMeshes[7].material = ghostHeroMaterial
-            // this._heroMeshes[13].material = ghostHeroMaterial
-            
+            this._heroMeshes[0].rotation.y += rotation;            
         });
     }
 

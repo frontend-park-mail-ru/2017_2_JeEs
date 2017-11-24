@@ -28,19 +28,25 @@ module.exports = {
                     loader: 'sass-loader' // compiles Sass to CSS
                 }]
             }, {
-                test: /\.(eot|woff|woff2|ttf|svg|png|jpg|babylon)$/,
-                loader: 'url-loader?limit=30000&name=./[name]-[hash].[ext]',
-            }, {
+                test: /\.(png|jpg)$/,
+                loader: 'url-loader?limit=3000&name=images/[name].[ext]',
+            },
+            {
+                test: /\.(ttf)$/,
+                loader: 'url-loader?limit=3000&name=fonts/[name].[ext]',
+            },
+            {
+                test: /\.(babylon)$/,
+                loader: 'url-loader?limit=3000&name=meshes/[name].[ext]',
+            },
+            {
                 test: /\.js$/,
                 exclude: /(node_modules|bower_components)/,
-                use: {
-                    loader: 'babel-loader'
-                }
+                loader: 'babel-loader'
             }, {
                 test: /\.(pug|jade)$/,
                 loader: 'pug-loader'
             },
         ],
     },
-    recordsOutputPath: path.join(__dirname, 'dist', 'records.json')
 };
