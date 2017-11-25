@@ -1,6 +1,7 @@
 {
   "extends": "./test-tsconfig.json",
   "exclude": [
-    "tests"
+    "tests",
+    "app/modules/service-worker.js"
   ]
 }
