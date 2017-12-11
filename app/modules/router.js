@@ -20,9 +20,13 @@ export default class Router {
         this.page404 = view;
     }
 
+    static getLocation() {
+        return '/' + window.location.href.split('/').slice(-1);
+    }
+
     start() {
-        window.onpopstate = event => {
-            this.go(window.location.pathname);
+        window.onpopstate = () => {
+            this.go(Router.getLocation());
         };
 
         document.body.addEventListener('click', event => {
@@ -34,7 +38,7 @@ export default class Router {
             this.go(pathname);
         });
 
-        this.go(window.location.pathname);
+        this.go(Router.getLocation());
     }
 
     go(urlPath) {
@@ -48,8 +52,8 @@ export default class Router {
             view = this.page404;
         }
 
-        if (window.location.pathname !== urlPath) {
-            window.history.pushState({}, '', urlPath);
+        if (Router.getLocation() !== urlPath) {
+            window.history.pushState(getParamsObject, '', urlPath);
         }
 
         if (this.current) {
