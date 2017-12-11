@@ -2,17 +2,16 @@ import SinglePlayerGameStrategy from "./game-strategies/singleplayer-game-strate
 import MultiPlayerGameStrategy from "./game-strategies/multiplayer-game-strategy"
 
 class GameManager {
-    private singlePlayerGameStrategy: SinglePlayerGameStrategy;
-    private multiPlayerGameStrategy: MultiPlayerGameStrategy;
+    private gameStrategy: SinglePlayerGameStrategy | MultiPlayerGameStrategy;
 
     constructor(gameMode: string) {
         switch (gameMode) {
             case "singleplayer": {
-                this.singlePlayerGameStrategy = new SinglePlayerGameStrategy;
+                this.gameStrategy = new SinglePlayerGameStrategy;
                 break;
             }
             case "multiplayer": {
-                this.multiPlayerGameStrategy = new MultiPlayerGameStrategy;
+                this.gameStrategy = new MultiPlayerGameStrategy;
                 break;
             }
         }
@@ -20,8 +19,7 @@ class GameManager {
     }
 
     destroy() {
-        this.multiPlayerGameStrategy = null;
-        this.singlePlayerGameStrategy = null;
+        this.gameStrategy = null;
     }
 }
 
