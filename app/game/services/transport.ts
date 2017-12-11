@@ -91,23 +91,24 @@ export default class Transport {
     }
 
     public sendPoints(points: Array<Point>): void {
-        let pointsString: string = "";
-        points.forEach((point: Point) => {
-            pointsString += `${point.x} ${point.y} `;
-        });
+        let coordinatesArray: Array<number> = points.reduce((result: Array<number>, point: Point) => {
+            let updatedResult = result.concat((<any>Object).values(point));
+            return updatedResult;
+        }, []);
+
         this.sendMessage(JSON.stringify({
             class: "Coordinates",
-            coordinates: pointsString.slice(0, -1) // removing trailing whitespace
+            coordinates: coordinatesArray
         }));
     }
 
     private parseCoordinates(coordinatesMessage: messages.CoordinatesMessage): void {
         new Promise((resolve, reject) => {
-            const points: Array<Point> = coordinatesMessage.coordinates
-                .split(" ")
-                .reduce((result: Array<Point>, value: string, index: number, array: string[]) => {
-                    if (index % 2 === 0)
-                        result.push(new Point(parseInt(array[index]), parseInt(array[index + 1])));
+            const points: Array<Point> = coordinatesMessage.coordinates            
+                .reduce((result: Array<Point>, value: number, index: number, array: Array<number>) => {
+                    if (index % 2 === 0) {
+                        result.push(new Point(array[index], array[index + 1]));
+                    }
                     return result;
                 }, []);
 
