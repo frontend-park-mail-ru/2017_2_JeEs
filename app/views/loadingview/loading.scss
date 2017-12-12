@@ -1,0 +1,23 @@
+@import "../colors.scss";
+
+@keyframes spinner {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.main-block__loading {
+  margin-bottom: 2%;
+}
+
+.loading {
+  margin-top: 100%;
+  width: 30px;
+  height: 30px;
+  border: 6px solid $blue-green;
+  border-left-color: $dark-green;
+  border-right-color: transparent;
+  border-bottom-color: $dark-green-hover;
+  border-radius: 100%;
+  animation: spinner 600ms infinite linear;
+}
