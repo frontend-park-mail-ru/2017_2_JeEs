@@ -1,5 +1,5 @@
 import { GameStrategy, TURN_ENDING_EVENTS } from "./game-strategy";
-import { FieldState, } from "../utils/field-state";
+import {FieldState, FIGURE_KEY,} from "../utils/field-state";
 import EventBus from "../../modules/event-bus"
 import EVENTS from "../utils/events";
 import Point from "../utils/point";
@@ -40,6 +40,9 @@ export default class SinglePlayerGameStrategy {
 
     private onTurnEnded(data): void {
         if (data.event === TURN_ENDING_EVENTS.FIGURE_MOVED) {
+            if (this.gameStrategy.fieldState.getFigure(FIGURE_KEY.YOUR).hasReachedFinish()) {
+                this.eventBus.emit(EVENTS.GAME_OVER);
+            }
             let [recountedPoint]: Point[] =
                 SinglePlayerGameStrategy.recountCoordinates(this.fieldDimension, data.point);
             this.changeFieldState();
@@ -56,6 +59,8 @@ export default class SinglePlayerGameStrategy {
                 lowerOrRight: recountedLowerOrRight
             });
         }
+
+        this.gameStrategy.emitTurnBegan();
     }
 
     private static recountCoordinates(fieldDimension: number, ...points: Point[]): Point[] {
