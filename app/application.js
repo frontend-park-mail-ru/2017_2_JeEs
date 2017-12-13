@@ -14,7 +14,7 @@ import ApplicationView from './views/applicationview/applicationview';
 import AuthUserView from './views/userblockview/auth/authview';
 import UnauthUserView from './views/userblockview/unauth/unauthview';
 import MenuView from './views/menuview/menuview';
-import RatingView from './views/ratingview/ratingview';
+import RatingView from './views/scoreboardview/scoreboardview';
 import AuthView from './views/formsview/authview/authview';
 import RegistrationView from './views/formsview/registrationview/registrationview';
 import NotFoundView from './views/notfoundview/notfoundview';

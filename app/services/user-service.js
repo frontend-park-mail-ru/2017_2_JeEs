@@ -8,7 +8,6 @@ class UserService {
     constructor() {
         this.baseUrl = 'https://jees-quoridor-backend.herokuapp.com';
         window.localStorage['backendUrl'] = this.baseUrl;
-        // this.baseUrl = `${window.location.protocol}//${window.location.host}`;
 
     }
 
@@ -61,6 +60,12 @@ class UserService {
             });
     }
 
+    getScoreboard(offset, limit) {
+        return HttpSend(`${this.baseUrl}/scoreBoard?offset=${offset}&limit=${limit}`, 'GET', {})
+            .then(scoreboardObject => {
+                return scoreboardObject.scoreboard;
+            });
+    }
 }
 
 export default UserService;

@@ -22,22 +22,29 @@
   font-size: 170%;
   //margin-top: 0;
   width : $rating-width;
+  height: $rating-height;
+  justify-content: flex-start;
+  overflow: auto;
 
   h3 {
-    @include margin-bt(0);
+    @include margin-bt(5px);
   }
 
   ul {
     list-style-type: none;
     margin-left: 0;
     padding-left: 0;
-    width: 80%;
+    width: 90%;
 
     li {
       font-family: $main-menu-font;
       font-size: 90%;
       list-style-type: none;
       text-align: center;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
     }
   }
 }
