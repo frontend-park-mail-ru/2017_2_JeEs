@@ -36,7 +36,7 @@ module.exports = [
                 },
                 {
                     test: /\.(ttf)$/,
-                    loader: 'url-loader?limit=3000&name=fonts/[name].[ext]',
+                    loader: 'url-loader?name=fonts/[name].[ext]',
                 },
                 {
                     test: /\.(babylon)$/,

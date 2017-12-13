@@ -66,7 +66,7 @@ router.register('/', menuView)
     .start();
 
 if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/serviceworker.js', { scope: '/' })
+    navigator.serviceWorker.register('/service-worker.js', { scope: '/' })
         .then((registration) => {
             console.log('ServiceWorker registration', registration);
         })
