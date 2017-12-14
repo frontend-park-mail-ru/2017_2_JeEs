@@ -13,10 +13,6 @@ import HeroManager from './heroview/heroManager';
 
 
 
-
-const WINDOW_WIDTH = window.innerWidth;
-const WINDOW_HEIGHT = window.innerHeight;
-
 const BASE_SIZE = Constants.BASE_SIZE;
 
 export default class GameViewManager {
@@ -32,6 +28,8 @@ export default class GameViewManager {
 
     private _gameFieldSize: number;
 
+    private _canvas: HTMLCanvasElement;
+
     private _eventBus;
 
     constructor(gameFieldSize: number) {
@@ -40,20 +38,23 @@ export default class GameViewManager {
 
         this._eventBus = new EventBus;
 
-        const canvas = <HTMLCanvasElement>document.getElementsByClassName("renderCanvas")[0];
+        this._canvas = <HTMLCanvasElement>document.getElementsByClassName("renderCanvas")[0];
 
         // TODO FullScreen.addFullScreen(canvas)
 
-        canvas.width = WINDOW_WIDTH;
-        canvas.height = WINDOW_HEIGHT;
+        window.addEventListener('resize', this._resizeCanvas);
+        window.addEventListener('orientationchange', this._resizeCanvas);
 
-        this._engine = new BABYLON.Engine(canvas, true);
+        this._resizeCanvas()
+
+
+        this._engine = new BABYLON.Engine(this._canvas, true);
         this._scene = new BABYLON.Scene(this._engine);
 
         const gameFieldHalf = this._gameFieldSize / 2 - 0.5;
         const cameraPosition = new BABYLON.Vector3(BASE_SIZE * gameFieldHalf, 0, BASE_SIZE * gameFieldHalf);
         this._camera = new BABYLON.ArcRotateCamera("Camera", -Math.PI / 2, Math.PI / 2.5, BASE_SIZE * 25, cameraPosition, this._scene);
-        this._camera.attachControl(canvas, false);
+        this._camera.attachControl(this._canvas, true);
         this._camera.lowerRadiusLimit = BASE_SIZE * 15;
         this._camera.upperBetaLimit = Math.PI / 2.1;
         this._camera.upperRadiusLimit = BASE_SIZE * 30;
@@ -68,13 +69,13 @@ export default class GameViewManager {
 
         this._HeroManaher.CreateHeroes();
 
-        canvas.addEventListener("click", this.OnSceneClick);
+        this._canvas.addEventListener("click", this.OnSceneClick);
 
-        canvas.addEventListener("mousemove", this.OnSceneMove);
+        this._canvas.addEventListener("mousemove", this.OnSceneMove);
 
-        canvas.addEventListener("touchend", event => {
+        this._canvas.addEventListener("touchend", event => {
         });
-        
+
 
 
         this._eventBus.on(Events.TURN_BEGAN, (data) => {
@@ -170,5 +171,10 @@ export default class GameViewManager {
 
     }
 
+
+    private _resizeCanvas = () => {
+        this._canvas.width = window.innerWidth;
+        this._canvas.height = window.innerHeight;
+    }
 
 }

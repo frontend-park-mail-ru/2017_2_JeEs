@@ -7,7 +7,7 @@
   font-family: $cursive-font;
 }
 
-#renderCanvas {
-  width: 900px;
-  height: 600px;
+.renderCanvas {
+  position: fixed; 
+  left: 0; top: 0;
 }
