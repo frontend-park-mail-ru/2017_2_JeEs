@@ -48,6 +48,7 @@ export default class GameViewManager {
         this._resizeCanvas()
 
 
+
         this._engine = new BABYLON.Engine(this._canvas, true);
         this._scene = new BABYLON.Scene(this._engine);
 
@@ -75,8 +76,6 @@ export default class GameViewManager {
 
         this._canvas.addEventListener("touchend", event => {
         });
-
-
 
         this._eventBus.on(Events.TURN_BEGAN, (data) => {
             this._HeroManaher.NewTurn(data.availableForMovementPoints)
