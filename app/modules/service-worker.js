@@ -5,6 +5,7 @@ const casheData = [
     '/bundle.css',
     '/bundle.js',
     '/images/wall.jpg',
+    '/images/wall3.jpg',
     '/images/404.png',
     '/images/cat.png',
     '/images/wall3.jpg',
