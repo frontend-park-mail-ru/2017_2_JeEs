@@ -25,6 +25,6 @@ export default class ApplicationView extends BaseView {
     }
 
     getMainBlock() {
-        return document.querySelector('.main-block');
+        return document.querySelector('.central-block__main-block');
     }
 }
