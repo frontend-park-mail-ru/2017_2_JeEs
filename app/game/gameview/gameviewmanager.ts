@@ -66,7 +66,7 @@ export default class GameViewManager {
 
         this._floorView.AddFloor();
 
-        this._HeroManaher.CreateHeroes();
+        // this._HeroManaher.CreateHeroes();
 
         canvas.addEventListener("click", this.OnSceneClick);
 
@@ -110,6 +110,7 @@ export default class GameViewManager {
         if (this._myTurn) {
             let pickResult = this._scene.pick(event.offsetX, event.offsetY);
 
+            console.log(pickResult.pickedMesh)
             if (pickResult.pickedMesh !== null && this._HeroManaher.IsCurrentHero(pickResult.pickedMesh)) {
                 if (this._HeroManaher.IsHeroMoving()) {
                     this._HeroManaher.CancelMove();
@@ -120,6 +121,7 @@ export default class GameViewManager {
             }
 
             if (pickResult.pickedMesh !== null && this._HeroManaher.IsGhostHero(pickResult.pickedMesh)) {
+                console.log(2)
                 this._HeroManaher.MoveOnGhostHero(<BABYLON.Mesh>pickResult.pickedMesh)
                 return;
             }

@@ -4,6 +4,8 @@ import Events from "../utils/events"
 import Point from "../utils/point"
 import Constants from "./constants"
 import { Vector3 } from 'babylonjs';
+import ResourcesMap from "./resources"
+
 
 
 const BASE_SIZE = Constants.BASE_SIZE
@@ -117,28 +119,30 @@ export default class WallView {
 
     private _addWall(point1: Point, point2: Point) {
 
-        BABYLON.SceneLoader.ImportMesh("Wall", "./meshes/", "wall.babylon", this._scene, newMeshes => {
-            const position = new Point((point1.x + point2.x) / 2, (point1.y + point2.y) / 2);
+        (new ResourcesMap).get("myWall", "Wall", "./meshes/", "wall.babylon", this._scene)
 
-            this._ghostWall = <BABYLON.Mesh[]>newMeshes;
+        // BABYLON.SceneLoader.ImportMesh("Wall", "./meshes/", "wall.babylon", this._scene, newMeshes => {
+        //     const position = new Point((point1.x + point2.x) / 2, (point1.y + point2.y) / 2);
+
+        //     this._ghostWall = <BABYLON.Mesh[]>newMeshes;
 
 
-            if ((point1.y - point2.y) === 0) {
-                this._ghostWall[0].rotation.y = Math.PI / 2
-            }
+        //     if ((point1.y - point2.y) === 0) {
+        //         this._ghostWall[0].rotation.y = Math.PI / 2
+        //     }
 
-            this._ghostWall[0].position = new BABYLON.Vector3(BASE_SIZE * position.x, this.DefaultHeightPosition, BASE_SIZE * position.y);
+        //     this._ghostWall[0].position = new BABYLON.Vector3(BASE_SIZE * position.x, this.DefaultHeightPosition, BASE_SIZE * position.y);
 
-            this._ghostWall[0].isVisible = false;
+        //     this._ghostWall[0].isVisible = false;
 
-            const wallMaterial = new BABYLON.StandardMaterial("wallMaterial", this._scene);
-            wallMaterial.diffuseColor = BABYLON.Color3.Gray();
-            wallMaterial.alpha = 0.5;
+        //     const wallMaterial = new BABYLON.StandardMaterial("wallMaterial", this._scene);
+        //     wallMaterial.diffuseColor = BABYLON.Color3.Gray();
+        //     wallMaterial.alpha = 0.5;
 
-            newMeshes.forEach(element => {
-                element.material = wallMaterial;
-            });
-        });
+        //     newMeshes.forEach(element => {
+        //         element.material = wallMaterial;
+        //     });
+        // });
     }
 
     private _checkCollisions(points: Point[]) {

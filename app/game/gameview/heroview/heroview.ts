@@ -23,7 +23,7 @@ export default class Hero {
                 ghostHeroMaterial.diffuseColor = BABYLON.Color3.Gray();
                 ghostHeroMaterial.alpha = 0.3;
                 newMeshes.forEach(element => {
-                    element.name = name;                    
+                    element.name = name;
                     element.material = ghostHeroMaterial;
                 });
             } else {
@@ -36,8 +36,20 @@ export default class Hero {
             this._heroMeshes[0].position = new BABYLON.Vector3(BASE_SIZE * x, this.DefaultHeightPosition, BASE_SIZE * z);
 
             this._heroMeshes[0].rotation.y = this.DefaultRotation;
-            this._heroMeshes[0].rotation.y += rotation;            
+            this._heroMeshes[0].rotation.y += rotation;
         });
+    }
+
+    public Clone(name: string, scene: BABYLON.Scene, x: number, z: number, isGhost: boolean, rotation: number) {
+        let newMesh = this._heroMeshes[0].clone(name)
+        if (isGhost) {
+            const ghostHeroMaterial = new BABYLON.StandardMaterial("ghostHeroMaterial", scene);
+            ghostHeroMaterial.diffuseColor = BABYLON.Color3.Gray();
+            ghostHeroMaterial.alpha = 0.3;
+
+            newMesh.material = ghostHeroMaterial;
+        }
+        newMesh.position = new BABYLON.Vector3(BASE_SIZE * x, this.DefaultHeightPosition, BASE_SIZE * z);
     }
 
     public SetPosition(position: Point) {
