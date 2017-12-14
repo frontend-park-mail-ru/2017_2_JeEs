@@ -1,7 +1,11 @@
 div.main-block__rating.element-area
     h3= "Рейтинг"
-    ul
+    ul.scoreboard
+        li.loading-block(style="display: none")
+            .loading
         each value in dataList
             li
-                span= value.userName
-                span= value.score
+                span.userName= value.userName
+                span.score= value.score
+        li.loading-block
+            .loading
