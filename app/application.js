@@ -14,7 +14,7 @@ import ApplicationView from './views/applicationview/applicationview';
 import AuthUserView from './views/userblockview/auth/authview';
 import UnauthUserView from './views/userblockview/unauth/unauthview';
 import MenuView from './views/menuview/menuview';
-import RatingView from './views/ratingview/ratingview';
+import RatingView from './views/scoreboardview/scoreboardview';
 import AuthView from './views/formsview/authview/authview';
 import RegistrationView from './views/formsview/registrationview/registrationview';
 import NotFoundView from './views/notfoundview/notfoundview';
@@ -28,6 +28,7 @@ import GameModeView from './views/gamemodeview/gamemodeview';
 import Router from './modules/router';
 
 import UserService from './services/user-service';
+import LoadingView from "./views/loadingview/loading";
 
 const userService = new UserService();
 
@@ -50,6 +51,8 @@ const authView = new AuthView(mainBlock);
 const registrationView = new RegistrationView(mainBlock);
 const gameModeView = new GameModeView(mainBlock);
 
+const loadingView = new LoadingView(mainBlock);
+
 
 const router = new Router();
 
@@ -63,6 +66,7 @@ router.register('/', menuView)
     .register('/signup', registrationView)
     .register('/authors', creatorsView)
     .register('/rules', rulesView)
+    .register('/loading', loadingView)
     .start();
 
 if ('serviceWorker' in navigator) {
