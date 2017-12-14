@@ -23,11 +23,11 @@ const createStylesheet = (styles) => {
 };
 
 const appendStylesheet = (stylesheet) => {
-    styleElement = document.querySelector('.theme-styles')
+    styleElement = document.querySelector('.theme-styles');
     if (!styleElement) {
-        var styleElement = document.createElement("style");
-        styleElement.classList.add("theme-styles")
-        document.head.appendChild(styleElement)
+        var styleElement = document.createElement('style');
+        styleElement.classList.add('theme-styles');
+        document.head.appendChild(styleElement);
     }
     styleElement.innerHTML = stylesheet;
 };

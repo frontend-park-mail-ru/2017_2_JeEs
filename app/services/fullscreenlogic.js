@@ -1,14 +1,14 @@
 export default class FullScreenLogic {
     static addFullScreen(element) {
         document.onkeypress = event => {
-            if (event.code === "KeyF") {
+            if (event.code === 'KeyF') {
                 if (element.width !== window.innerWidth) {
                     FullScreenLogic._launchIntoFullscreen(element);
                 } else {
                     FullScreenLogic._exitFullScreen(element);
                 }
             }
-        }
+        };
     }
 
     static _launchIntoFullscreen(element) {

@@ -23,7 +23,7 @@ const casheUrls = [
     '/signup', 
     '/authors', 
     '/rules'
-]
+];
 
 self.addEventListener('install', (event) => {
     event.waitUntil(

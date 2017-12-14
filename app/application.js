@@ -28,7 +28,7 @@ import GameModeView from './views/gamemodeview/gamemodeview';
 import Router from './modules/router';
 
 import UserService from './services/user-service';
-import LoadingView from "./views/loadingview/loading";
+import LoadingView from './views/loadingview/loading';
 
 const userService = new UserService();
 
