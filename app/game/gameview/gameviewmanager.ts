@@ -72,6 +72,10 @@ export default class GameViewManager {
 
         canvas.addEventListener("mousemove", this.OnSceneMove);
 
+        canvas.addEventListener("touchend", event => {
+        });
+        
+
 
         this._eventBus.on(Events.TURN_BEGAN, (data) => {
             this._HeroManaher.NewTurn(data.availableForMovementPoints)
@@ -127,6 +131,16 @@ export default class GameViewManager {
             if (pickResult.pickedMesh !== null && this._wallView.IsGhostWall(pickResult.pickedMesh)) {
                 this._wallView.AddWallByGhosWall()
                 return;
+            }
+
+            if (!this._HeroManaher.IsHeroMoving()) {
+                if (pickResult.pickedPoint === null) {
+                    return;
+                }
+                let x = pickResult.pickedPoint.x;
+                let y = pickResult.pickedPoint.z;
+
+                this._wallView.AddGhostWall(new Point(x, y))
             }
         }
     };
