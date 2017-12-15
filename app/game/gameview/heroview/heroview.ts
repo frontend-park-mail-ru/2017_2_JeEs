@@ -2,7 +2,7 @@ import * as BABYLON from 'babylonjs'
 import Constants from "../constants"
 import Point from "../../utils/point";
 
-import ResourcesMap from "../resources"
+import ResourcesMap from "../services/resources"
 
 
 const BASE_SIZE = Constants.BASE_SIZE;

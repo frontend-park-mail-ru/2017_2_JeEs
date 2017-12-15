@@ -1,11 +1,15 @@
 export default class FullScreenLogic {
+    private static _fullScreen: boolean = false;
+
     static addFullScreen(element) {
         document.onkeypress = event => {
             if (event.code === 'KeyF') {
-                if (element.width !== window.innerWidth) {
-                    FullScreenLogic._launchIntoFullscreen(element);
-                } else {
+                if (this._fullScreen) {
                     FullScreenLogic._exitFullScreen(element);
+                    this._fullScreen = false;
+                } else {
+                    FullScreenLogic._launchIntoFullscreen(element);
+                    this._fullScreen = true;                    
                 }
             }
         };
@@ -31,7 +35,5 @@ export default class FullScreenLogic {
         } else if (document.webkitExitFullscreen) {
             document.webkitExitFullscreen();
         }
-        // element.width = window.innerWidth / 2;
-        // element.height = window.innerHeight / 2;
     }
 }

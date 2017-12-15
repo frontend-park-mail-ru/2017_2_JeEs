@@ -8,7 +8,7 @@ import WallView from "./wallview"
 import FloorView from "./floorview"
 import Events from "../utils/events"
 
-import FullScreen from "../../services/fullscreenlogic"
+import FullScreen from "./services/fullscreenlogic"
 import HeroManager from './heroview/heroManager';
 
 
@@ -40,7 +40,7 @@ export default class GameViewManager {
 
         this._canvas = <HTMLCanvasElement>document.getElementsByClassName("renderCanvas")[0];
 
-        // TODO FullScreen.addFullScreen(canvas)
+        FullScreen.addFullScreen(this._canvas)
 
         window.addEventListener('resize', this._resizeCanvas);
         window.addEventListener('orientationchange', this._resizeCanvas);

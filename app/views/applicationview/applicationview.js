@@ -13,8 +13,15 @@ export default class ApplicationView extends BaseView {
 
         this.gameName = this.element.querySelector('.game-name-block__game-name');
 
+        this.backButton = this.element.querySelector('.button-to-back');
+
         this.gameName.addEventListener('click', (formdata) => {
             (new Router()).go('/');
+        });
+
+        this.backButton.addEventListener('click', (formdata) => {
+            event.preventDefault;
+            (new Router()).back();
         });
     }
 

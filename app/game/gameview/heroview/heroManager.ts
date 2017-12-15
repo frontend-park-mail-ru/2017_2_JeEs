@@ -71,7 +71,7 @@ export default class HeroManager {
 
         this._opponentHero = new Hero("opponentHero", this._scene, this._gameFieldSize - 1, gameFieldHalf, false, Math.PI);
 
-        this._currentHero = this._opponentHero; //костыль? почему первый не _currentHero?
+        this._currentHero = this._opponentHero;
     }
 
     public IsHeroMoving(): boolean {

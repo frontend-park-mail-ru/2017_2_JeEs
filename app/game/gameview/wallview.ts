@@ -4,7 +4,7 @@ import Events from "../utils/events"
 import Point from "../utils/point"
 import Constants from "./constants"
 import { Vector3 } from 'babylonjs';
-import ResourcesMap from "./resources"
+import ResourcesMap from "./services/resources"
 
 
 
