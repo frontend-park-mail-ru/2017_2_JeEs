@@ -69,13 +69,48 @@ html, body, #root {
   cursor: pointer;
 }
 
-.main-block {
-  @include aligment(center);
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-}
+
 
 h1 {
   margin-top: 5%;
 }
+
+.central-block {
+  width: 400px;
+  display: grid;
+  grid-template-columns: 60px 300px;
+  //grid-auto-rows: 80px 80px 80px 80px 80px;
+
+
+  .central-block__button {
+    grid-column: 1 / 2;
+
+    display: grid;
+    grid-template-rows: 120px 100px;
+    //grid-row: 3 / 4;
+    .central-block__button__inner{
+      grid-row: 1 / 2;
+
+      .button-to-back {
+        width: 40px;
+        height: 40px;
+        border-radius: 100%;
+        background-color: $dark-green;
+        color: $light-green;
+        font-size: 150%;
+      }
+    }
+
+  }
+
+  .central-block__main-block {
+    @include aligment(center);
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    grid-column: 2 / 3;
+    //grid-row: 1 / 6;
+  }
+
+}
+

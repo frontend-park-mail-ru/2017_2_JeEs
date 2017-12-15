@@ -2,6 +2,9 @@ import * as BABYLON from 'babylonjs'
 import Constants from "../constants"
 import Point from "../../utils/point";
 
+import ResourcesMap from "../services/resources"
+
+
 const BASE_SIZE = Constants.BASE_SIZE;
 
 
@@ -11,38 +14,37 @@ export default class Hero {
 
     private _position: Point;
 
-    private _heroMeshes: BABYLON.Mesh[];
+    private _heroMesh: BABYLON.Mesh;
+
+    private _heroName: BABYLON.Mesh;
 
     constructor(name: string, scene: BABYLON.Scene, x: number, z: number, isGhost: boolean, rotation: number) {
-        BABYLON.SceneLoader.ImportMesh("Hero", "./meshes/", "hero.babylon", scene, newMeshes => {
-            this._position = new Point(x, z)
-            this._heroMeshes = <BABYLON.Mesh[]>newMeshes;
+        (new ResourcesMap).get(name, "Hero", "./meshes/", "hero.babylon", scene)
+            .then((data) => {
+                this._position = new Point(x, z)
+                this._heroMesh = data;
 
-            if (isGhost) {
-                const ghostHeroMaterial = new BABYLON.StandardMaterial("ghostHeroMaterial", scene);
-                ghostHeroMaterial.diffuseColor = BABYLON.Color3.Gray();
-                ghostHeroMaterial.alpha = 0.3;
-                newMeshes.forEach(element => {
-                    element.name = name;                    
-                    element.material = ghostHeroMaterial;
-                });
-            } else {
-                newMeshes.forEach(element => {
-                    element.name = name;
-                });
-            }
 
-            this._heroMeshes[0].scaling = new BABYLON.Vector3(0.4, 0.4, 0.4);
-            this._heroMeshes[0].position = new BABYLON.Vector3(BASE_SIZE * x, this.DefaultHeightPosition, BASE_SIZE * z);
+                if (isGhost) {
+                    const ghostHeroMaterial = new BABYLON.StandardMaterial("ghostHeroMaterial", scene);
+                    ghostHeroMaterial.diffuseColor = BABYLON.Color3.Gray();
+                    ghostHeroMaterial.alpha = 0.3;
+                    this._heroMesh.material = ghostHeroMaterial
+                }
+                this._heroMesh.name = name;
 
-            this._heroMeshes[0].rotation.y = this.DefaultRotation;
-            this._heroMeshes[0].rotation.y += rotation;            
-        });
+                this._heroMesh.scaling = new BABYLON.Vector3(0.4, 0.4, 0.4);
+                this._heroMesh.position = new BABYLON.Vector3(BASE_SIZE * x, this.DefaultHeightPosition, BASE_SIZE * z);
+
+                this._heroMesh.rotation.y = this.DefaultRotation;
+                this._heroMesh.rotation.y += rotation;
+            });
+
     }
 
     public SetPosition(position: Point) {
-        this._heroMeshes[0].position.x = BASE_SIZE * position.x;
-        this._heroMeshes[0].position.z = BASE_SIZE * position.y;
+        this._heroMesh.position.x = BASE_SIZE * position.x;
+        this._heroMesh.position.z = BASE_SIZE * position.y;
         this._position = position;
     }
 
@@ -51,22 +53,22 @@ export default class Hero {
     }
 
     public SetRotation(rotation: number) {
-        this._heroMeshes[0].rotation.y += rotation;
+        this._heroMesh.rotation.y += rotation;
     }
 
     public GetRotation(): number {
-        return this._heroMeshes[0].rotation.y - this.DefaultRotation;
+        return this._heroMesh.rotation.y - this.DefaultRotation;
     }
 
     public Delete() {
-        this._heroMeshes[0].dispose();
+        this._heroMesh.dispose();
     }
 
     public GetName(): string {
-        return this._heroMeshes[0].name;
+        return this._heroMesh.name;
     }
 
     public CheckHeroByMesh(heroMesh: BABYLON.Mesh): boolean {
-        return this._heroMeshes.indexOf(heroMesh) !== -1;
+        return heroMesh.name.startsWith(this._heroMesh.name)
     }
 }

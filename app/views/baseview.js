@@ -1,6 +1,6 @@
 'use strict';
 
-import EventBus from '../modules/event-bus'
+import EventBus from '../modules/event-bus';
 import UserService from '../services/user-service';
 
 

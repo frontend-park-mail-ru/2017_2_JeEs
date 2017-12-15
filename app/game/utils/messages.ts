@@ -1,3 +1,5 @@
+import Point from "./point";
+
 interface Message {
     class: string;
 }
@@ -9,7 +11,7 @@ interface InitGameMessage extends Message {
 }
 
 interface CoordinatesMessage extends Message {
-    coordinates: string;
+    coordinates: Array<number>;
 }
 
 interface FinishGameMessage extends Message {
