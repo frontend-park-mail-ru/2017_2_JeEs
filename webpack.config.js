@@ -2,8 +2,8 @@
 
 const webpack = require('webpack');
 const path = require('path');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
-let InlineChunksWebpackPlugin = require('inline-chunks-html-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const InlineChunksWebpackPlugin = require('inline-chunks-html-webpack-plugin');
 
 module.exports = [
     {
