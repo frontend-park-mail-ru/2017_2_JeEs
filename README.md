@@ -33,4 +33,4 @@
 
 ## Docker
 `sudo docker build -t "quoridor-frontend" ./` - build  
-`sudo docker run --name quoridor-frontend -d nginx` - run
+`sudo docker run -p 80:80  quoridor-frontend` - run
