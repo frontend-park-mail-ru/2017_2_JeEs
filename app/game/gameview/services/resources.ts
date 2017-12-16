@@ -1,6 +1,4 @@
-'use strict';
-import * as BABYLON from 'babylonjs'
-
+import * as BABYLON from 'babylonjs';
 
 export default class ResourcesMap {
     private static __instance: ResourcesMap;
@@ -34,7 +32,7 @@ export default class ResourcesMap {
                 return;
             }
 
-            let newMesh = mesh[0].clone(name)
+            let newMesh = mesh[0].clone(name);
 
             resolve(newMesh);
         });

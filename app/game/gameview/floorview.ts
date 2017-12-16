@@ -1,5 +1,5 @@
-import * as BABYLON from 'babylonjs'
-import Constants from "./constants"
+import * as BABYLON from 'babylonjs';
+import Constants from "./constants";
 
 const BASE_SIZE = Constants.BASE_SIZE;
 

@@ -1,29 +1,32 @@
-import * as BABYLON from 'babylonjs'
-import EventBus from "../../modules/event-bus"
-import Events from "../utils/events"
-import Point from "../utils/point"
-import Constants from "./constants"
+import * as BABYLON from 'babylonjs';
+import EventBus from "../../modules/event-bus";
+import Events from "../utils/events";
+import Point from "../utils/point";
+import Constants from "./constants";
 import { Vector3 } from 'babylonjs';
-import ResourcesMap from "./services/resources"
+import ResourcesMap from "./services/resources";
 
 
 
-const BASE_SIZE = Constants.BASE_SIZE
+const BASE_SIZE = Constants.BASE_SIZE;
 
 
 export default class WallView {
-
     private _ghostWall: BABYLON.Mesh;
-    private _scene: BABYLON.Scene
+
+    private readonly _ghostWallName: string = "ghostWall";
+    private readonly _wallName: string = "wall";
+
+    private _scene: BABYLON.Scene;
     private _eventBus;
-    private _engagedPoints: Point[] = []
+    private _engagedPoints: Point[] = [];
 
     private readonly DefaultHeightPosition: number = 0;
 
     constructor(scene: BABYLON.Scene) {
         this._scene = scene;
 
-        this._createGhostWall()
+        this._createGhostWall();
 
 
         this._eventBus = new EventBus;
@@ -38,7 +41,7 @@ export default class WallView {
             this._engagedPoints = engagedPoints;
         } else {
             this._engagedPoints = engagedPoints.map((point: Point) => {
-                return new Point(16 - point.x, 16 - point.y)
+                return new Point(16 - point.x, 16 - point.y);
             });
         }
     }
@@ -69,7 +72,7 @@ export default class WallView {
 
     public AddWallByGhosWall() {
         this._ghostWall.material.alpha = 1;
-        this._ghostWall.name = "wall"
+        this._ghostWall.name = this._wallName;
         
         let upperOrLeft: Point;
         let lowerOrRight: Point;
@@ -85,11 +88,11 @@ export default class WallView {
 
         this._eventBus.emit(Events.GAMEVIEW_WALL_PLACED, { upperOrLeft, lowerOrRight });
 
-        this._createGhostWall()
+        this._createGhostWall();
     }
 
     public IsGhostWall(mesh: BABYLON.AbstractMesh): boolean {
-        return mesh.name === "ghostWall";
+        return mesh.name === this._ghostWallName;
     }
 
     public OpponentsWallPlaced(...wallPoints) {
@@ -120,13 +123,13 @@ export default class WallView {
 
     private _addWall(point1: Point, point2: Point) {
 
-        (new ResourcesMap).get("ghostWall", "Wall", "./meshes/", "wall.babylon", this._scene)
+        (new ResourcesMap).get("wall", "Wall", "./meshes/", "wall.babylon", this._scene)
             .then((data) => {
                 const position = new Point((point1.x + point2.x) / 2, (point1.y + point2.y) / 2);
 
                 this._ghostWall = data;
 
-                this._ghostWall.name = "ghostWall"
+                this._ghostWall.name = this._ghostWallName;
 
                 if ((point1.y - point2.y) === 0) {
                     this._ghostWall.rotation.y = Math.PI / 2
@@ -157,6 +160,6 @@ export default class WallView {
         } else {
             return false;
         }
-        return true
+        return true;
     }
 }
