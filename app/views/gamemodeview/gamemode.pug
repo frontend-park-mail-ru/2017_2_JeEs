@@ -1,8 +1,8 @@
 mixin item(title, href)
-    button.main-menu__menu-button(value=href)= title
+    button.main-block__gamemode-button(value=href)= title
 
 
 .main-block__gamemode.element-area
-    p= "Режим игры"
+    h3= "Режим игры"
     +item('Нет друзей:(', '/game?mode=singleplayer')
     +item('Есть друзья:)', '/game?mode=multiplayer')
