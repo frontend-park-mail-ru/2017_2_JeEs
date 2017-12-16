@@ -25,6 +25,7 @@
 
 .authors__author {
   color: $dark-green;
+  font-size: 170%;
 }
 
 .authors__author:hover {
@@ -33,12 +34,15 @@
 
 .main-block__authors {
   color: $dark-green;
-  font-size: 170%;
+  //font-size: 100%;
   font-family: $cursive-font;
   text-align: center;
 
-  h3 {
-    @include margin-bt(0);
+  p {
+    margin-top: 3%;
+    margin-bottom: 9%;
+    font-size: 200%;
+    font-family: $main-menu-font;
   }
 
   ul {

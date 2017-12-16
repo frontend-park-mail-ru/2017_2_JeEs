@@ -36,6 +36,7 @@
   font-family: $main-menu-font;
   font-size: 120%;
   border-color: $white-border;
+  border-radius: 5px;
   display: block;
 }
 
@@ -44,13 +45,13 @@
   border-radius: 3px;
 }
 
-.form__title {
-  @include margin-bt(3%);
-  font-family: $cursive-font;
-  font-size: 190%;
-  color: $blue-green;
-  text-align: center;
-}
+//.form__title {
+//  @include margin-bt(3%);
+//  font-family: $cursive-font;
+//  font-size: 190%;
+//  color: $blue-green;
+//  text-align: center;
+//}
 
 .form__message {
   @include margin-lr(auto);
@@ -86,4 +87,5 @@
   display: table-cell;
   vertical-align: middle;
   width: 80%;
+
 }
