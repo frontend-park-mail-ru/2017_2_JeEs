@@ -8,11 +8,15 @@
   font-size: 110%;
   font-family: $main-menu-font;
   color: $light-green;
-  background-color: $form-button-background;
+
   margin-top: 3%;
+  background-image: url('../../../public/static/images/mramor.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 10px;
 }
 
 .user-block__button:hover {
-  background-color: $dark-green-hover;
-  border-color: $light-green;
+  border-radius: 20px;
+  border-color: $dark-green;
 }

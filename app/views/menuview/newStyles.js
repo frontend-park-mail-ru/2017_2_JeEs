@@ -166,7 +166,7 @@ const mainRulesStyle = {
 };
 
 let hasTheme = false;
-let styles = createStylesheet([wallStyle, mainButtonsStyle, gamenameStyle, gamenameStyleHover,
+let styles = createStylesheet([wallStyle, mainButtonsStyle, gamenameStyle,
     mainButtonHover, userButtonsStyle, userButtonHover, changeButtonsStyle,
     changeButtonHover, formFieldStyle, formFieldHover, formTitle, formButtonStyle,
     formButtonHover, authorsStyle, authorsHover, mainAuthorsStyle, mainRatingStyle,

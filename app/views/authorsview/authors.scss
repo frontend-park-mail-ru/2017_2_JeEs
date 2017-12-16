@@ -16,6 +16,13 @@
   transition: border-radius .3s ease-in-out;
 }
 
+.main-block__names {
+  border: solid $dark-green;
+  border-radius: 10px;
+  width: 100%;
+  background-color: rgba(192, 192, 192, 0.7);
+}
+
 .authors__author {
   color: $dark-green;
 }
