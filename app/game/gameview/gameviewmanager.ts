@@ -1,15 +1,18 @@
-import * as BABYLON from 'babylonjs'
-import Point from "../utils/point"
-import * as FieldState from "../utils/field-state"
-import Constants from "./constants"
-import EventBus from "../../modules/event-bus"
+import * as BABYLON from 'babylonjs';
+import Point from "../utils/point";
+import * as FieldState from "../utils/field-state";
+import Constants from "./constants";
+import EventBus from "../../modules/event-bus";
 
-import WallView from "./wallview"
-import FloorView from "./floorview"
-import Events from "../utils/events"
+import WallView from "./wallview";
+import FloorView from "./floorview";
+import Events from "../utils/events";
 
-import FullScreen from "./services/fullscreenlogic"
+import FullScreen from "./services/fullscreenlogic";
 import HeroManager from './heroview/heroManager';
+
+import ResourcesMap from "./services/resources";
+
 
 
 
@@ -40,7 +43,7 @@ export default class GameViewManager {
 
         this._canvas = <HTMLCanvasElement>document.getElementsByClassName("renderCanvas")[0];
 
-        FullScreen.addFullScreen(this._canvas)
+        FullScreen.addFullScreen(this._canvas);
 
         window.addEventListener('resize', this._resizeCanvas);
         window.addEventListener('orientationchange', this._resizeCanvas);
@@ -64,6 +67,14 @@ export default class GameViewManager {
 
         this._HeroManaher = new HeroManager(gameFieldSize, this._scene);
         this._wallView = new WallView(this._scene);
+
+        // (new ResourcesMap).get("ground", "Plane", "./meshes/", "scene.babylon", this._scene)
+        //     .then((data) => {
+        //         data.isVisible = true;
+        //         data.scaling = new BABYLON.Vector3(100, 100, 100);
+        //     })
+
+
         this._floorView = new FloorView(gameFieldSize, this._scene);
 
         this._floorView.AddFloor();
@@ -119,7 +130,7 @@ export default class GameViewManager {
                     this._HeroManaher.CancelMove();
                     return;
                 }
-                this._HeroManaher.HeroMovementStart()
+                this._HeroManaher.HeroMovementStart();
                 return;
             }
 
@@ -140,7 +151,7 @@ export default class GameViewManager {
                 let x = pickResult.pickedPoint.x;
                 let y = pickResult.pickedPoint.z;
 
-                this._wallView.AddGhostWall(new Point(x, y))
+                this._wallView.AddGhostWall(new Point(x, y));
             }
         }
     };
@@ -158,7 +169,7 @@ export default class GameViewManager {
             let y = pickResult.pickedPoint.z;
 
             if (!this._HeroManaher.IsHeroMoving()) {
-                this._wallView.AddGhostWall(new Point(x, y))
+                this._wallView.AddGhostWall(new Point(x, y));
             }
         }
     }

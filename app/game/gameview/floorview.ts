@@ -27,7 +27,7 @@ export default class FloorView {
         floor.material = floorMaterial;
 
 
-        this._addAllAvailablePositionOnFloor()
+        this._addAllAvailablePositionOnFloor();
 
         // тени
         // var shadowGenerator = new BABYLON.ShadowGenerator(1024, light);
@@ -41,7 +41,7 @@ export default class FloorView {
             if (_i % 2 === 0) {
                 for (let _j = 0; _j < this._gameFieldSize; _j++) {
                     if (_j % 2 === 0) {
-                        this._addAvailablePosition(_i, 1 / 8, _j)
+                        this._addAvailablePosition(_i, 1 / 8, _j);
                     }
                 }
             }

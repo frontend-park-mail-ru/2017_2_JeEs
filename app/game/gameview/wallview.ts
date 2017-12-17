@@ -61,7 +61,7 @@ export default class WallView {
             lowerOrRight = new Point(transformedCoordinate.x + 1, transformedCoordinate.y);
         }
 
-        if (this._checkCollisions([upperOrLeft, transformedCoordinate, lowerOrRight])) {
+        if (this._ghostWall != null && this._checkCollisions([upperOrLeft, transformedCoordinate, lowerOrRight])) {
             this._ghostWall.position.x = transformedCoordinate.x * BASE_SIZE;
             this._ghostWall.position.z = transformedCoordinate.y * BASE_SIZE;
             this._ghostWall.rotation.y = rotation;
@@ -71,18 +71,20 @@ export default class WallView {
     }
 
     public AddWallByGhosWall() {
-        this._ghostWall.material.alpha = 1;
-        this._ghostWall.name = this._wallName;
-        
+        let wall: BABYLON.Mesh = this._ghostWall;
+        this._ghostWall = null;
+        wall.material.alpha = 1;
+        wall.name = this._wallName;
+
         let upperOrLeft: Point;
         let lowerOrRight: Point;
 
-        if (this._ghostWall.rotation.y === 0) {
-            upperOrLeft = new Point(this._ghostWall.position.x / BASE_SIZE, this._ghostWall.position.z / BASE_SIZE + 1);
-            lowerOrRight = new Point(this._ghostWall.position.x / BASE_SIZE, this._ghostWall.position.z / BASE_SIZE - 1);
+        if (wall.rotation.y === 0) {
+            upperOrLeft = new Point(wall.position.x / BASE_SIZE, wall.position.z / BASE_SIZE + 1);
+            lowerOrRight = new Point(wall.position.x / BASE_SIZE, wall.position.z / BASE_SIZE - 1);
         } else {
-            upperOrLeft = new Point(this._ghostWall.position.x / BASE_SIZE - 1, this._ghostWall.position.z / BASE_SIZE);
-            lowerOrRight = new Point(this._ghostWall.position.x / BASE_SIZE + 1, this._ghostWall.position.z / BASE_SIZE);
+            upperOrLeft = new Point(wall.position.x / BASE_SIZE - 1, wall.position.z / BASE_SIZE);
+            lowerOrRight = new Point(wall.position.x / BASE_SIZE + 1, wall.position.z / BASE_SIZE);
         }
 
 
