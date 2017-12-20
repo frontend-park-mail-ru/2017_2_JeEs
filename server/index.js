@@ -17,6 +17,7 @@ app.use(cors({
 
 app.use(morgan('dev'));
 app.use(express.static('dist'));
+app.use(express.static('public/sky'));
 app.use(fallback('index.html', { root: 'public' }));
 app.use(body.json());
 app.use(cookie());

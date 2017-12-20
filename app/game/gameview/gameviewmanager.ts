@@ -68,7 +68,40 @@ export default class GameViewManager {
         this._HeroManaher = new HeroManager(gameFieldSize, this._scene);
         this._wallView = new WallView(this._scene);
 
-        // (new ResourcesMap).get("ground", "Plane", "./meshes/", "scene.babylon", this._scene)
+
+        // var skyboxMaterial = new BABYLON.SkyMaterial("skyMaterial", this._scene);
+        // skyboxMaterial.backFaceCulling = false;
+        // //skyboxMaterial._cachedDefines.FOG = true;
+
+        // // Sky mesh (box)
+        // var skybox = BABYLON.Mesh.CreateBox("skyBox", 1000.0, scene);
+        // skybox.material = skyboxMaterial;
+
+
+        var skybox = BABYLON.Mesh.CreateBox("skybox", 1000.0, this._scene);
+        var skyboxMaterial = new BABYLON.StandardMaterial("skybox", this._scene);
+        skyboxMaterial.backFaceCulling = false;
+        skyboxMaterial.disableLighting = true;
+        skybox.material = skyboxMaterial;
+
+        skybox.infiniteDistance = true;
+
+        skyboxMaterial.disableLighting = true;
+
+
+        skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture("skybox", this._scene);
+        skyboxMaterial.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE;
+
+
+
+
+        // var envTexture = new BABYLON.CubeTexture("/assets/textures/SpecularHDR.dds", this._scene);
+        // this._scene.createDefaultSkybox(envTexture, true, 1000);
+
+        // this._HeroManaher = new HeroManager(gameFieldSize, this._scene);
+        // this._wallView = new WallView(this._scene);
+
+        // (new ResourcesMap).get("Scene", "Scene", "./meshes/", "scene.babylon", this._scene)
         //     .then((data) => {
         //         data.isVisible = true;
         //         data.scaling = new BABYLON.Vector3(100, 100, 100);
@@ -78,6 +111,7 @@ export default class GameViewManager {
         this._floorView = new FloorView(gameFieldSize, this._scene);
 
         this._floorView.AddFloor();
+
 
         this._HeroManaher.CreateHeroes();
 
@@ -118,6 +152,9 @@ export default class GameViewManager {
         this._engine.runRenderLoop(() => {
             this._scene.render();
         })
+
+
+
     }
 
 
