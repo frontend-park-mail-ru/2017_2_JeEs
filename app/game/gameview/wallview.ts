@@ -72,6 +72,7 @@ export default class WallView {
 
     public AddWallByGhosWall() {
         let wall: BABYLON.Mesh = this._ghostWall;
+        this._ghostWall.visibility = 1;
         this._ghostWall = null;
         wall.material.alpha = 1;
         wall.name = this._wallName;
@@ -107,7 +108,7 @@ export default class WallView {
 
         this._ghostWall.position = new BABYLON.Vector3(BASE_SIZE * position.x, this.DefaultHeightPosition, BASE_SIZE * position.y);
         this._ghostWall.isVisible = true;
-        this._ghostWall.material.alpha = 1;
+        this._ghostWall.visibility = 1;
         this._createGhostWall()
     }
 
@@ -141,11 +142,7 @@ export default class WallView {
 
                 this._ghostWall.isVisible = false;
 
-                const wallMaterial = new BABYLON.StandardMaterial("wallMaterial", this._scene);
-                wallMaterial.diffuseColor = BABYLON.Color3.Gray();
-                wallMaterial.alpha = 0.5;
-
-                this._ghostWall.material = wallMaterial;
+                this._ghostWall.visibility = 0.3;
             })
 
 

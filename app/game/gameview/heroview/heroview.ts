@@ -24,12 +24,12 @@ export default class Hero {
                 this._position = new Point(x, z)
                 this._heroMesh = data;
 
-
                 if (isGhost) {
-                    const ghostHeroMaterial = new BABYLON.StandardMaterial("ghostHeroMaterial", scene);
-                    ghostHeroMaterial.diffuseColor = BABYLON.Color3.Gray();
-                    ghostHeroMaterial.alpha = 0.3;
-                    this._heroMesh.material = ghostHeroMaterial
+                    var p = this._heroMesh
+
+                    for (var i = 0; i < p.getChildMeshes(false).length; i++) {
+                        p.getChildMeshes(false)[i].visibility = 0.3;
+                    }
                 }
                 this._heroMesh.name = name;
 
