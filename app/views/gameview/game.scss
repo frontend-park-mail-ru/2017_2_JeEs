@@ -1,14 +1,76 @@
 @import "../colors.scss";
 @import "../fonts.scss";
 
-.main-block__game {
-  color: $blue-green;
-  text-shadow: $text-shadow;
-  font-family: $cursive-font;
-}
 
-.renderCanvas {
+.game__canvas {
   position: fixed; 
   left: 0; top: 0;
-  touch-action: none;
+}
+
+.game {
+  width: 100%;
+  height: 100%;
+}
+.game__interface {
+  width: 100%;
+  height: 100%;
+}
+
+.interface__information {
+  display: grid;
+  grid-template-columns: 1fr 3fr 1fr;
+  grid-template-rows: 1fr 3fr;
+  left: 0; top: 0;
+  width: 100%;
+  height: 100%;
+}
+
+
+.information__hero--one {
+
+}
+.information__timer {
+
+}
+.information__hero--two {
+
+}
+
+@media screen and (max-width: 330px) {
+  .information__rules {
+    width: 100%;
+  }
+ }
+
+.information__rules {
+  z-index: 1;
+
+  position: fixed;
+  width: 300px;
+  height: 300px;
+  right: 10px;
+  bottom: 10px;
+
+  color: $blue-green;
+
+  font-family: sans-serif;
+
+  display: block;
+
+  border-radius: 10px;
+  border: solid $dark-green;
+
+  background-color: rgba(192, 192, 192, 0.7);
+  align-items: center;
+  margin-top: 10px;
+  margin-left: 10px;
+  margin-bottom: 10px;
+  margin-right: 10px;
+  justify-content: space-between;
+
+  padding: 1% 3%;
+
+  p {
+    font-size: 120%;
+  }
 }

@@ -34,6 +34,13 @@ export default class WallView {
         this._eventBus.on(Events.GAMEVIEW_HERO_MOVEMENT_START, (data) => {
             this._ghostWall.isVisible = false;
         })
+
+
+        document.addEventListener("keypress",  event => {
+            if (event.code === 'KeyR') {
+                this._ghostWall.rotation.y += Math.PI / 2
+            }
+        });
     }
 
     public NewTurn(engagedPoints: Point[], isCurrentHero: boolean) {
@@ -143,6 +150,8 @@ export default class WallView {
                 this._ghostWall.isVisible = false;
 
                 this._ghostWall.visibility = 0.3;
+
+                (<BABYLON.StandardMaterial>this._ghostWall.material).disableLighting = true;
             })
 
 

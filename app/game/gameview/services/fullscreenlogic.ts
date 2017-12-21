@@ -2,17 +2,17 @@ export default class FullScreenLogic {
     private static _fullScreen: boolean = false;
 
     static addFullScreen(element) {
-        document.onkeypress = event => {
+        document.addEventListener("keypress", event => {
             if (event.code === 'KeyF') {
                 if (this._fullScreen) {
                     FullScreenLogic._exitFullScreen(element);
                     this._fullScreen = false;
                 } else {
                     FullScreenLogic._launchIntoFullscreen(element);
-                    this._fullScreen = true;                    
+                    this._fullScreen = true;
                 }
             }
-        };
+        });
     }
 
     static _launchIntoFullscreen(element) {

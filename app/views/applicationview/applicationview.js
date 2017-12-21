@@ -23,6 +23,8 @@ export default class ApplicationView extends BaseView {
             event.preventDefault;
             (new Router()).back();
         });
+
+        this.isCreated = true;
     }
 
 

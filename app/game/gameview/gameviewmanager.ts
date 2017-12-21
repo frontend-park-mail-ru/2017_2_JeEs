@@ -41,7 +41,7 @@ export default class GameViewManager {
 
         this._eventBus = new EventBus;
 
-        this._canvas = <HTMLCanvasElement>document.getElementsByClassName("renderCanvas")[0];
+        this._canvas = <HTMLCanvasElement>document.getElementsByClassName("game__canvas")[0];
 
         FullScreen.addFullScreen(this._canvas);
 
@@ -69,22 +69,11 @@ export default class GameViewManager {
         this._wallView = new WallView(this._scene);
 
 
-        // var skyboxMaterial = new BABYLON.SkyMaterial("skyMaterial", this._scene);
-        // skyboxMaterial.backFaceCulling = false;
-        // //skyboxMaterial._cachedDefines.FOG = true;
-
-        // // Sky mesh (box)
-        // var skybox = BABYLON.Mesh.CreateBox("skyBox", 1000.0, scene);
-        // skybox.material = skyboxMaterial;
-
-
-        var skybox = BABYLON.Mesh.CreateBox("skybox", 1000.0, this._scene);
-        var skyboxMaterial = new BABYLON.StandardMaterial("skybox", this._scene);
+        let skybox = BABYLON.Mesh.CreateBox("skybox", 1000.0, this._scene);
+        let skyboxMaterial = new BABYLON.StandardMaterial("skybox", this._scene);
         skyboxMaterial.backFaceCulling = false;
         skyboxMaterial.disableLighting = true;
         skybox.material = skyboxMaterial;
-
-        skybox.infiniteDistance = true;
 
         skyboxMaterial.disableLighting = true;
 
@@ -92,11 +81,6 @@ export default class GameViewManager {
         skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture("skybox", this._scene);
         skyboxMaterial.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE;
 
-
-
-
-        // var envTexture = new BABYLON.CubeTexture("/assets/textures/SpecularHDR.dds", this._scene);
-        // this._scene.createDefaultSkybox(envTexture, true, 1000);
 
         // this._HeroManaher = new HeroManager(gameFieldSize, this._scene);
         // this._wallView = new WallView(this._scene);
@@ -214,8 +198,8 @@ export default class GameViewManager {
     private _addLights() {
         const gameFieldHalf = this._gameFieldSize / 2 - 0.5;
 
-        const lightOne = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, BASE_SIZE * gameFieldHalf, 0), this._scene);
-
+        const lightOne = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(BASE_SIZE * gameFieldHalf, BASE_SIZE * this._gameFieldSize, BASE_SIZE * gameFieldHalf), this._scene);
+        lightOne.specular = new BABYLON.Color3(0.3,0.3,0.3);
     }
 
 

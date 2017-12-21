@@ -19,7 +19,7 @@ export default class ResourcesMap {
         return new Promise((resolve, reject) => {
             let mesh: BABYLON.Mesh[] = this.channels.get(meshName);
             if (!mesh) {
-                setTimeout(BABYLON.SceneLoader.ImportMesh(meshName, rootUrl, sceneFilename, scene, newMeshes => {
+                BABYLON.SceneLoader.ImportMesh(meshName, rootUrl, sceneFilename, scene, newMeshes => {
                     mesh = <BABYLON.Mesh[]>newMeshes;
                     mesh[0].isVisible = false;
                     this.channels.set(meshName, mesh);
@@ -28,7 +28,7 @@ export default class ResourcesMap {
                 }, onProgress => {
                 }, onError => {
                     reject()
-                }), 0);
+                });
                 return;
             }
 
