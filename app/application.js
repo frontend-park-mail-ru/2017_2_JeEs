@@ -3,7 +3,7 @@
 function requireAll(r) { r.keys().forEach(r); }
 
 requireAll(require.context('../public/static/fonts/', true, /\.(ttf)$/));
-requireAll(require.context('../public/static/images/', true, /\.(png)$/));
+requireAll(require.context('../public/static/images/', true, /\.(png|jpg)$/));
 requireAll(require.context('../public/', true, /\.(babylon)$/));
 
 requireAll(require.context('./views/', true, /\.(scss)$/));
@@ -28,7 +28,7 @@ import GameModeView from './views/gamemodeview/gamemodeview';
 import Router from './modules/router';
 
 import UserService from './services/user-service';
-import LoadingView from "./views/loadingview/loading";
+import LoadingView from './views/loadingview/loading';
 
 const userService = new UserService();
 
@@ -70,7 +70,7 @@ router.register('/', menuView)
     .start();
 
 if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/serviceworker.js', { scope: '/' })
+    navigator.serviceWorker.register('/service-worker.js', { scope: '/' })
         .then((registration) => {
             console.log('ServiceWorker registration', registration);
         })

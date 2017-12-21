@@ -71,7 +71,7 @@ export default class HeroManager {
 
         this._opponentHero = new Hero("opponentHero", this._scene, this._gameFieldSize - 1, gameFieldHalf, false, Math.PI);
 
-        this._currentHero = this._opponentHero; //костыль? почему первый не _currentHero?
+        this._currentHero = this._opponentHero;
     }
 
     public IsHeroMoving(): boolean {
@@ -111,11 +111,16 @@ export default class HeroManager {
     }
 
     public IsGhostHero(mesh: BABYLON.AbstractMesh): boolean {
-        return this._ghostHeroes.length === 0 ? false : mesh.name === this._ghostHeroes[0].GetName();
+        if (this._ghostHeroes.length === 0) {
+            return false;
+        }
+
+        return (mesh.name.startsWith("ghostHero"));
     }
 
     public IsCurrentHero(mesh: BABYLON.AbstractMesh): boolean {
-        return mesh.name === this._currentHero.GetName();
+        let result: boolean;
+        return mesh.name.startsWith(this._currentHero.GetName())
     }
 
     public IsMainHeroTurn(): boolean {
@@ -127,11 +132,11 @@ export default class HeroManager {
     }
 
     private _addGhostHeroes(hero: Hero) {
-        this._availableForMovementPoints.forEach(_point => {
+        this._availableForMovementPoints.forEach((_point, _index) => {
             if (this.IsMainHeroTurn()) {
-                this._ghostHeroes.push(new Hero("ghostHero", this._scene, _point.x, _point.y, true, hero.GetRotation()));
+                this._ghostHeroes.push(new Hero(`ghostHero${_index}`, this._scene, _point.x, _point.y, true, hero.GetRotation()));
             } else {
-                this._ghostHeroes.push(new Hero("ghostHero", this._scene, this._gameFieldSize - _point.x - 1, this._gameFieldSize - _point.y - 1, true, hero.GetRotation()));
+                this._ghostHeroes.push(new Hero(`ghostHero${_index}`, this._scene, this._gameFieldSize - _point.x - 1, this._gameFieldSize - _point.y - 1, true, hero.GetRotation()));
             }
         });
     }

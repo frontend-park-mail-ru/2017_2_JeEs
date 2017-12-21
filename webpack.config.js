@@ -2,6 +2,8 @@
 
 const webpack = require('webpack');
 const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const InlineChunksWebpackPlugin = require('inline-chunks-html-webpack-plugin');
 
 module.exports = [
     {
@@ -10,7 +12,7 @@ module.exports = [
             bundle: './app/application.js',
         },
         output: {
-            filename: 'bundle.js',
+            filename: '[name].js',
             path: path.join(__dirname, 'dist'),
         },
         resolve: {
@@ -36,7 +38,7 @@ module.exports = [
                 },
                 {
                     test: /\.(ttf)$/,
-                    loader: 'url-loader?limit=3000&name=fonts/[name].[ext]',
+                    loader: 'url-loader?name=fonts/[name].[ext]',
                 },
                 {
                     test: /\.(babylon)$/,
@@ -52,6 +54,18 @@ module.exports = [
                 },
             ],
         },
+        plugins: [
+            new webpack.optimize.CommonsChunkPlugin("commons.chunk"),
+            new HtmlWebpackPlugin({
+                filename: 'index.html',
+                template: 'public/index.html',
+                inject: true,
+            }),
+            new webpack.optimize.AggressiveSplittingPlugin({
+                minSize: 30000,
+                maxSize: 50000
+            }),
+        ]
     }, {
         context: __dirname,
         entry: {
@@ -61,5 +75,5 @@ module.exports = [
             filename: 'service-worker.js',
             path: path.join(__dirname, 'dist'),
         },
-    }, 
+    },
 ];

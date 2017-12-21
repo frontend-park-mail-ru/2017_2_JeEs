@@ -30,7 +30,7 @@ export default class Router {
         };
 
         document.body.addEventListener('click', event => {
-            if (event.target.tagName.toLowerCase() !== 'button') {
+            if (event.target.tagName.toLowerCase() !== 'button' ||  event.target.className.toLowerCase() === "button-to-back") {
                 return;
             }
             event.preventDefault();
@@ -62,5 +62,9 @@ export default class Router {
 
         view.create(getParamsObject);
         this.current = view;
+    }
+
+    back() {
+        window.history.back(); 
     }
 }

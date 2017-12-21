@@ -3,8 +3,8 @@ import BaseView from '../baseview';
 const imageStyle = {
     selector: '.cry-image',
     styles: {
-        'background-image': 'url(\'./static/images/cat.png\')',
-        'filter' : 'blur(5px)'
+        'background-image': 'url(\'./images/cat.png\')',
+        'filter': 'blur(5px)'
     }
 };
 
@@ -23,9 +23,13 @@ const createStylesheet = (styles) => {
 };
 
 const appendStylesheet = (stylesheet) => {
-    let styleTag = document.getElementById('theme-styles');
-
-    styleTag.innerHTML = stylesheet;
+    styleElement = document.querySelector('.theme-styles');
+    if (!styleElement) {
+        var styleElement = document.createElement('style');
+        styleElement.classList.add('theme-styles');
+        document.head.appendChild(styleElement);
+    }
+    styleElement.innerHTML = stylesheet;
 };
 
 let style = createStylesheet([imageStyle]);
@@ -39,12 +43,11 @@ export default class NotFoundView extends BaseView {
 
     create() {
         this.element.innerHTML = this.template({});
+
         document
-            .getElementById('image-switch')
+            .querySelector('.image-switch')
             .addEventListener('click', function (evt) {
-
                 appendStylesheet(style);
-
             });
     }
 

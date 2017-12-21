@@ -36,6 +36,7 @@
   font-family: $main-menu-font;
   font-size: 120%;
   border-color: $white-border;
+  border-radius: 5px;
   display: block;
 }
 
@@ -44,13 +45,13 @@
   border-radius: 3px;
 }
 
-.form__title {
-  @include margin-bt(3%);
-  font-family: $cursive-font;
-  font-size: 190%;
-  color: $blue-green;
-  text-align: center;
-}
+//.form__title {
+//  @include margin-bt(3%);
+//  font-family: $cursive-font;
+//  font-size: 190%;
+//  color: $blue-green;
+//  text-align: center;
+//}
 
 .form__message {
   @include margin-lr(auto);
@@ -67,21 +68,24 @@
   height: $menu-button-height;
   width: 80%;
   font-size: 120%;
-  font-family: $main-menu-font;
   color: $light-green;
-  background-color: $form-button-background;
+  font-family: $main-menu-font;
+  background-image: url('../../../public/static/images/mramor.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 10px;
   display: block;
   margin-bottom: 5%;
 }
 
 .form__button:hover {
-  background-color: $dark-green-hover;
-  border-color: $light-green;
-  border-radius: 8px;
+  border-color: $dark-green;
+  border-radius: 20px;
 }
 
 .auth-form__form, .registration-form__form {
   display: table-cell;
   vertical-align: middle;
   width: 80%;
+
 }
