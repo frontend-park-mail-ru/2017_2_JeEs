@@ -38,13 +38,6 @@ const gamenameStyle = {
     }
 };
 
-// const gamenameStyleHover = {
-//     selector: '.game-name-block__game-name:hover',
-//     styles: {
-//         'color': '#402641'
-//     }
-// };
-
 const mainButtonsStyle = {
     selector: '.main-menu__menu-button',
     styles: {
@@ -57,7 +50,7 @@ const mainButtonHover = {
     selector: '.main-menu__menu-button:hover',
     styles: {
         'border-radius': '20px',
-        'border-color': '#BDD9BF'
+        'border-color': '#412234'
     }
 };
 
@@ -151,6 +144,13 @@ const mainAuthorsStyle = {
     }
 };
 
+const borderRatingStyle = {
+    selector: '.main-block__rating',
+    styles: {
+        'border-color': '#402641',
+    }
+};
+
 const mainRatingStyle = {
     selector: '.main-block__rating',
     styles: {
@@ -173,6 +173,15 @@ const gameMode = {
     }
 };
 
+const gameModeHover = {
+    selector: '.main-block__gamemode-button:hover',
+    styles: {
+        'border-color': '#412234'
+    }
+};
+
+
+
 const authorsNames = {
     selector: '.main-block__names',
     styles: {
@@ -181,19 +190,29 @@ const authorsNames = {
 };
 
 const rulesBlock = {
-    selector: '.main-block__rules\n',
+    selector: '.main-block__rules',
     styles: {
         'border-color': '#412234',
     }
 };
 
+const loadingStyle = {
+    selector: '.loading',
+    styles: {
+        'border': '6px solid #412234',
+        'border-left-color': '#340641',
+        'border-bottom-color': '#410f1f',
+
+    }
+};
 
 let hasTheme = false;
 let styles = createStylesheet([wallStyle, mainButtonsStyle, gamenameStyle,
     mainButtonHover, userButtonsStyle, userButtonHover, changeButtonsStyle,
     changeButtonHover, formFieldStyle, formFieldHover, formTitle, formButtonStyle,
     formButtonHover, authorsStyle, authorsHover, mainAuthorsStyle, mainRatingStyle,
-    mainRulesStyle, gameMode, authorsNames, rulesBlock]);
+    mainRulesStyle, gameMode, authorsNames, rulesBlock, borderRatingStyle, loadingStyle,
+    gameModeHover]);
 
 export default function ChangeTheme() {
     let stylesheet = hasTheme ? '' : styles;

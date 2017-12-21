@@ -1,7 +1,9 @@
 .main-block__auth-form
     form.auth-form__form.form.element-area
-        //p.form__title Вход
-        input(type="text", name="login", placeholder="Логин").form__field
-        input(type="password", name="password", placeholder="Пароль").form__field
-        input(type="submit", value="Вход").form__button
-        p.form__message
+        div.main-block__button-inner
+            button.main-block__back-in-form='←'
+        div.main-block__input
+            input(type="text", name="login", placeholder="Логин").form__field
+            input(type="password", name="password", placeholder="Пароль").form__field
+            input(type="submit", value="Вход").form__button
+            p.form__message

@@ -24,7 +24,14 @@
 }
 
 .main-block__rules {
-  @include size(40%);
+  display: grid;
+  grid-template-rows: 1fr 10fr;
+}
+
+.main-block__rules-inner {
+  grid-row: 2 / 3;
+
+  width: 30%;
   @include min-size($min-rules-size);
   @include margin-lr(auto);
 
@@ -48,4 +55,20 @@
   p {
     font-size: 120%;
   }
+}
+
+.main-block__back-in-rules {
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+  background-image: url('../../../public/static/images/mramor.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: $light-green;
+  font-size: 150%;
+  margin-left: 45%;
+}
+
+.main-block__back-in-rules:hover {
+  border-color: $dark-green;
 }

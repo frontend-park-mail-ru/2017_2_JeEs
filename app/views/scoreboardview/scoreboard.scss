@@ -15,16 +15,23 @@
 }
 
 .main-block__rating {
+  display: grid;
+  grid-template-rows: 1fr 10fr;
+}
+
+.main-block__scoreboard {
+  grid-row: 2 / 3;
+
   display: flex;
   flex-direction: column;
-  //background-color: $grey-background ;
   color: $blue-green;
   font-size: 170%;
-  //margin-top: 0;
   width : $rating-width;
   height: $rating-height;
   justify-content: flex-start;
   padding: 10px 0 10px 10px;
+
+  margin-left: -7%;
 
   border-radius: 10px;
   border: solid $dark-green;
@@ -83,4 +90,23 @@
   }
 }
 
+.main-block__button-inner {
+  grid-row: 1 / 2;
+}
+
+.main-block__back-in-rating {
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+  background-image: url('../../../public/static/images/mramor.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: $light-green;
+  font-size: 150%;
+  margin-left: 40%;
+}
+
+.main-block__back-in-rating:hover {
+  border-color: $dark-green;
+}
 

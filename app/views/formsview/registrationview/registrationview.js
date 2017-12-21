@@ -32,6 +32,13 @@ export default class RegistrationView extends BaseView {
             event.preventDefault();
             this._onSubmit();
         });
+
+        this.backButton = this.element.querySelector('.main-block__back-in-form');
+
+        this.backButton.addEventListener('click', (formdata) => {
+            event.preventDefault;
+            (new Router()).back();
+        });
     }
 
     _onSubmit() {

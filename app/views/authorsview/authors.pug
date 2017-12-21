@@ -4,7 +4,8 @@ mixin item(title, href)
 
 
 .main-block__authors.element-area
-
+    div.main-block__button-inner
+        button.main-block__back-button='←'
     ul.main-block__names
         p= "Авторы"
         +item('@barzug', 'https://github.com/barzug')
