@@ -104,8 +104,42 @@
   color: $light-green;
   font-size: 150%;
   margin-left: 35%;
+
+
 }
 
 .main-block__back-in-form:hover {
   border-color: $dark-green;
+}
+
+@media screen and (max-width: 800px) and (max-height: 500px) {
+  .form__field {
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 5%;
+    text-align: center;
+    width: 60%;
+    color: #116B55;
+    font-family: "Neucha Regular", sans-serif;
+    font-size: 100%;
+    border-color: #FFFFFF;
+    border-radius: 10px;
+    display: block;
+  }
+
+  .form__button {
+    margin-left: auto;
+    margin-right: auto;
+    height: 40px;
+    width: 65%;
+    font-size: 120%;
+    color: #C3EB78;
+    font-family: "Neucha Regular", sans-serif;
+    background-image: url('../../../public/static/images/mramor.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 10px;
+    display: block;
+    margin-bottom: 5%;
+  }
 }

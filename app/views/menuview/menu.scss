@@ -2,6 +2,11 @@
 @import "../fonts.scss";
 @import "../sizes.scss";
 
+@mixin size($size) {
+    height : $size;
+    width : $size;
+}
+
 @mixin margin-lr($margin) {
     margin-left: $margin;
     margin-right: $margin;
@@ -51,4 +56,38 @@
 .change-theme:hover {
     border-color: $dark-green;
     border-radius: 20px;
+}
+
+@media screen and (max-width: 800px) and (max-height: 500px) {
+    .main-menu__menu-button {
+      height: 35px;
+      width: 51%;
+      font-size: 100%;
+      font-family: "Neucha Regular", sans-serif;
+      color: #C3EB78;
+      background-image: url('../../../public/static/images/mramor.jpg');
+      background-repeat: no-repeat;
+      background-size: cover;
+      margin-top: 5%;
+      margin-left: 25%;
+      border-radius: 10px;
+    }
+
+    .change-theme {
+      margin-top: 5%;
+      margin-bottom: 5%;
+      margin-left: auto;
+      margin-right: auto;
+      height: 30px;
+      width: 35%;
+      font-size: 66%;
+      font-family: "Neucha Regular", sans-serif;
+      color: #C3EB78;
+      display: block;
+      background-image: url('../../../public/static/images/mramor.jpg');
+      background-repeat: no-repeat;
+      background-size: cover;
+      border-radius: 10px;
+    }
+
 }

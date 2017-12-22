@@ -145,21 +145,21 @@ const mainAuthorsStyle = {
 };
 
 const borderRatingStyle = {
-    selector: '.main-block__rating',
+    selector: '.main-block__scoreboard',
     styles: {
         'border-color': '#402641',
     }
 };
 
 const mainRatingStyle = {
-    selector: '.main-block__rating',
+    selector: '.main-block__scoreboard',
     styles: {
         'color': '#402641',
     }
 };
 
 const mainRulesStyle = {
-    selector: '.main-block__rules',
+    selector: '.main-block__rules-inner',
     styles: {
         'color': '#402641',
     }
@@ -180,8 +180,6 @@ const gameModeHover = {
     }
 };
 
-
-
 const authorsNames = {
     selector: '.main-block__names',
     styles: {
@@ -190,7 +188,7 @@ const authorsNames = {
 };
 
 const rulesBlock = {
-    selector: '.main-block__rules',
+    selector: '.main-block__rules-inner',
     styles: {
         'border-color': '#412234',
     }
@@ -206,13 +204,90 @@ const loadingStyle = {
     }
 };
 
+const backButton = {
+    selector: '.main-block__back-button',
+    styles: {
+        'color': '#412234',
+        'background-image': 'url(\'/images/mramor3.jpg\')'
+    }
+};
+
+const backButtonHover = {
+    selector: '.main-block__back-button:hover',
+    styles: {
+        'border-color': '#412234'
+    }
+};
+
+const backButtonInForm = {
+    selector: '.main-block__back-in-form',
+    styles: {
+        'color': '#412234',
+        'background-image': 'url(\'/images/mramor3.jpg\')'
+    }
+};
+
+const backButtonInFormHover = {
+    selector: '.main-block__back-in-form:hover',
+    styles: {
+        'border-color': '#412234'
+    }
+};
+
+const backButtonInGameMode = {
+    selector: '.main-block__back',
+    styles: {
+        'color': '#412234',
+        'background-image': 'url(\'/images/mramor3.jpg\')'
+    }
+};
+
+const backButtonInGameModeHover = {
+    selector: '.main-block__back:hover',
+    styles: {
+        'border-color': '#412234'
+    }
+};
+
+const backButtonInRating = {
+    selector: '.main-block__back-in-rating',
+    styles: {
+        'color': '#412234',
+        'background-image': 'url(\'/images/mramor3.jpg\')'
+    }
+};
+
+const backButtonInRatingHover = {
+    selector: '.main-block__back-in-rating:hover',
+    styles: {
+        'border-color': '#412234'
+    }
+};
+
+const backButtonInRules = {
+    selector: '.main-block__back-in-rules',
+    styles: {
+        'color': '#412234',
+        'background-image': 'url(\'/images/mramor3.jpg\')'
+    }
+};
+
+const backButtonInRulesHover = {
+    selector: '.main-block__back-in-rules:hover',
+    styles: {
+        'border-color': '#412234'
+    }
+};
+
 let hasTheme = false;
 let styles = createStylesheet([wallStyle, mainButtonsStyle, gamenameStyle,
     mainButtonHover, userButtonsStyle, userButtonHover, changeButtonsStyle,
     changeButtonHover, formFieldStyle, formFieldHover, formTitle, formButtonStyle,
     formButtonHover, authorsStyle, authorsHover, mainAuthorsStyle, mainRatingStyle,
     mainRulesStyle, gameMode, authorsNames, rulesBlock, borderRatingStyle, loadingStyle,
-    gameModeHover]);
+    gameModeHover, backButtonInRulesHover, backButtonInRules, backButtonInRatingHover,
+    backButtonInRating, backButtonInGameModeHover, backButtonInGameMode, backButtonInFormHover,
+    backButtonInForm, backButtonHover, backButton]);
 
 export default function ChangeTheme() {
     let stylesheet = hasTheme ? '' : styles;

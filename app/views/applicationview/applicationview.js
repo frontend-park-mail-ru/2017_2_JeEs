@@ -21,6 +21,9 @@ export default class ApplicationView extends BaseView {
 
         this.backButton = this.element.querySelector('.central-block__button-to-back');
 
+
+
+
         // this.backButton.addEventListener('click', (formdata) => {
         //     event.preventDefault;
         //     (new Router()).back();
