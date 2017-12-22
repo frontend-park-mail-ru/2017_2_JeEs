@@ -28,8 +28,14 @@ export default class MultiPlayerGameStrategy {
         this.eventBus.on(EVENTS.YOUR_TURN, () => {
             this.gameStrategy.emitTurnBegan();
         });
+        this.eventBus.on(EVENTS.VALIDATE_WALL, this.onValidateWall.bind(this));
+        this.eventBus.on(EVENTS.INFO_MESSAGE_RECEIVED, this.onInfoMessageReceived.bind(this));
 
         this.eventBus.emit(EVENTS.MULTIPLAYER);
+    }
+
+    private onValidateWall(data): void {
+        this.transport.sendPoints([data.upperOrLeft, data.lowerOrRight]);
     }
 
     private onGameStarted(data): void {
@@ -44,8 +50,15 @@ export default class MultiPlayerGameStrategy {
     private onTurnEnded(data): void {
         if (data.event === TURN_ENDING_EVENTS.FIGURE_MOVED) {
             this.transport.sendPoints([data.point]);
-        } else if (data.event === TURN_ENDING_EVENTS.WALL_PLACED) {
-            this.transport.sendPoints([data.upperOrLeft, data.lowerOrRight]);
+        }
+    }
+
+    // the worst thing i ever wrote
+    private onInfoMessageReceived(data: {message: string}) {
+        if (data.message === "OK") {
+            this.eventBus.emit(EVENTS.WALL_IS_VALID)
+        } else if (data.message === "Повторите ход. Нельзя добавить стену") {
+            this.eventBus.emit(EVENTS.WALL_IS_INVALID);
         }
     }
 }

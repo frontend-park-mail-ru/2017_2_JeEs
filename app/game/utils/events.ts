@@ -30,4 +30,10 @@ export default abstract class EVENTS {
     // emitted in gameviewview (!), handled in transport
     public static readonly WEBSOCKET_OPEN: string = "network:websocket_open";
     public static readonly WEBSOCKET_CLOSE: string = "network:websocket_close";
+
+    public static readonly VALIDATE_WALL: string = "game:validate_wall";
+    public static readonly INFO_MESSAGE_RECEIVED: string = "network:info_message_received";
+
+    public static readonly WALL_IS_VALID: string = "game:wall_is_valid";
+    public static readonly WALL_IS_INVALID: string = "game:wall_is_invalid";
 }
