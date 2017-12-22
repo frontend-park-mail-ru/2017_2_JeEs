@@ -1,21 +1,15 @@
 export default class FullScreenLogic {
-    private static _fullScreen: boolean = false;
+    private _fullScreen: boolean = false;
 
-    static addFullScreen(element) {
-        document.addEventListener("keypress", event => {
-            if (event.code === 'KeyF') {
-                if (this._fullScreen) {
-                    FullScreenLogic._exitFullScreen(element);
-                    this._fullScreen = false;
-                } else {
-                    FullScreenLogic._launchIntoFullscreen(element);
-                    this._fullScreen = true;
-                }
-            }
-        });
+    private _element;
+
+    constructor(element) {
+        this._element = element;
+
+        document.addEventListener("keypress", this._fullScreenLogic);
     }
 
-    static _launchIntoFullscreen(element) {
+    private _launchIntoFullscreen(element) {
         if (element.requestFullscreen) {
             element.requestFullscreen();
         } else if (element.mozRequestFullScreen) {
@@ -27,13 +21,30 @@ export default class FullScreenLogic {
         }
     }
 
-    static _exitFullScreen(element) {
+    private _exitFullScreen(element) {
         if (document.exitFullscreen) {
             document.exitFullscreen();
         } else if (document.mozCancelFullScreen) {
             document.mozCancelFullScreen();
         } else if (document.webkitExitFullscreen) {
             document.webkitExitFullscreen();
+        }
+    }
+
+    public destroy() {
+        document.removeEventListener("keypress", this._fullScreenLogic);
+        this._element = null;
+    }
+
+    private _fullScreenLogic = event => {
+        if (event.code === 'KeyF') {
+            if (this._fullScreen) {
+                this._exitFullScreen(this._element);
+                this._fullScreen = false;
+            } else {
+                this._launchIntoFullscreen(this._element);
+                this._fullScreen = true;
+            }
         }
     }
 }

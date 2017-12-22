@@ -12,7 +12,19 @@ export default class GameView extends BaseView {
     }
 
     create(getParamsObject) {
-        this.element.innerHTML = this.template({});
+        this.prevChildren = this.element.childNodes;
+        this.prevChildren.forEach(node => {
+            if (node.nodeName.toLowerCase() !== 'div') {
+                return;
+            }
+            node.style.visibility = "hidden";
+        });
+
+        this.gameDiv = document.createElement('div');
+        this.gameDiv.className = "game";
+        this.gameDiv.innerHTML = this.template({});
+        this.element.appendChild(this.gameDiv);
+
         this.game = new Game(17);
 
         window.sessionStorage['fieldDimension'] = '9';
@@ -42,7 +54,18 @@ export default class GameView extends BaseView {
         this.eventBus.emit(EVENTS.WEBSOCKET_CLOSE);
         this.gameManager.destroy();
         this.gameManager = null;
+        this.game.destroy();
         this.game = null;
+
+        this.element.removeChild(this.gameDiv)
+
+
+        this.prevChildren.forEach(node => {
+            if (node.nodeName.toLowerCase() !== 'div') {
+                return;
+            }
+            node.style.visibility = "";
+        });
     }
 
 

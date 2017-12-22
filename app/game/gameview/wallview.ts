@@ -36,29 +36,7 @@ export default class WallView {
         })
 
 
-        document.addEventListener("keypress", event => {
-            if (event.code === 'KeyR') {
-                let point = new Point(this._ghostWall.position.x, this._ghostWall.position.z)
-
-                const transformedCoordinate: Point = new Point(Math.round(point.x / BASE_SIZE), Math.round(point.y / BASE_SIZE));
-                let upperOrLeft: Point;
-                let lowerOrRight: Point;
-
-                if (this._ghostWall.rotation.y !== 0 && this._ghostWall.rotation.y !== Math.PI) {
-                    console.log(1)
-                    upperOrLeft = new Point(transformedCoordinate.x, transformedCoordinate.y + 1);
-                    lowerOrRight = new Point(transformedCoordinate.x, transformedCoordinate.y - 1);
-                } else {
-                    console.log(2)
-                    upperOrLeft = new Point(transformedCoordinate.x - 1, transformedCoordinate.y);
-                    lowerOrRight = new Point(transformedCoordinate.x + 1, transformedCoordinate.y);
-                }
-
-                if (this._ghostWall != null && this._checkCollisions([upperOrLeft, transformedCoordinate, lowerOrRight])) {
-                    this._ghostWall.rotation.y += Math.PI / 2;
-                }
-            }
-        });
+        document.addEventListener("keypress", this._rotateWall);
     }
 
     public NewTurn(engagedPoints: Point[], isCurrentHero: boolean) {
@@ -188,4 +166,44 @@ export default class WallView {
         }
         return true;
     }
+
+
+    private _rotateWall = event => {
+        if (event.code === 'KeyR') {
+            let point = new Point(this._ghostWall.position.x, this._ghostWall.position.z)
+
+            const transformedCoordinate: Point = new Point(Math.round(point.x / BASE_SIZE), Math.round(point.y / BASE_SIZE));
+            let upperOrLeft: Point;
+            let lowerOrRight: Point;
+
+            if (this._ghostWall.rotation.y !== 0 && this._ghostWall.rotation.y !== Math.PI) {
+                console.log(1)
+                upperOrLeft = new Point(transformedCoordinate.x, transformedCoordinate.y + 1);
+                lowerOrRight = new Point(transformedCoordinate.x, transformedCoordinate.y - 1);
+            } else {
+                console.log(2)
+                upperOrLeft = new Point(transformedCoordinate.x - 1, transformedCoordinate.y);
+                lowerOrRight = new Point(transformedCoordinate.x + 1, transformedCoordinate.y);
+            }
+
+            if (this._ghostWall != null && this._checkCollisions([upperOrLeft, transformedCoordinate, lowerOrRight])) {
+                this._ghostWall.rotation.y += Math.PI / 2;
+            }
+        }
+    }
+
+    private _onHeroStart = data => {
+        this._ghostWall.isVisible = false;
+    }
+
+    public destroy() {
+        this._ghostWall = null;
+        this._scene = null;
+
+
+        this._eventBus.remove(Events.GAMEVIEW_HERO_MOVEMENT_START)
+
+        document.removeEventListener("keypress", this._rotateWall);
+    }
+
 }

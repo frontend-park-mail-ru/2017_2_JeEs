@@ -23,7 +23,7 @@ export default class GameViewManager {
     private _scene: BABYLON.Scene;
     private _camera: BABYLON.ArcRotateCamera;
 
-    private _HeroManaher: HeroManager;
+    private _heroManaher: HeroManager;
     private _wallView: WallView;
     private _floorView: FloorView;
 
@@ -35,6 +35,8 @@ export default class GameViewManager {
 
     private _eventBus;
 
+    private _fullScreen;
+
     constructor(gameFieldSize: number) {
 
         this._gameFieldSize = gameFieldSize;
@@ -43,7 +45,7 @@ export default class GameViewManager {
 
         this._canvas = <HTMLCanvasElement>document.getElementsByClassName("game__canvas")[0];
 
-        FullScreen.addFullScreen(this._canvas);
+        this._fullScreen = new FullScreen(this._canvas);
 
         window.addEventListener('resize', this._resizeCanvas);
         window.addEventListener('orientationchange', this._resizeCanvas);
@@ -66,9 +68,9 @@ export default class GameViewManager {
         this._camera.upperBetaLimit = Math.PI / 2.1;
         this._camera.upperRadiusLimit = BASE_SIZE * 30;
 
-        this._addLights()
+        this._addLights();
 
-        this._HeroManaher = new HeroManager(gameFieldSize, this._scene);
+        this._heroManaher = new HeroManager(gameFieldSize, this._scene);
         this._wallView = new WallView(this._scene);
 
 
@@ -97,7 +99,7 @@ export default class GameViewManager {
         this._floorView.AddFloor();
 
 
-        this._HeroManaher.CreateHeroes();
+        this._heroManaher.CreateHeroes();
 
         this._canvas.addEventListener("click", this.OnSceneClick);
 
@@ -106,37 +108,17 @@ export default class GameViewManager {
         this._canvas.addEventListener("touchend", event => {
         });
 
-        this._eventBus.on(Events.TURN_BEGAN, (data) => {
-            this._HeroManaher.NewTurn(data.availableForMovementPoints)
-            this._wallView.NewTurn(data.engagedPoints, this._HeroManaher.IsMainHeroTurn())
-            this._myTurn = true;
-        });
+        this._eventBus.on(Events.TURN_BEGAN, this._onTurnBegan);
 
-        this._eventBus.on(Events.TURN_ENDED, (data) => {
-            this._myTurn = false;
-        });
+        this._eventBus.on(Events.TURN_ENDED, this._onTurnEnded);
 
-        this._eventBus.on(Events.MULTIPLAYER, (data) => {
+        this._eventBus.on(Events.MULTIPLAYER, this._onMultiplayerBegan);
 
-            this._HeroManaher.SetMultiplayerLogic();
-
-            this._eventBus.on(Events.OPPONENTS_FIGURE_MOVED, (data) => {
-                this._HeroManaher.OpponentsMove(data.point);
-            });
-
-            this._eventBus.on(Events.OPPONENTS_WALL_PLACED, (data) => {
-                this._wallView.OpponentsWallPlaced(data.upperOrLeft, data.lowerOrRight);
-            });
-        });
-
-        this._eventBus.on(Events.GAME_OVER, (data) => {
-            alert("Вы победили!");
-        });
+        this._eventBus.on(Events.GAME_OVER, this._onGameOver);
 
         this._engine.runRenderLoop(() => {
             this._scene.render();
         })
-
 
 
     }
@@ -146,17 +128,17 @@ export default class GameViewManager {
         if (this._myTurn) {
             let pickResult = this._scene.pick(event.offsetX, event.offsetY);
 
-            if (pickResult.pickedMesh !== null && this._HeroManaher.IsCurrentHero(pickResult.pickedMesh)) {
-                if (this._HeroManaher.IsHeroMoving()) {
-                    this._HeroManaher.CancelMove();
+            if (pickResult.pickedMesh !== null && this._heroManaher.IsCurrentHero(pickResult.pickedMesh)) {
+                if (this._heroManaher.IsHeroMoving()) {
+                    this._heroManaher.CancelMove();
                     return;
                 }
-                this._HeroManaher.HeroMovementStart();
+                this._heroManaher.HeroMovementStart();
                 return;
             }
 
-            if (pickResult.pickedMesh !== null && this._HeroManaher.IsGhostHero(pickResult.pickedMesh)) {
-                this._HeroManaher.MoveOnGhostHero(<BABYLON.Mesh>pickResult.pickedMesh)
+            if (pickResult.pickedMesh !== null && this._heroManaher.IsGhostHero(pickResult.pickedMesh)) {
+                this._heroManaher.MoveOnGhostHero(<BABYLON.Mesh>pickResult.pickedMesh)
                 return;
             }
 
@@ -165,7 +147,7 @@ export default class GameViewManager {
                 return;
             }
 
-            if (!this._HeroManaher.IsHeroMoving()) {
+            if (!this._heroManaher.IsHeroMoving()) {
                 if (pickResult.pickedPoint === null) {
                     return;
                 }
@@ -189,7 +171,7 @@ export default class GameViewManager {
             let x = pickResult.pickedPoint.x;
             let y = pickResult.pickedPoint.z;
 
-            if (!this._HeroManaher.IsHeroMoving()) {
+            if (!this._heroManaher.IsHeroMoving()) {
                 this._wallView.AddGhostWall(new Point(x, y));
             }
         }
@@ -206,6 +188,89 @@ export default class GameViewManager {
     private _resizeCanvas = () => {
         this._canvas.width = window.innerWidth;
         this._canvas.height = window.innerHeight;
+    }
+
+    private _onTurnBegan = data => {
+        console.log(data)
+        this._heroManaher.NewTurn(data.availableForMovementPoints);
+        this._wallView.NewTurn(data.engagedPoints, this._heroManaher.IsMainHeroTurn());
+        this._myTurn = true;
+    }
+
+    private _onTurnEnded = data => {
+        this._myTurn = false;
+    }
+
+    private _onOpponentFigureMoved = data => {
+        this._heroManaher.OpponentsMove(data.point);
+    }
+
+    private _onOpponentWallPlaced = data => {
+        this._wallView.OpponentsWallPlaced(data.upperOrLeft, data.lowerOrRight);
+    }
+
+    private _onMultiplayerBegan = data => {
+        this._heroManaher.SetMultiplayerLogic();
+
+        this._eventBus.on(Events.OPPONENTS_FIGURE_MOVED, this._onOpponentFigureMoved);
+
+        this._eventBus.on(Events.OPPONENTS_WALL_PLACED, this._onOpponentWallPlaced);
+    }
+
+    private _onGameOver = data => {
+        alert("Вы победили!");
+    }
+
+    public destroy() {
+
+        this._eventBus.remove(Events.TURN_BEGAN);
+
+        this._eventBus.remove(Events.TURN_ENDED);
+
+        this._eventBus.remove(Events.OPPONENTS_FIGURE_MOVED);
+
+        this._eventBus.remove(Events.OPPONENTS_WALL_PLACED);
+
+        this._eventBus.remove(Events.MULTIPLAYER);
+
+        this._eventBus.remove(Events.GAME_OVER);
+
+        this._eventBus.remove(Events.YOUR_FIGURE_MOVED);
+
+        this._eventBus.remove(Events.YOUR_WALL_PLACED);
+
+        this._eventBus.remove(Events.GAME_CLOSED);
+
+        this._eventBus.remove(Events.GAME_STARTED);
+
+        this._eventBus.remove(Events.TURN_ENDED);
+
+        this._eventBus.remove(Events.YOUR_TURN);
+
+        window.removeEventListener('resize', this._resizeCanvas);
+        window.removeEventListener('orientationchange', this._resizeCanvas);
+
+        this._engine.stopRenderLoop();
+        this._engine = null;
+        this._scene = null;
+        this._camera = null;
+
+        this._heroManaher.destroy();
+        this._heroManaher = null;
+
+        this._wallView.destroy();
+        this._wallView = null;
+
+        this._floorView.destroy();
+        this._floorView = null;
+
+
+        this._canvas = null;
+
+        (new ResourcesMap()).destroy();
+
+
+        this._fullScreen.destroy();
     }
 
 }

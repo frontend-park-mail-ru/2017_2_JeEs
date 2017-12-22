@@ -31,6 +31,10 @@ export default class EventBus {
         events.splice(events.indexOf(callback), 1);
     }
 
+    remove(eventName: string) {
+        this.channels.delete(eventName);
+    }
+
     emit(eventName: string, data: Object = {}) {
         const events: Array<Function> = this.channels.get(eventName);
         if (!events) {

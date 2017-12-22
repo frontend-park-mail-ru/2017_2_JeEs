@@ -57,4 +57,9 @@ export default class FloorView {
 
         availablePosition.material = availablePositionMaterial;
     }
+
+
+    public destroy() {
+        this._scene = null;
+    }
 }

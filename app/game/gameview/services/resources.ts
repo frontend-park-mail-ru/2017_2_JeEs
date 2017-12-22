@@ -3,7 +3,6 @@ import * as BABYLON from 'babylonjs';
 export default class ResourcesMap {
     private static __instance: ResourcesMap;
     private channels: Map<string, BABYLON.Mesh[]>;
-    private mutex: boolean
 
     constructor() {
         if (ResourcesMap.__instance) {
@@ -15,7 +14,7 @@ export default class ResourcesMap {
         ResourcesMap.__instance = this;
     }
 
-    get(name: string, meshName: string, rootUrl: string, sceneFilename: string, scene: BABYLON.Scene): Promise<BABYLON.Mesh> {
+    public get(name: string, meshName: string, rootUrl: string, sceneFilename: string, scene: BABYLON.Scene): Promise<BABYLON.Mesh> {
         return new Promise((resolve, reject) => {
             let mesh: BABYLON.Mesh[] = this.channels.get(meshName);
             if (!mesh) {
@@ -36,5 +35,10 @@ export default class ResourcesMap {
 
             resolve(newMesh);
         });
+    }
+
+    public destroy() {
+        this.channels = null;
+        ResourcesMap.__instance = null;
     }
 }

@@ -10,7 +10,6 @@ export default class BaseView {
         this.userService = new UserService();
         this.eventBus = new EventBus();
 
-        this.isCreated = false;
         this.template = null;
     }
 

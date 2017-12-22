@@ -71,4 +71,9 @@ export default class Hero {
     public CheckHeroByMesh(heroMesh: BABYLON.Mesh): boolean {
         return heroMesh.name.startsWith(this._heroMesh.name)
     }
+    
+
+    public destroy() {
+        this._heroMesh = null;
+    }
 }

@@ -40,16 +40,7 @@ export default class HeroManager {
 
 
         //сомнительное размещение логики, если честно
-        this._eventBus.on(Events.GAMEVIEW_WALL_PLACED, (data) => {
-            if (this.IsMainHeroTurn()) {
-                this._eventBus.emit(Events.YOUR_WALL_PLACED, data)
-            } else {
-                this._eventBus.emit(Events.YOUR_WALL_PLACED, {
-                    upperOrLeft: new Point(this._gameFieldSize - 1 - data.upperOrLeft.x, this._gameFieldSize - 1 - data.upperOrLeft.y),
-                    lowerOrRight: new Point(this._gameFieldSize - 1 - data.lowerOrRight.x, this._gameFieldSize - 1 - data.lowerOrRight.y)
-                })
-            }
-        });
+        this._eventBus.on(Events.GAMEVIEW_WALL_PLACED, this._onWallPlaced);
     }
 
     public SetMultiplayerLogic() {
@@ -100,6 +91,7 @@ export default class HeroManager {
                 break
             }
         }
+
 
         if (this.IsMainHeroTurn()) {
             this._eventBus.emit(Events.YOUR_FIGURE_MOVED, { point: position })
@@ -154,5 +146,37 @@ export default class HeroManager {
         } else {
             this._currentHero = this._mainHero;
         }
+    }
+
+    private _onWallPlaced = data => {
+        if (this.IsMainHeroTurn()) {
+            this._eventBus.emit(Events.YOUR_WALL_PLACED, data)
+        } else {
+            this._eventBus.emit(Events.YOUR_WALL_PLACED, {
+                upperOrLeft: new Point(this._gameFieldSize - 1 - data.upperOrLeft.x, this._gameFieldSize - 1 - data.upperOrLeft.y),
+                lowerOrRight: new Point(this._gameFieldSize - 1 - data.lowerOrRight.x, this._gameFieldSize - 1 - data.lowerOrRight.y)
+            })
+        }
+    }
+
+
+
+    public destroy() {
+        this._scene = null;
+
+        this._currentHero.destroy();
+        this._currentHero = null;
+
+        this._mainHero.destroy();
+        this._mainHero = null;
+
+        this._ghostHeroes.forEach(hero => {
+            hero.destroy();
+        });
+        this._ghostHeroes = null;
+
+        this._scene = null;
+
+        this._eventBus.remove(Events.GAMEVIEW_WALL_PLACED);
     }
 }
