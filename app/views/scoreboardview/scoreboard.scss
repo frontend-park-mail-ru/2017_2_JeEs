@@ -14,62 +14,202 @@
   font-style: normal;
 }
 
-.main-block__rating {
-  display: flex;
-  flex-direction: column;
-  //background-color: $grey-background ;
-  color: $blue-green;
-  font-size: 170%;
-  //margin-top: 0;
-  width : $rating-width;
-  height: $rating-height;
-  justify-content: flex-start;
-  padding: 10px 0 10px 10px;
+@media not screen and (max-height: 750px) {
 
-  h3 {
-    @include margin-bt(5px);
+  .main-block__rating {
+    display: grid;
+    grid-template-rows: 1fr 10fr;
+    margin-top: 10%;
   }
 
-  ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    overflow: auto;
-    height: 100%;
+  .main-block__scoreboard {
+    grid-row: 2 / 3;
 
-    .loading-block {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      margin-bottom: 5px;
-      margin-top: 5px;
+    display: flex;
+    flex-direction: column;
+    color: $blue-green;
+    font-size: 170%;
+    width: $rating-width;
+    height: $rating-height;
+    justify-content: flex-start;
+    padding: 10px 0 10px 10px;
 
-      .loading {
-        margin: 0;
+    margin-left: -7%;
+
+    border-radius: 10px;
+    border: solid $dark-green;
+    background-color: rgba(192, 192, 192, 0.7);
+
+    p {
+      margin-top: 3%;
+      margin-bottom: 9%;
+      font-size: 120%;
+      font-family: $main-menu-font;
+    }
+
+    h3 {
+      @include margin-bt(5px);
+    }
+
+    ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      overflow: auto;
+      height: 100%;
+
+      .loading-block {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 5px;
+        margin-top: 5px;
+
+        .loading {
+          margin: 0;
+        }
+      }
+
+      li {
+        font-family: $main-menu-font;
+        font-size: 90%;
+        list-style-type: none;
+        text-align: center;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .userName {
+        margin-left: 5%;
+      }
+
+      .score {
+        margin-right: 5%;
       }
     }
-
-    li {
-      font-family: $main-menu-font;
-      font-size: 90%;
-      list-style-type: none;
-      text-align: center;
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .userName {
-      margin-left: 5%;
-    }
-
-    .score {
-      margin-right: 5%;
-    }
   }
+
+  .main-block__button-inner-scoreboard {
+    grid-row: 1 / 2;
+  }
+
+  .main-block__back-in-rating {
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    background-image: url('../../../public/static/images/mramor.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: $light-green;
+    font-size: 150%;
+    margin-left: 40%;
+  }
+
+  .main-block__back-in-rating:hover {
+    border-color: $dark-green;
+  }
+
 }
 
+@media screen and (max-height: 750px) {
+  .main-block__rating {
+    display: grid;
+    grid-template-rows: 1fr 10fr;
+    margin-top: 10%;
+  }
 
+  .main-block__scoreboard {
+    grid-row: 2 / 3;
+
+    display: flex;
+    flex-direction: column;
+    color: $blue-green;
+    font-size: 170%;
+    width: $rating-width;
+    height: 330px;
+    justify-content: flex-start;
+    padding: 10px 0 10px 10px;
+
+    margin-left: -7%;
+
+    border-radius: 10px;
+    border: solid $dark-green;
+    background-color: rgba(192, 192, 192, 0.7);
+
+    p {
+      margin-top: 3%;
+      margin-bottom: 9%;
+      font-size: 120%;
+      font-family: $main-menu-font;
+    }
+
+    h3 {
+      @include margin-bt(5px);
+    }
+
+    ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      overflow: auto;
+      height: 100%;
+
+      .loading-block {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 5px;
+        margin-top: 5px;
+
+        .loading {
+          margin: 0;
+        }
+      }
+
+      li {
+        font-family: $main-menu-font;
+        font-size: 90%;
+        list-style-type: none;
+        text-align: center;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .userName {
+        margin-left: 5%;
+      }
+
+      .score {
+        margin-right: 5%;
+      }
+    }
+  }
+
+  .main-block__button-inner-scoreboard {
+    grid-row: 1 / 2;
+  }
+
+  .main-block__back-in-rating {
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    background-image: url('../../../public/static/images/mramor.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: $light-green;
+    font-size: 150%;
+    margin-left: 40%;
+  }
+
+  .main-block__back-in-rating:hover {
+    border-color: $dark-green;
+  }
+}

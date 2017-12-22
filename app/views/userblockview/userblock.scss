@@ -2,6 +2,11 @@
 @import "../fonts.scss";
 @import "../sizes.scss";
 
+@mixin size($size) {
+  height : $size;
+  width : $size;
+}
+
 .user-block__button {
   height: $user-block-height;
   width: $user-block-width;
@@ -19,4 +24,22 @@
 .user-block__button:hover {
   border-radius: 20px;
   border-color: $dark-green;
+}
+
+@media screen and (max-width: 800px) and (max-height: 500px) {
+
+  .user-block__button {
+    height: 60%;
+    width: 93%;
+    font-size: 100%;
+    font-family: "Neucha Regular", sans-serif;
+    color: #C3EB78;
+    margin-top: 3%;
+    background-image: url('../../../public/static/images/mramor.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 10px;
+  }
+
+
 }

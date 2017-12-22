@@ -1,4 +1,5 @@
 import BaseView from '../baseview';
+import Router from '../../modules/router';
 
 export default class CreatorsView extends BaseView {
     constructor(parent) {
@@ -9,6 +10,13 @@ export default class CreatorsView extends BaseView {
 
     create() {
         this.element.innerHTML = this.template({});
+
+        this.backButton = this.element.querySelector('.main-block__back-button');
+
+        this.backButton.addEventListener('click', (formdata) => {
+            event.preventDefault;
+            (new Router()).back();
+        });
     }
 
 }

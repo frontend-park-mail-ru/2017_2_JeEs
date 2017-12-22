@@ -3,6 +3,8 @@ mixin item(title, href)
 
 
 .main-block__gamemode.element-area
-    h3= "Режим игры"
-    +item('Нет друзей:(', '/game?mode=singleplayer')
-    +item('Есть друзья:)', '/game?mode=multiplayer')
+    div.main-block__button-inner
+        button.main-block__back='←'
+    ul.main-block__modes
+        +item('Игра в одиночку', '/game?mode=singleplayer')
+        +item('Игра с противником', '/game?mode=multiplayer')

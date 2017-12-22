@@ -1,11 +1,14 @@
-div.main-block__rating.element-area
-    h3= "Рейтинг"
-    ul.scoreboard
-        li.loading-block(style="display: none")
-            .loading
-        each value in dataList
-            li
-                span.userName= value.userName
-                span.score= value.score
-        li.loading-block
-            .loading
+section.main-block__rating.element-area
+    div.main-block__button-inner-scoreboard
+        button.main-block__back-in-rating='←'
+    div.main-block__scoreboard
+        p= "Рейтинг"
+        ul.scoreboard
+            li.loading-block(style="display: none")
+                .loading
+            each value in dataList
+                li
+                    span.userName= value.userName
+                    span.score= value.score
+            li.loading-block
+                .loading

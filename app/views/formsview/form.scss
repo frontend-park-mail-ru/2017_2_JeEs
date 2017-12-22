@@ -36,20 +36,13 @@
   font-family: $main-menu-font;
   font-size: 120%;
   border-color: $white-border;
+  border-radius: 10px;
   display: block;
 }
 
 .form__field:hover {
   border-color: $dark-green;
   border-radius: 3px;
-}
-
-.form__title {
-  @include margin-bt(3%);
-  font-family: $cursive-font;
-  font-size: 190%;
-  color: $blue-green;
-  text-align: center;
 }
 
 .form__message {
@@ -60,7 +53,6 @@
   font-size: 100%;
   text-align: center;
 }
-
 
 .form__button {
   @include margin-lr(auto);
@@ -83,7 +75,71 @@
 }
 
 .auth-form__form, .registration-form__form {
-  display: table-cell;
+  //display: table-cell;
+
+  display: grid;
+  grid-auto-rows: 1fr 5fr;
   vertical-align: middle;
   width: 80%;
+
+}
+
+.main-block__input {
+  grid-row: 2 / 3;
+  margin-left: -15%;
+  margin-top: 5%;
+}
+
+.main-block__button-inner {
+  grid-row: 1 / 2;
+}
+
+.main-block__back-in-form {
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+  background-image: url('../../../public/static/images/mramor.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: $light-green;
+  font-size: 150%;
+  margin-left: 35%;
+
+
+}
+
+.main-block__back-in-form:hover {
+  border-color: $dark-green;
+}
+
+@media screen and (max-width: 800px) and (max-height: 500px) {
+  .form__field {
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 5%;
+    text-align: center;
+    width: 60%;
+    color: #116B55;
+    font-family: "Neucha Regular", sans-serif;
+    font-size: 100%;
+    border-color: #FFFFFF;
+    border-radius: 10px;
+    display: block;
+  }
+
+  .form__button {
+    margin-left: auto;
+    margin-right: auto;
+    height: 40px;
+    width: 65%;
+    font-size: 120%;
+    color: #C3EB78;
+    font-family: "Neucha Regular", sans-serif;
+    background-image: url('../../../public/static/images/mramor.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 10px;
+    display: block;
+    margin-bottom: 5%;
+  }
 }
