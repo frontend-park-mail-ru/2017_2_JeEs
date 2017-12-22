@@ -28,10 +28,30 @@
 }
 
 .top-bar__hero--one {
+  color: blue;
+  font-family: monospace;
+  text-align: center;
 }
+
+.hero--one__name, .hero--two__name {
+  font-size: 23px;
+}
+
 .top-bar__messages {
+  font-size: 220%;
+  color: $light-green;
+  font-family: monospace;
+  margin-left: 50%;
 }
+
+.hero--one__walls, .hero--two__walls {
+  font-size: 15px;
+}
+
 .top-bar__hero--two {
+  color: red;
+  font-family: monospace;
+  text-align: center;
 
 }
 
