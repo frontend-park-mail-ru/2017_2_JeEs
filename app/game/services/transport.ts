@@ -136,12 +136,15 @@ export default class Transport {
     }
 
     private handleInitGameMessage(initGameMessage: messages.InitGameMessage): void {
+        this.eventBus.emit(EVENTS.OPPONENTHERO_NAME, initGameMessage.enemy)
         this.eventBus.emit(EVENTS.GAME_STARTED, { isFirst: initGameMessage.isFirst })
     }
 
     private handleFinishGameMessage(finishGameMessage: messages.FinishGameMessage): void {
         if (finishGameMessage.won) {
             alert("Вы выиграли");
+        } else {
+            alert("Вы проиграли");
         }
     }
 

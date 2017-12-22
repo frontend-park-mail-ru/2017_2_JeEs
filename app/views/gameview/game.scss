@@ -3,18 +3,18 @@
 
 
 .game__canvas {
-  position: fixed; 
-  left: 0; top: 0;
+    position: fixed; 
+    left: 0; top: 0;
 }
 
 .game {
-  z-index: 1;
-  width: 100%;
-  height: 100%;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
 }
 .game__interface {
-  width: 100%;
-  height: 100%;
+    width: 100%;
+    height: 100%;
 }
 
 .interface__top-bar {
@@ -28,31 +28,33 @@
 }
 
 .top-bar__hero--one {
-  color: blue;
-  font-family: monospace;
-  text-align: center;
+    color: blue;
+    font-family: monospace;
+    text-align: center;
 }
 
 .hero--one__name, .hero--two__name {
-  font-size: 23px;
+    font-size: 23px;
 }
 
 .top-bar__messages {
-  font-size: 220%;
-  color: $light-green;
-  font-family: monospace;
-  margin-left: 50%;
+    font-size: 220%;
+    color: $light-green;
+    font-family: monospace;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
 }
 
 .hero--one__walls, .hero--two__walls {
-  font-size: 15px;
+    font-size: 15px;
 }
 
 .top-bar__hero--two {
-  color: red;
-  font-family: monospace;
-  text-align: center;
-
+    color: red;
+    font-family: monospace;
+    text-align: center;
 }
 
 @media screen and (max-width: 370px) {
@@ -62,10 +64,22 @@
     }
 }
 
+@media screen and (max-height: 370px) {
+    .interface__rules {
+        width: 80vw;
+        height: 80vh;
+    }
+}
+
+ @media not screen and (max-height: 370px) {
+    .interface__rules {
+        height: 300px;
+    }
+ }
+
  @media not screen and (max-width: 370px) {
     .interface__rules {
         width: 300px;
-        height: 300px;
     }
  }
 

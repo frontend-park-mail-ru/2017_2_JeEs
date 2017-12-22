@@ -212,6 +212,8 @@ export default class GameViewManager {
     private _onMultiplayerBegan = data => {
         this._heroManaher.SetMultiplayerLogic();
 
+        this._wallView.SetMultiplayerLogic();
+
         this._eventBus.on(Events.OPPONENTS_FIGURE_MOVED, this._onOpponentFigureMoved);
 
         this._eventBus.on(Events.OPPONENTS_WALL_PLACED, this._onOpponentWallPlaced);

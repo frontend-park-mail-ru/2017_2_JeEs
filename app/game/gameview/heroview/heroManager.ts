@@ -15,6 +15,10 @@ export default class HeroManager {
 
     private _mainHero: Hero;
 
+    private _mainHeroWallsNumber: number = 8;
+
+    private _opponentHeroWallsNumber: number = 8;
+
     private _opponentHero: Hero;
 
     private _ghostHeroes: Hero[] = new Array;
@@ -39,8 +43,27 @@ export default class HeroManager {
         this._eventBus = new EventBus;
 
 
+        this._eventBus.on(Events.OPPONENTS_WALL_PLACED, () => {
+            if (!this._singleplayerFlag) {
+                this._opponentHeroWallsNumber--;
+                this._eventBus.emit(Events.OPPONENTHERO_WALL_NUMBER, this._opponentHeroWallsNumber);
+            }
+        });
+
         //сомнительное размещение логики, если честно
         this._eventBus.on(Events.GAMEVIEW_WALL_PLACED, this._onWallPlaced);
+
+        this._eventBus.on(Events.GAMEVIEW_VALIDATE_WALL, data => {
+            if (this.IsMainHeroTurn()) {
+                this._eventBus.emit(Events.YOUR_WALL_PLACED, data);
+            } else {
+                this._eventBus.emit(Events.YOUR_WALL_PLACED, {
+                    upperOrLeft: new Point(this._gameFieldSize - 1 - data.upperOrLeft.x, this._gameFieldSize - 1 - data.upperOrLeft.y),
+                    lowerOrRight: new Point(this._gameFieldSize - 1 - data.lowerOrRight.x, this._gameFieldSize - 1 - data.lowerOrRight.y)
+                })
+            }
+        });
+
     }
 
     public SetMultiplayerLogic() {
@@ -150,12 +173,17 @@ export default class HeroManager {
 
     private _onWallPlaced = data => {
         if (this.IsMainHeroTurn()) {
-            this._eventBus.emit(Events.YOUR_WALL_PLACED, data)
+            this._eventBus.emit(Events.YOUR_WALL_PLACED, data);
+            this._mainHeroWallsNumber--;
+            this._eventBus.emit(Events.MAINHERO_WALL_NUMBER, this._mainHeroWallsNumber);
         } else {
             this._eventBus.emit(Events.YOUR_WALL_PLACED, {
                 upperOrLeft: new Point(this._gameFieldSize - 1 - data.upperOrLeft.x, this._gameFieldSize - 1 - data.upperOrLeft.y),
                 lowerOrRight: new Point(this._gameFieldSize - 1 - data.lowerOrRight.x, this._gameFieldSize - 1 - data.lowerOrRight.y)
             })
+
+            this._opponentHeroWallsNumber--;
+            this._eventBus.emit(Events.OPPONENTHERO_WALL_NUMBER, this._opponentHeroWallsNumber);
         }
     }
 

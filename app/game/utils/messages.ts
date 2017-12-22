@@ -6,7 +6,7 @@ interface Message {
 
 interface InitGameMessage extends Message {
     self: number;
-    enemy: number;
+    enemy: string;
     isFirst: boolean;
 }
 

@@ -6,12 +6,19 @@ import HttpSend from '../modules/http';
  */
 class UserService {
     constructor() {
+        if (UserService.__instance) {
+            return UserService.__instance;
+        }
+
         this.baseUrl = 'https://jees-quoridor-backend.herokuapp.com';
         window.localStorage['backendUrl'] = this.baseUrl;
         this.username;
+
+        UserService.__instance = this;
     }
 
     getUsername() {
+        debugger;
         return this.username;
     }
 
@@ -49,6 +56,7 @@ class UserService {
      * @return {Promise}
      */
     logout() {
+        debugger;
         this.username = null;
         return HttpSend(`${this.baseUrl}/signout`, 'DELETE', {});
     }
@@ -61,6 +69,7 @@ class UserService {
     getData() {
         return HttpSend(`${this.baseUrl}/currentUser`, 'GET', {})
             .then(userdata => {
+                debugger;
                 this.username = userdata.login;
                 return userdata;
             });

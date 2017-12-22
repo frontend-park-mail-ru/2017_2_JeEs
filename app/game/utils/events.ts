@@ -18,6 +18,8 @@ export default abstract class EVENTS {
     // emitted and handled in view
     public static readonly GAMEVIEW_HERO_MOVEMENT_START: string = "gameview:hero_movement_start";
     public static readonly GAMEVIEW_WALL_PLACED: string = "gameview:wall_placed";
+    public static readonly GAMEVIEW_VALIDATE_WALL: string = "gameview:validate_wall";
+
 
     // emitted in GameStrategy, handled in view
     public static readonly TURN_BEGAN: string = "game:turn_began";
@@ -32,6 +34,8 @@ export default abstract class EVENTS {
     public static readonly WEBSOCKET_CLOSE: string = "network:websocket_close";
 
     // emitted and handled in view, needed for interface
-    public static readonly OPPONENTHERO_WALL_PLACED: string = "gameview:opponenthero_wall_placed";
-    public static readonly MAINHERO_WALL_PLACED: string = "gameview:mainhero_wall_placed";
+    public static readonly OPPONENTHERO_WALL_NUMBER: string = "gameview:opponenthero_wall_number";
+    public static readonly MAINHERO_WALL_NUMBER: string = "gameview:mainhero_wall_number";
+    public static readonly OPPONENTHERO_NAME: string = "gameview:opponenthero_name";
+
 }

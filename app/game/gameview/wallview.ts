@@ -14,6 +14,10 @@ const BASE_SIZE = Constants.BASE_SIZE;
 export default class WallView {
     private _ghostWall: BABYLON.Mesh;
 
+    private _prevWall: BABYLON.Mesh;
+
+    private _singleplayerFlag: boolean = true;
+
     private readonly _ghostWallName: string = "ghostWall";
     private readonly _wallName: string = "wall";
 
@@ -74,27 +78,40 @@ export default class WallView {
     }
 
     public AddWallByGhosWall() {
-        let wall: BABYLON.Mesh = this._ghostWall;
+        this._prevWall = this._ghostWall;
         this._ghostWall.visibility = 1;
         this._ghostWall = null;
-        wall.material.alpha = 1;
-        wall.name = this._wallName;
 
         let upperOrLeft: Point;
         let lowerOrRight: Point;
 
-        if (wall.rotation.y === 0) {
-            upperOrLeft = new Point(wall.position.x / BASE_SIZE, wall.position.z / BASE_SIZE + 1);
-            lowerOrRight = new Point(wall.position.x / BASE_SIZE, wall.position.z / BASE_SIZE - 1);
+        if (this._prevWall.rotation.y === 0) {
+            upperOrLeft = new Point(this._prevWall.position.x / BASE_SIZE, this._prevWall.position.z / BASE_SIZE + 1);
+            lowerOrRight = new Point(this._prevWall.position.x / BASE_SIZE, this._prevWall.position.z / BASE_SIZE - 1);
         } else {
-            upperOrLeft = new Point(wall.position.x / BASE_SIZE - 1, wall.position.z / BASE_SIZE);
-            lowerOrRight = new Point(wall.position.x / BASE_SIZE + 1, wall.position.z / BASE_SIZE);
+            upperOrLeft = new Point(this._prevWall.position.x / BASE_SIZE - 1, this._prevWall.position.z / BASE_SIZE);
+            lowerOrRight = new Point(this._prevWall.position.x / BASE_SIZE + 1, this._prevWall.position.z / BASE_SIZE);
         }
 
+        if (this._singleplayerFlag) {
+            this._prevWall.material.alpha = 1;
+            this._prevWall.name = this._wallName;
+    
+            this._eventBus.emit(Events.GAMEVIEW_WALL_PLACED, { upperOrLeft, lowerOrRight });
+    
+            this._createGhostWall();
+        } else {
 
-        this._eventBus.emit(Events.GAMEVIEW_WALL_PLACED, { upperOrLeft, lowerOrRight });
-
-        this._createGhostWall();
+            this._eventBus.emit(Events.GAMEVIEW_VALIDATE_WALL, { upperOrLeft, lowerOrRight });
+            GAMEVIEW_VALIDATE_WALL
+    
+            this._prevWall.material.alpha = 1;
+            this._prevWall.name = this._wallName;
+    
+            this._eventBus.emit(Events.GAMEVIEW_WALL_PLACED, { upperOrLeft, lowerOrRight });
+    
+            this._createGhostWall();
+        }
     }
 
     public IsGhostWall(mesh: BABYLON.AbstractMesh): boolean {
@@ -177,11 +194,9 @@ export default class WallView {
             let lowerOrRight: Point;
 
             if (this._ghostWall.rotation.y !== 0 && this._ghostWall.rotation.y !== Math.PI) {
-                console.log(1)
                 upperOrLeft = new Point(transformedCoordinate.x, transformedCoordinate.y + 1);
                 lowerOrRight = new Point(transformedCoordinate.x, transformedCoordinate.y - 1);
             } else {
-                console.log(2)
                 upperOrLeft = new Point(transformedCoordinate.x - 1, transformedCoordinate.y);
                 lowerOrRight = new Point(transformedCoordinate.x + 1, transformedCoordinate.y);
             }
@@ -190,6 +205,10 @@ export default class WallView {
                 this._ghostWall.rotation.y += Math.PI / 2;
             }
         }
+    }
+
+    public SetMultiplayerLogic() {
+        this._singleplayerFlag = false;
     }
 
     private _onHeroStart = data => {

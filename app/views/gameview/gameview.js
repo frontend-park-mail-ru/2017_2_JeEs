@@ -34,28 +34,40 @@ export default class GameView extends BaseView {
         this.eventBus = new EventBus;
         this.eventBus.emit(EVENTS.WEBSOCKET_OPEN);
 
-        this.rulesBlock = document.body.querySelector('.interface__rules')
+        this.rulesBlock = document.body.querySelector('.interface__rules');
 
-        this.rulesBlockButton = document.body.querySelector('.interface__button-to-close-rules')
+        this.rulesBlockButton = document.body.querySelector('.interface__button-to-close-rules');
 
         this.rulesBlockButton.addEventListener('click', evt => {
             evt.preventDefault();
             if (this.rulesBlock.style.visibility === "hidden") {
-                this.rulesBlock.style.visibility = ""
-                this.rulesBlockButton.textContent = "↓"
+                this.rulesBlock.style.visibility = "";
+                this.rulesBlockButton.textContent = "↓";
             } else {
-                this.rulesBlock.style.visibility = "hidden"
-                this.rulesBlockButton.textContent = "↑"
+                this.rulesBlock.style.visibility = "hidden";
+                this.rulesBlockButton.textContent = "↑";
             }
         });
 
 
-        this._eventBus.on(EVENTS.OPPONENTHERO_WALL_PLACED, data => {
-            this._heroManaher.OpponentsMove(data.point);
+        this.heroTwoWalls = document.body.querySelector('.hero--two__walls')
+
+        this.eventBus.on(EVENTS.OPPONENTHERO_WALL_NUMBER, data => {
+            this.heroTwoWalls.textContent = `Стенок: ${data}`
         });
 
-        this._eventBus.on(EVENTS.MAINHERO_WALL_PLACED, data => {
-            this._heroManaher.OpponentsMove(data.point);
+        this.heroOneWalls = document.body.querySelector('.hero--one__walls')
+
+        this.eventBus.on(EVENTS.MAINHERO_WALL_NUMBER, data => {
+            this.heroOneWalls.textContent = `Стенок: ${data}`
+        });
+
+        this.eventBus.on(EVENTS.OPPONENTHERO_NAME, data => {
+            let hero_one_name = document.body.querySelector('.hero--one__name')
+            hero_one_name.textContent = this.userService.getUsername();
+
+            let heto_two_name = document.body.querySelector('.hero--two__name')
+            heto_two_name.textContent = data;
         });
     }
 
@@ -75,8 +87,16 @@ export default class GameView extends BaseView {
             }
             node.style.visibility = "";
         });
+
+
+        this.heroTwoWalls = null;
+
+        this.heroOneWalls = null;
+
+        this.eventBus.remove(EVENTS.OPPONENTHERO_WALL_NUMBER);
+
+        this.eventBus.remove(Events.MAINHERO_WALL_NUMBER);
+
+        this.eventBus.remove(Events.OPPONENTHERO_NAME);
     }
-
-
-
 }
