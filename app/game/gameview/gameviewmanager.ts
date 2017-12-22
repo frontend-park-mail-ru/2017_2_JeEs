@@ -74,8 +74,8 @@ export default class GameViewManager {
         this._wallView = new WallView(this._scene);
 
 
-        let skybox = BABYLON.Mesh.CreateBox("skybox", 1000.0, this._scene);
-        let skyboxMaterial = new BABYLON.StandardMaterial("skybox", this._scene);
+        let skybox = BABYLON.Mesh.CreateBox("images/skybox", 1000.0, this._scene);
+        let skyboxMaterial = new BABYLON.StandardMaterial("images/skybox", this._scene);
         skyboxMaterial.backFaceCulling = false;
         skyboxMaterial.disableLighting = true;
         skybox.material = skyboxMaterial;
@@ -83,7 +83,7 @@ export default class GameViewManager {
         skyboxMaterial.disableLighting = true;
 
 
-        skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture("skybox", this._scene);
+        skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture("images/skybox", this._scene);
         skyboxMaterial.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE;
 
 

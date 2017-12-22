@@ -37,6 +37,10 @@ module.exports = [
                     loader: 'url-loader?limit=3000&name=images/[name].[ext]',
                 },
                 {
+                    test: /\.(ico)$/,
+                    loader: 'url-loader?limit=1&name=[name].[ext]',
+                },
+                {
                     test: /\.(ttf)$/,
                     loader: 'url-loader?name=fonts/[name].[ext]',
                 },
