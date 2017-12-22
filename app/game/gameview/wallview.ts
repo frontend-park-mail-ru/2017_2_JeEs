@@ -36,9 +36,27 @@ export default class WallView {
         })
 
 
-        document.addEventListener("keypress",  event => {
+        document.addEventListener("keypress", event => {
             if (event.code === 'KeyR') {
-                this._ghostWall.rotation.y += Math.PI / 2
+                let point = new Point(this._ghostWall.position.x, this._ghostWall.position.z)
+
+                const transformedCoordinate: Point = new Point(Math.round(point.x / BASE_SIZE), Math.round(point.y / BASE_SIZE));
+                let upperOrLeft: Point;
+                let lowerOrRight: Point;
+
+                if (this._ghostWall.rotation.y !== 0 && this._ghostWall.rotation.y !== Math.PI) {
+                    console.log(1)
+                    upperOrLeft = new Point(transformedCoordinate.x, transformedCoordinate.y + 1);
+                    lowerOrRight = new Point(transformedCoordinate.x, transformedCoordinate.y - 1);
+                } else {
+                    console.log(2)
+                    upperOrLeft = new Point(transformedCoordinate.x - 1, transformedCoordinate.y);
+                    lowerOrRight = new Point(transformedCoordinate.x + 1, transformedCoordinate.y);
+                }
+
+                if (this._ghostWall != null && this._checkCollisions([upperOrLeft, transformedCoordinate, lowerOrRight])) {
+                    this._ghostWall.rotation.y += Math.PI / 2;
+                }
             }
         });
     }
