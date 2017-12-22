@@ -53,6 +53,9 @@ export default class GameViewManager {
 
 
         this._engine = new BABYLON.Engine(this._canvas, true);
+
+        this._engine.loadingScreen = <any>BABYLON.DefaultLoadingScreen;
+
         this._scene = new BABYLON.Scene(this._engine);
 
         const gameFieldHalf = this._gameFieldSize / 2 - 0.5;
@@ -81,9 +84,6 @@ export default class GameViewManager {
         skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture("skybox", this._scene);
         skyboxMaterial.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE;
 
-
-        // this._HeroManaher = new HeroManager(gameFieldSize, this._scene);
-        // this._wallView = new WallView(this._scene);
 
         // (new ResourcesMap).get("Scene", "Scene", "./meshes/", "scene.babylon", this._scene)
         //     .then((data) => {
@@ -199,7 +199,7 @@ export default class GameViewManager {
         const gameFieldHalf = this._gameFieldSize / 2 - 0.5;
 
         const lightOne = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(BASE_SIZE * gameFieldHalf, BASE_SIZE * this._gameFieldSize, BASE_SIZE * gameFieldHalf), this._scene);
-        lightOne.specular = new BABYLON.Color3(0.3,0.3,0.3);
+        lightOne.specular = new BABYLON.Color3(0.3, 0.3, 0.3);
     }
 
 

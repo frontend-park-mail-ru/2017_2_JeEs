@@ -43,7 +43,7 @@ const unauthUserView = new UnauthUserView(topBar);
 
 const notFoundView = new NotFoundView(mainBlock);
 const creatorsView = new CreatorsView(mainBlock);
-const gameView = new GameView(mainBlock);
+const gameView = new GameView(document.body);
 const rulesView = new RulesView(mainBlock);
 const menuView = new MenuView(mainBlock);
 const ratingView = new RatingView(mainBlock);
@@ -69,15 +69,15 @@ router.register('/', menuView)
     .register('/loading', loadingView)
     .start();
 
-if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/service-worker.js', { scope: '/' })
-        .then((registration) => {
-            console.log('ServiceWorker registration', registration);
-        })
-        .catch((error) => {
-            throw new Error(`ServiceWorker error: ${error}`);
-        });
-}
+// if ('serviceWorker' in navigator) {
+//     navigator.serviceWorker.register('/service-worker.js', { scope: '/' })
+//         .then((registration) => {
+//             console.log('ServiceWorker registration', registration);
+//         })
+//         .catch((error) => {
+//             throw new Error(`ServiceWorker error: ${error}`);
+//         });
+// }
 
 userService.getData()
     .then(() => authUserView.create())
