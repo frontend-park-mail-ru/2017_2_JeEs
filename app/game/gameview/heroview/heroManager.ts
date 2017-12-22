@@ -55,9 +55,9 @@ export default class HeroManager {
 
         this._eventBus.on(Events.GAMEVIEW_VALIDATE_WALL, data => {
             if (this.IsMainHeroTurn()) {
-                this._eventBus.emit(Events.YOUR_WALL_PLACED, data);
+                this._eventBus.emit(Events.VALIDATE_WALL, data);
             } else {
-                this._eventBus.emit(Events.YOUR_WALL_PLACED, {
+                this._eventBus.emit(Events.VALIDATE_WALL, {
                     upperOrLeft: new Point(this._gameFieldSize - 1 - data.upperOrLeft.x, this._gameFieldSize - 1 - data.upperOrLeft.y),
                     lowerOrRight: new Point(this._gameFieldSize - 1 - data.lowerOrRight.x, this._gameFieldSize - 1 - data.lowerOrRight.y)
                 })

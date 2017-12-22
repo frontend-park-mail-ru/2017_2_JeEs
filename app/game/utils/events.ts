@@ -38,4 +38,9 @@ export default abstract class EVENTS {
     public static readonly MAINHERO_WALL_NUMBER: string = "gameview:mainhero_wall_number";
     public static readonly OPPONENTHERO_NAME: string = "gameview:opponenthero_name";
 
+    public static readonly VALIDATE_WALL: string = "game:validate_wall";
+    public static readonly INFO_MESSAGE_RECEIVED: string = "network:info_message_received";
+
+    public static readonly WALL_IS_VALID: string = "game:wall_is_valid";
+    public static readonly WALL_IS_INVALID: string = "game:wall_is_invalid";
 }

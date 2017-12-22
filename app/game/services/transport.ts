@@ -92,8 +92,7 @@ export default class Transport {
 
     public sendPoints(points: Array<Point>): void {
         let coordinatesArray: Array<number> = points.reduce((result: Array<number>, point: Point) => {
-            let updatedResult = result.concat((<any>Object).values(point));
-            return updatedResult;
+            return result.concat((<any>Object).values(point));
         }, []);
 
         this.sendMessage(JSON.stringify({
@@ -149,6 +148,6 @@ export default class Transport {
     }
 
     private handleInfoMessage(infoMessage: messages.InfoMessage): void {
-        alert(infoMessage.message);
+        this.eventBus.emit(EVENTS.INFO_MESSAGE_RECEIVED, {message: infoMessage.message});
     }
 }

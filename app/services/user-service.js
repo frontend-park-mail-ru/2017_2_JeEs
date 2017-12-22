@@ -18,7 +18,6 @@ class UserService {
     }
 
     getUsername() {
-        debugger;
         return this.username;
     }
 
@@ -69,7 +68,6 @@ class UserService {
     getData() {
         return HttpSend(`${this.baseUrl}/currentUser`, 'GET', {})
             .then(userdata => {
-                debugger;
                 this.username = userdata.login;
                 return userdata;
             });

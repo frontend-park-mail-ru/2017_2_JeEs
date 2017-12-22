@@ -30,3 +30,7 @@
 | Авторизоваться | Post | /signin | {"login":"user", "password":"12345"} | {"login":"user", "email":"user@mail.ru"} |
 | Разлогиниться | Delete | /signout |  | {"info":"Successful logout"} |
 | Запросить пользователя текущей сессии | Get | /currentUser |  | {"login":"user", "email":"user@mail.ru"} |
+
+## Docker
+`sudo docker build -t "quoridor-frontend" ./` - build  
+`sudo docker run -p 80:80 -d quoridor-frontend` - run

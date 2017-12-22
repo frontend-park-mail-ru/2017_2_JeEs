@@ -41,6 +41,32 @@ export default class WallView {
 
 
         document.addEventListener("keypress", this._rotateWall);
+
+        this._eventBus.on(Events.WALL_IS_VALID, (data) => {
+
+            let upperOrLeft: Point;
+            let lowerOrRight: Point;
+
+            if (this._prevWall.rotation.y === 0 || this._prevWall.rotation.y === Math.PI) {
+                upperOrLeft = new Point(this._prevWall.position.x / BASE_SIZE, this._prevWall.position.z / BASE_SIZE + 1);
+                lowerOrRight = new Point(this._prevWall.position.x / BASE_SIZE, this._prevWall.position.z / BASE_SIZE - 1);
+            } else {
+                upperOrLeft = new Point(this._prevWall.position.x / BASE_SIZE - 1, this._prevWall.position.z / BASE_SIZE);
+                lowerOrRight = new Point(this._prevWall.position.x / BASE_SIZE + 1, this._prevWall.position.z / BASE_SIZE);
+            }
+
+            this._prevWall.visibility = 1;
+            this._prevWall.name = this._wallName;
+
+            this._eventBus.emit(Events.GAMEVIEW_WALL_PLACED, { upperOrLeft, lowerOrRight });
+
+            this._createGhostWall();
+        })
+
+        this._eventBus.on(Events.WALL_IS_INVALID, (data) => {
+            alert(data.message);
+            this._ghostWall = this._prevWall;
+        })
     }
 
     public NewTurn(engagedPoints: Point[], isCurrentHero: boolean) {
@@ -79,13 +105,12 @@ export default class WallView {
 
     public AddWallByGhosWall() {
         this._prevWall = this._ghostWall;
-        this._ghostWall.visibility = 1;
         this._ghostWall = null;
 
         let upperOrLeft: Point;
         let lowerOrRight: Point;
 
-        if (this._prevWall.rotation.y === 0) {
+        if (this._prevWall.rotation.y === 0 || this._prevWall.rotation.y === Math.PI) {
             upperOrLeft = new Point(this._prevWall.position.x / BASE_SIZE, this._prevWall.position.z / BASE_SIZE + 1);
             lowerOrRight = new Point(this._prevWall.position.x / BASE_SIZE, this._prevWall.position.z / BASE_SIZE - 1);
         } else {
@@ -94,23 +119,14 @@ export default class WallView {
         }
 
         if (this._singleplayerFlag) {
-            this._prevWall.material.alpha = 1;
+            this._prevWall.visibility = 1;
             this._prevWall.name = this._wallName;
-    
+
             this._eventBus.emit(Events.GAMEVIEW_WALL_PLACED, { upperOrLeft, lowerOrRight });
-    
+
             this._createGhostWall();
         } else {
-
             this._eventBus.emit(Events.GAMEVIEW_VALIDATE_WALL, { upperOrLeft, lowerOrRight });
-            GAMEVIEW_VALIDATE_WALL
-    
-            this._prevWall.material.alpha = 1;
-            this._prevWall.name = this._wallName;
-    
-            this._eventBus.emit(Events.GAMEVIEW_WALL_PLACED, { upperOrLeft, lowerOrRight });
-    
-            this._createGhostWall();
         }
     }
 
