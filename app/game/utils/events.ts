@@ -17,7 +17,7 @@ export default abstract class EVENTS {
 
     // emitted and handled in view
     public static readonly GAMEVIEW_HERO_MOVEMENT_START: string = "gameview:hero_movement_start";
-    public static readonly GAMEVIEW_WALL_PLACED: string = "gameview:wall_placed";  //костыль для синглплеера
+    public static readonly GAMEVIEW_WALL_PLACED: string = "gameview:wall_placed";
 
     // emitted in GameStrategy, handled in view
     public static readonly TURN_BEGAN: string = "game:turn_began";
@@ -30,4 +30,8 @@ export default abstract class EVENTS {
     // emitted in gameviewview (!), handled in transport
     public static readonly WEBSOCKET_OPEN: string = "network:websocket_open";
     public static readonly WEBSOCKET_CLOSE: string = "network:websocket_close";
+
+    // emitted and handled in view, needed for interface
+    public static readonly OPPONENTHERO_WALL_PLACED: string = "gameview:opponenthero_wall_placed";
+    public static readonly MAINHERO_WALL_PLACED: string = "gameview:mainhero_wall_placed";
 }

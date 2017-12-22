@@ -4,6 +4,7 @@ import { GameManager, } from '../../game/game-manager.ts';
 import EventBus from '../../modules/event-bus.ts';
 import EVENTS from '../../game/utils/events.ts';
 
+
 export default class GameView extends BaseView {
     constructor(parent) {
         super(parent);
@@ -48,6 +49,14 @@ export default class GameView extends BaseView {
             }
         });
 
+
+        this._eventBus.on(EVENTS.OPPONENTHERO_WALL_PLACED, data => {
+            this._heroManaher.OpponentsMove(data.point);
+        });
+
+        this._eventBus.on(EVENTS.MAINHERO_WALL_PLACED, data => {
+            this._heroManaher.OpponentsMove(data.point);
+        });
     }
 
     destroy() {

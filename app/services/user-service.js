@@ -8,7 +8,11 @@ class UserService {
     constructor() {
         this.baseUrl = 'https://jees-quoridor-backend.herokuapp.com';
         window.localStorage['backendUrl'] = this.baseUrl;
+        this.username;
+    }
 
+    getUsername() {
+        return this.username;
     }
 
     /**
@@ -19,7 +23,11 @@ class UserService {
      * @return {Promise}
      */
     signup(email, login, password) {
-        return HttpSend(`${this.baseUrl}/signup`, 'POST', {email, login, password});
+        return HttpSend(`${this.baseUrl}/signup`, 'POST', { email, login, password })
+            .then(userdata => {
+                this.username = userdata.login;
+                return userdata;
+            });
     }
 
     /**
@@ -29,15 +37,11 @@ class UserService {
      * @return {Promise}
      */
     login(login, password) {
-        return HttpSend(`${this.baseUrl}/signin`, 'POST', {login, password});
-    }
-
-    /**
-     * Проверяет, авторизован ли пользователь
-     * @return {Promise}
-     */
-    isLoggedIn() {
-        return HttpSend(`${this.baseUrl}/currentUser`, 'GET', {});
+        return HttpSend(`${this.baseUrl}/signin`, 'POST', { login, password })
+            .then(userdata => {
+                this.username = userdata.login;
+                return userdata;
+            });
     }
 
     /**
@@ -45,6 +49,7 @@ class UserService {
      * @return {Promise}
      */
     logout() {
+        this.username = null;
         return HttpSend(`${this.baseUrl}/signout`, 'DELETE', {});
     }
 
@@ -56,6 +61,7 @@ class UserService {
     getData() {
         return HttpSend(`${this.baseUrl}/currentUser`, 'GET', {})
             .then(userdata => {
+                this.username = userdata.login;
                 return userdata;
             });
     }
