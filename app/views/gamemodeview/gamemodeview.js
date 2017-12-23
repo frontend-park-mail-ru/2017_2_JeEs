@@ -23,7 +23,8 @@ export default class GameModeView extends BaseView {
         this.backButton.addEventListener('click', (event) => {
             event.preventDefault();
             if (!this.userService.getUsername()) {
-                return
+                (new Router()).go("/signin");
+                return;
             }
             (new Router()).go("/game?mode=multiplayer");
         });

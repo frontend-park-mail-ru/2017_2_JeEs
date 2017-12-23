@@ -48,6 +48,7 @@ export default class HeroManager {
                 this._opponentHeroWallsNumber--;
                 this._eventBus.emit(Events.OPPONENTHERO_WALL_NUMBER, this._opponentHeroWallsNumber);
             }
+
         });
 
         //сомнительное размещение логики, если честно
@@ -129,6 +130,9 @@ export default class HeroManager {
             this._eventBus.emit(Events.YOUR_FIGURE_MOVED, { point: new Point(this._gameFieldSize - position.x - 1, this._gameFieldSize - position.y - 1) })
         }
 
+        this._eventBus.emit(Events.GAMEVIEW_STOP_TIMER, "")
+        this._eventBus.emit(Events.GAMEVIEW_SEND_MESSAGE, "Ход соперника")
+
         this.CancelMove()
     }
 
@@ -156,9 +160,9 @@ export default class HeroManager {
     private _addGhostHeroes(hero: Hero) {
         this._availableForMovementPoints.forEach((_point, _index) => {
             if (this.IsMainHeroTurn()) {
-                this._ghostHeroes.push(new Hero(`ghostHero${_index}`,  "BlueHero", "blue_hero.babylon", this._scene, _point.x, _point.y, true, hero.GetRotation()));
+                this._ghostHeroes.push(new Hero(`ghostHero${_index}`, "BlueHero", "blue_hero.babylon", this._scene, _point.x, _point.y, true, hero.GetRotation()));
             } else {
-                this._ghostHeroes.push(new Hero(`ghostHero${_index}`,  "RedHero", "red_hero.babylon", this._scene, this._gameFieldSize - _point.x - 1, this._gameFieldSize - _point.y - 1, true, hero.GetRotation()));
+                this._ghostHeroes.push(new Hero(`ghostHero${_index}`, "RedHero", "red_hero.babylon", this._scene, this._gameFieldSize - _point.x - 1, this._gameFieldSize - _point.y - 1, true, hero.GetRotation()));
             }
         });
     }
@@ -191,6 +195,11 @@ export default class HeroManager {
 
             this._opponentHeroWallsNumber--;
             this._eventBus.emit(Events.OPPONENTHERO_WALL_NUMBER, this._opponentHeroWallsNumber);
+        }
+
+        if (!this._singleplayerFlag) {
+            this._eventBus.emit(Events.GAMEVIEW_STOP_TIMER, "")
+            this._eventBus.emit(Events.GAMEVIEW_SEND_MESSAGE, "Ход соперника")
         }
     }
 

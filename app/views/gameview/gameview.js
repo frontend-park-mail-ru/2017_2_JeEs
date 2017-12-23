@@ -109,6 +109,11 @@ export default class GameView extends BaseView {
         });
 
 
+        this.eventBus.on(EVENTS.GAMEVIEW_STOP_TIMER, () => {
+            clearInterval(this.timer);
+        });
+
+
         this.fullScreen = new FullScreen(document.body.querySelector('.game'));
 
 
@@ -167,6 +172,8 @@ export default class GameView extends BaseView {
         this.eventBus.remove(EVENTS.VALIDATE_WALL);
 
         this.eventBus.remove(EVENTS.INFO_MESSAGE_RECEIVED);
+
+        this.eventBus.remove(EVENTS.GAMEVIEW_STOP_TIMER);
 
         clearInterval(this.timer);
 
