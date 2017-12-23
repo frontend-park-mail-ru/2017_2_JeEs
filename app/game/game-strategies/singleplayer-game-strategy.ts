@@ -1,5 +1,5 @@
 import { GameStrategy, TURN_ENDING_EVENTS } from "./game-strategy";
-import {FieldState, FIGURE_KEY,} from "../utils/field-state";
+import { FieldState, FIGURE_KEY, } from "../utils/field-state";
 import EventBus from "../../modules/event-bus"
 import EVENTS from "../utils/events";
 import Point from "../utils/point";
@@ -10,6 +10,7 @@ function* fieldStatesGeneratorFunction() {
         yield this.secondPlayersFieldState;
     }
 }
+
 
 export default class SinglePlayerGameStrategy {
     private _gameStrategy: GameStrategy;
