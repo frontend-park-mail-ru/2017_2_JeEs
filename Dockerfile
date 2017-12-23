@@ -6,7 +6,8 @@ RUN apk update && apk add bash nodejs
 
 EXPOSE 80
 
+WORKDIR /root/Quoridor
+COPY . .
 COPY quoridor-nginx.conf /etc/nginx/conf.d/
 
-RUN npm build
-COPY dist var/www/
+RUN npm build && cp -r dist /var/www/
