@@ -74,6 +74,14 @@ export default class HeroManager {
     public NewTurn(availableForMovementPoints: Point[]) {
         if (this._singleplayerFlag) {
             this._changeHero();
+            if (this.IsMainHeroTurn()) {
+                this._eventBus.emit(Events.GAMEVIEW_SEND_MESSAGE, "Ход синего игрока")
+            } else {
+                this._eventBus.emit(Events.GAMEVIEW_SEND_MESSAGE, "Ход красного игрока")
+            }
+        } else {
+            debugger;
+            this._eventBus.emit(Events.GAMEVIEW_SEND_MESSAGE, "Ваш ход")
         }
         this._availableForMovementPoints = availableForMovementPoints;
     }

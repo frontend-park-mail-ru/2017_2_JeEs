@@ -19,6 +19,10 @@ export default abstract class EVENTS {
     public static readonly GAMEVIEW_HERO_MOVEMENT_START: string = "gameview:hero_movement_start";
     public static readonly GAMEVIEW_WALL_PLACED: string = "gameview:wall_placed";
     public static readonly GAMEVIEW_VALIDATE_WALL: string = "gameview:validate_wall";
+    public static readonly GAMEVIEW_SEND_MESSAGE: string = "gameview:send_message";
+    public static readonly GAMEVIEW_START_TIMER: string = "gameview:start_timer";
+
+
 
 
     // emitted in GameStrategy, handled in view

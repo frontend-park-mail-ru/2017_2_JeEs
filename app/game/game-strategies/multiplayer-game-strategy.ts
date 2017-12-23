@@ -40,11 +40,12 @@ export default class MultiPlayerGameStrategy {
 
     private onGameStarted(data): void {
         if (data.isFirst) {
-            alert("Вы ходите первым");
+            this.eventBus.emit(EVENTS.GAMEVIEW_SEND_MESSAGE, "Вы ходите первым");
             this.gameStrategy.emitTurnBegan();
         } else {
-            alert("Вы ходите вторым");
+            this.eventBus.emit(EVENTS.GAMEVIEW_SEND_MESSAGE, "Вы ходите вторым");
         }
+        this.eventBus.emit(EVENTS.GAMEVIEW_START_TIMER, "");
     }
 
     private onTurnEnded(data): void {

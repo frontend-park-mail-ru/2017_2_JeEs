@@ -15,12 +15,12 @@ export default class FloorView {
 
     public AddFloor() {
         const floor = BABYLON.MeshBuilder.CreateBox("floor", {
-            width: BASE_SIZE * this._gameFieldSize,
+            width: BASE_SIZE * (this._gameFieldSize + 2),
             height: BASE_SIZE / 4,
-            depth: BASE_SIZE * this._gameFieldSize
+            depth: BASE_SIZE * (this._gameFieldSize + 2)
         }, this._scene);
         const gameFieldHalf = this._gameFieldSize / 2 - 0.5;
-        floor.position = new BABYLON.Vector3(BASE_SIZE * gameFieldHalf, 0, BASE_SIZE * gameFieldHalf);
+        floor.position = new BABYLON.Vector3(BASE_SIZE * gameFieldHalf, 0, BASE_SIZE * gameFieldHalf - 1);
 
 
         const floorMaterial = new BABYLON.StandardMaterial("floorMaterial", this._scene);

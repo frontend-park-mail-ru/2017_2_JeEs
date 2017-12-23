@@ -141,9 +141,9 @@ export default class Transport {
 
     private handleFinishGameMessage(finishGameMessage: messages.FinishGameMessage): void {
         if (finishGameMessage.won) {
-            alert("Вы выиграли");
+            this.eventBus.emit(EVENTS.GAMEVIEW_SEND_MESSAGE, "Вы выиграли");
         } else {
-            alert("Вы проиграли");
+            this.eventBus.emit(EVENTS.GAMEVIEW_SEND_MESSAGE, "Вы проиграли");
         }
     }
 

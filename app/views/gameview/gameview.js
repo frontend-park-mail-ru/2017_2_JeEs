@@ -13,6 +13,10 @@ export default class GameView extends BaseView {
     }
 
     create(getParamsObject) {
+        this.timer;
+        this.timeout;
+
+
         this.prevChildren = this.element.childNodes;
         this.prevChildren.forEach(node => {
             if (node.nodeName.toLowerCase() !== 'div') {
@@ -69,6 +73,39 @@ export default class GameView extends BaseView {
             let heto_two_name = document.body.querySelector('.hero--two__name')
             heto_two_name.textContent = data;
         });
+
+        this.messageTimer = document.body.querySelector('.messsages__timer')
+
+        this.messageText = document.body.querySelector('.messsages__text')
+
+        this.eventBus.on(EVENTS.GAMEVIEW_SEND_MESSAGE, data => {
+            if (this.messageTimer.style.display !== "none") {
+                this.messageTimer.style.display = "none";
+                this.messageText.style.display = "flex";
+            }
+            this.messageText.textContent = data;
+
+            clearTimeout(this.timeout);
+            this.timeout = setTimeout((data) => {
+                this.messageText.style.display = "none";
+                this.messageTimer.style.display = "flex";
+            }, 5000)
+        });
+
+
+        this.eventBus.on(EVENTS.GAMEVIEW_START_TIMER, () => {
+            clearInterval(this.timer);
+            this.time = 60;
+            this.timer = setInterval(() => {
+                this.time--;
+                this.messageTimer.textContent = this.time;
+            }, 1000);
+
+            setTimeout(() => {
+                clearInterval(this.timer);
+            }, 60000);
+        });
+
     }
 
     destroy() {

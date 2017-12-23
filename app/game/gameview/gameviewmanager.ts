@@ -98,7 +98,6 @@ export default class GameViewManager {
 
         this._floorView.AddFloor();
 
-
         this._heroManaher.CreateHeroes();
 
         this._canvas.addEventListener("click", this.OnSceneClick);
@@ -191,10 +190,11 @@ export default class GameViewManager {
     }
 
     private _onTurnBegan = data => {
-        console.log(data)
         this._heroManaher.NewTurn(data.availableForMovementPoints);
         this._wallView.NewTurn(data.engagedPoints, this._heroManaher.IsMainHeroTurn());
         this._myTurn = true;
+        this._eventBus.emit(Events.GAMEVIEW_START_TIMER, "");
+
     }
 
     private _onTurnEnded = data => {
@@ -220,7 +220,7 @@ export default class GameViewManager {
     }
 
     private _onGameOver = data => {
-        alert("Вы победили!");
+        this._eventBus.emit(Events.GAMEVIEW_SEND_MESSAGE, "Вы победили!");
     }
 
     public destroy() {
