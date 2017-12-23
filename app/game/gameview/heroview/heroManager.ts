@@ -89,9 +89,9 @@ export default class HeroManager {
     public CreateHeroes() {
         const gameFieldHalf = this._gameFieldSize / 2 - 0.5;
 
-        this._mainHero = new Hero("mainHero", this._scene, 0, gameFieldHalf, false, 0);
+        this._mainHero = new Hero("mainHero", "BlueHero", "blue_hero.babylon", this._scene, 0, gameFieldHalf, false, 0);
 
-        this._opponentHero = new Hero("opponentHero", this._scene, this._gameFieldSize - 1, gameFieldHalf, false, Math.PI);
+        this._opponentHero = new Hero("opponentHero", "RedHero", "red_hero.babylon", this._scene, this._gameFieldSize - 1, gameFieldHalf, false, Math.PI);
 
         this._currentHero = this._opponentHero;
     }
@@ -157,9 +157,9 @@ export default class HeroManager {
     private _addGhostHeroes(hero: Hero) {
         this._availableForMovementPoints.forEach((_point, _index) => {
             if (this.IsMainHeroTurn()) {
-                this._ghostHeroes.push(new Hero(`ghostHero${_index}`, this._scene, _point.x, _point.y, true, hero.GetRotation()));
+                this._ghostHeroes.push(new Hero(`ghostHero${_index}`,  "BlueHero", "blue_hero.babylon", this._scene, _point.x, _point.y, true, hero.GetRotation()));
             } else {
-                this._ghostHeroes.push(new Hero(`ghostHero${_index}`, this._scene, this._gameFieldSize - _point.x - 1, this._gameFieldSize - _point.y - 1, true, hero.GetRotation()));
+                this._ghostHeroes.push(new Hero(`ghostHero${_index}`,  "RedHero", "red_hero.babylon", this._scene, this._gameFieldSize - _point.x - 1, this._gameFieldSize - _point.y - 1, true, hero.GetRotation()));
             }
         });
     }

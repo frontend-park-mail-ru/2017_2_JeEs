@@ -3,6 +3,8 @@ import Game from '../../game/gameview/gameviewmanager';
 import { GameManager, } from '../../game/game-manager.ts';
 import EventBus from '../../modules/event-bus.ts';
 import EVENTS from '../../game/utils/events.ts';
+import FullScreen from "../../game/gameview/services/fullscreenlogic";
+
 
 
 export default class GameView extends BaseView {
@@ -106,6 +108,8 @@ export default class GameView extends BaseView {
             }, 60000);
         });
 
+
+        this.fullScreen = new FullScreen(document.body.querySelector('.game'));
     }
 
     destroy() {
@@ -135,5 +139,7 @@ export default class GameView extends BaseView {
         this.eventBus.remove(Events.MAINHERO_WALL_NUMBER);
 
         this.eventBus.remove(Events.OPPONENTHERO_NAME);
+
+        this.fullScreen.destroy();
     }
 }

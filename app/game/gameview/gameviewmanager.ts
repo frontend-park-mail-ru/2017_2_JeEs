@@ -8,7 +8,6 @@ import WallView from "./wallview";
 import FloorView from "./floorview";
 import Events from "../utils/events";
 
-import FullScreen from "./services/fullscreenlogic";
 import HeroManager from './heroview/heroManager';
 
 import ResourcesMap from "./services/resources";
@@ -45,8 +44,6 @@ export default class GameViewManager {
 
         this._canvas = <HTMLCanvasElement>document.getElementsByClassName("game__canvas")[0];
 
-        this._fullScreen = new FullScreen(this._canvas);
-
         window.addEventListener('resize', this._resizeCanvas);
         window.addEventListener('orientationchange', this._resizeCanvas);
 
@@ -81,7 +78,6 @@ export default class GameViewManager {
         skybox.material = skyboxMaterial;
 
         skyboxMaterial.disableLighting = true;
-
 
         skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture("images/skybox", this._scene);
         skyboxMaterial.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE;
@@ -118,7 +114,6 @@ export default class GameViewManager {
         this._engine.runRenderLoop(() => {
             this._scene.render();
         })
-
 
     }
 
@@ -270,9 +265,6 @@ export default class GameViewManager {
         this._canvas = null;
 
         (new ResourcesMap()).destroy();
-
-
-        this._fullScreen.destroy();
     }
 
 }

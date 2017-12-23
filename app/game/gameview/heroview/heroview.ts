@@ -18,8 +18,8 @@ export default class Hero {
 
     private _heroName: BABYLON.Mesh;
 
-    constructor(name: string, scene: BABYLON.Scene, x: number, z: number, isGhost: boolean, rotation: number) {
-        (new ResourcesMap).get(name, "Hero", "./meshes/", "hero.babylon", scene)
+    constructor(name: string, meshname: string, filename: string, scene: BABYLON.Scene, x: number, z: number, isGhost: boolean, rotation: number) {
+        (new ResourcesMap).get(name, meshname, "./meshes/", filename, scene)
             .then((data) => {
                 this._position = new Point(x, z)
                 this._heroMesh = data;
