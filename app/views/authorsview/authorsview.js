@@ -13,8 +13,9 @@ export default class CreatorsView extends BaseView {
 
         this.backButton = this.element.querySelector('.main-block__back-button');
 
-        this.backButton.addEventListener('click', (formdata) => {
-            event.preventDefault;
+        this.backButton.addEventListener('click', (event) => {
+            event.preventDefault();
+            debugger;
             (new Router()).back();
         });
     }

@@ -18,7 +18,7 @@ class GameManager {
         window.sessionStorage.setItem("gameMode", gameMode);
     }
 
-    destroy() {
+    public destroy() {
         this.gameStrategy = null;
     }
 }

@@ -15,13 +15,6 @@ export default class ScoreboardView extends BaseView {
     }
 
     create() {
-        // this.backButton = this.element.querySelector('.main-block__back-in-rating');
-        //
-        // this.backButton.addEventListener('click', (formdata) => {
-        //     event.preventDefault;
-        //     (new Router()).back();
-        // });
-
         this.userService.getScoreboard(this.lowerOffset, this.chunkSize)
             .then((scoreboardArray) => {
                 this.element.innerHTML = this.template({dataList: scoreboardArray});
@@ -42,6 +35,13 @@ export default class ScoreboardView extends BaseView {
             });
 
 
+            this.backButton = this.element.querySelector('.main-block__back-in-rating');
+        
+            this.backButton.addEventListener('click', (event) => {
+                event.preventDefault();
+                (new Router()).back();
+            });
+    
     }
 
     onScroll() {

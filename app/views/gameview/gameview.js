@@ -4,7 +4,7 @@ import { GameManager, } from '../../game/game-manager.ts';
 import EventBus from '../../modules/event-bus.ts';
 import EVENTS from '../../game/utils/events.ts';
 import FullScreen from "../../game/gameview/services/fullscreenlogic";
-
+import Router from '../../modules/router';
 
 
 export default class GameView extends BaseView {
@@ -110,6 +110,14 @@ export default class GameView extends BaseView {
 
 
         this.fullScreen = new FullScreen(document.body.querySelector('.game'));
+
+
+        this.backButton = this.element.querySelector('.interface__back-in-gamemode');
+        
+        this.backButton.addEventListener('click', (event) => {
+            event.preventDefault();
+            (new Router()).back();
+        });
     }
 
     destroy() {
@@ -129,6 +137,12 @@ export default class GameView extends BaseView {
             node.style.visibility = "";
         });
 
+        this.backButton.removeEventListener('click', (event) => {
+            event.preventDefault();
+            (new Router()).back();
+        });
+
+        this.backButton = null;
 
         this.heroTwoWalls = null;
 
@@ -136,9 +150,27 @@ export default class GameView extends BaseView {
 
         this.eventBus.remove(EVENTS.OPPONENTHERO_WALL_NUMBER);
 
-        this.eventBus.remove(Events.MAINHERO_WALL_NUMBER);
+        this.eventBus.remove(EVENTS.MAINHERO_WALL_NUMBER);
 
-        this.eventBus.remove(Events.OPPONENTHERO_NAME);
+        this.eventBus.remove(EVENTS.OPPONENTHERO_NAME);
+
+        this.eventBus.remove(EVENTS.GAMEVIEW_VALIDATE_WALL);
+
+        this.eventBus.remove(EVENTS.WALL_IS_VALID);
+
+        this.eventBus.remove(EVENTS.WALL_IS_INVALID);
+
+        this.eventBus.remove(EVENTS.GAMEVIEW_SEND_MESSAGE);
+
+        this.eventBus.remove(EVENTS.GAMEVIEW_START_TIMER);
+
+        this.eventBus.remove(EVENTS.VALIDATE_WALL);
+
+        this.eventBus.remove(EVENTS.INFO_MESSAGE_RECEIVED);
+
+        clearInterval(this.timer);
+
+        this.timer = null;
 
         this.fullScreen.destroy();
     }

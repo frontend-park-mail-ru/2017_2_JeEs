@@ -13,8 +13,8 @@ export default class RulesView extends BaseView {
 
         this.backButton = this.element.querySelector('.main-block__back-in-rules');
 
-        this.backButton.addEventListener('click', (formdata) => {
-            event.preventDefault;
+        this.backButton.addEventListener('click', (event) => {
+            event.preventDefault();
             (new Router()).back();
         });
     }

@@ -61,7 +61,8 @@ const router = new Router();
 
 router.setNotFoundPage(notFoundView);
 
-router.register('/', menuView)
+router.register('', menuView)
+    .register('/', menuView)
     .register('/game', gameView)
     .register('/gamemode', gameModeView)
     .register('/rating', ratingView)
