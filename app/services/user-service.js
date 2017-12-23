@@ -6,7 +6,7 @@ import HttpSend from '../modules/http';
  */
 class UserService {
     constructor() {
-        this.baseUrl = 'http://quoridor.ru/backend';
+        this.baseUrl = 'https://jees-quoridor-backend.herokuapp.com';
         window.localStorage['backendUrl'] = this.baseUrl;
     }
 
