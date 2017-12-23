@@ -33,7 +33,6 @@ export default class EventBus {
 
     remove(eventName: string) {
         this.channels.delete(eventName);
-        console.log(this.channels);
     }
 
     emit(eventName: string, data: Object = {}) {

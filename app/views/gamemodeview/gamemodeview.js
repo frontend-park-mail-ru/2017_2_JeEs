@@ -17,6 +17,15 @@ export default class GameModeView extends BaseView {
             event.preventDefault();
             (new Router()).back();
         });
-    }
 
+        this.backButton = this.element.querySelector('.modes__multiplayer');
+
+        this.backButton.addEventListener('click', (event) => {
+            event.preventDefault();
+            if (!this.userService.getUsername()) {
+                return
+            }
+            (new Router()).go("/game?mode=multiplayer");
+        });
+    }
 }

@@ -15,7 +15,6 @@ export default class CreatorsView extends BaseView {
 
         this.backButton.addEventListener('click', (event) => {
             event.preventDefault();
-            debugger;
             (new Router()).back();
         });
     }

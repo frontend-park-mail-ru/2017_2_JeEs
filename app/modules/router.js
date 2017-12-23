@@ -49,7 +49,6 @@ export default class Router {
 
         let view = this.routes.get(path);
         if (!view) {
-            debugger;
             view = this.page404;
         }
 

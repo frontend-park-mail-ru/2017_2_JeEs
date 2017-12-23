@@ -7,4 +7,4 @@ mixin item(title, href)
         button.main-block__back='←'
     ul.main-block__modes
         +item('Игра в одиночку', '/game?mode=singleplayer')
-        +item('Игра с противником', '/game?mode=multiplayer')
+        button.main-block__gamemode-button.modes__multiplayer.no-route='Игра с противником'

@@ -18,17 +18,7 @@ export default class ApplicationView extends BaseView {
         this.gameName.addEventListener('click', (formdata) => {
             (new Router()).go('/');
         });
-
-
-        this.backButton = this.element.querySelector('.central-block__button-to-back');
-
-        // this.backButton.addEventListener('click', (formdata) => {
-        //     event.preventDefault;
-        //     (new Router()).back();
-        // });
     }
-
-
 
     getTopBar() {
         return document.querySelector('.top-bar');
