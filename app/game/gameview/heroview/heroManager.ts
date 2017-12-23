@@ -80,7 +80,6 @@ export default class HeroManager {
                 this._eventBus.emit(Events.GAMEVIEW_SEND_MESSAGE, "Ход красного игрока")
             }
         } else {
-            debugger;
             this._eventBus.emit(Events.GAMEVIEW_SEND_MESSAGE, "Ваш ход")
         }
         this._availableForMovementPoints = availableForMovementPoints;

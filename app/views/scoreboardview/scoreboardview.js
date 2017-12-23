@@ -17,7 +17,7 @@ export default class ScoreboardView extends BaseView {
     create() {
         this.userService.getScoreboard(this.lowerOffset, this.chunkSize)
             .then((scoreboardArray) => {
-                this.element.innerHTML = this.template({dataList: scoreboardArray});
+                this.element.innerHTML = this.template({ dataList: scoreboardArray });
                 this.lowerOffset += this.chunkSize;
 
                 let loadingBlocks = [...document.querySelectorAll('.loading-block')];
@@ -31,40 +31,86 @@ export default class ScoreboardView extends BaseView {
                 this.lowerLoadingBlock = lowerLoadingBlock;
 
                 this.scoreboard = document.querySelector('.scoreboard');
+                this.scoreboard.insertAfter = (function (elementToInsert, topElement) {
+                    this.insertBefore(elementToInsert, topElement.nextSibling);
+                }).bind(this.scoreboard);
                 this.scoreboard.addEventListener('scroll', this.onScroll.bind(this));
-            });
 
 
-            this.backButton = this.element.querySelector('.main-block__back-in-rating');
-        
-            this.backButton.addEventListener('click', (event) => {
-                event.preventDefault();
-                (new Router()).back();
+                this.backButton = this.element.querySelector('.main-block__back-in-rating');
+
+                // if (this.backButton) {
+                    this.backButton.addEventListener('click', (event) => {
+                        event.preventDefault();
+                        (new Router()).back();
+                    });
+                // }
             });
-    
+
     }
 
     onScroll() {
         if ((this.scoreboard.scrollTop === 0) && (this.upperOffset !== 0)) {
             this.upperLoadingBlock.setVisible(true);
+            (async () => {
+                this.loadingInProcess = true;
+                return await this.userService.getScoreboard(this.upperOffset - this.chunkSize, this.chunkSize);
+            })().then((scoreboardArray) => {
+                if (this.scoreboard.children.length - 2 >= this.limit) {
+                    this.popRows(this.chunkSize, "back");
+                }
+                this.pushRows(scoreboardArray, "front");
+                this.loadingInProcess = false;
+                this.upperLoadingBlock.setVisible(false);
+                this.scoreboard.scrollTo(0, 31 * 15);
+            });
         }
         if ((this.scoreboard.scrollHeight - this.scoreboard.scrollTop === this.scoreboard.clientHeight) && !this.loadingInProcess) {
             (async () => {
                 this.loadingInProcess = true;
                 return await this.userService.getScoreboard(this.lowerOffset, this.chunkSize);
             })().then((scoreboardArray) => {
-                this.insertRows(scoreboardArray);
-                this.lowerOffset += this.chunkSize;
+                if (this.scoreboard.children.length - 2 >= this.limit) {
+                    this.popRows(this.chunkSize, "front");
+                }
+                this.pushRows(scoreboardArray, "back");
                 this.loadingInProcess = false;
-            })
+            });
         }
     }
 
-    insertRows(scoreboardArray) {
-        scoreboardArray.forEach((scoreboardRow) => {
-            let newRow = document.createElement('li');
-            newRow.innerHTML = `<span class="userName">${scoreboardRow.userName}</span><span class="score">${scoreboardRow.score}</span>`;
-            this.scoreboard.insertBefore(newRow, this.lowerLoadingBlock);
-        });
+    pushRows(scoreboardArray, where) {
+        if (where === "back") {
+            scoreboardArray.forEach((scoreboardRow) => {
+                let newRow = document.createElement('li');
+                newRow.innerHTML = `<span class="userName">${scoreboardRow.userName}</span><span class="score">${scoreboardRow.score}</span>`;
+                this.scoreboard.insertBefore(newRow, this.lowerLoadingBlock);
+            });
+            this.lowerOffset += scoreboardArray.length;
+        } else if (where === "front") {
+            scoreboardArray.reverse().forEach((scoreboardRow) => {
+                let newRow = document.createElement('li');
+                newRow.innerHTML = `<span class="userName">${scoreboardRow.userName}</span><span class="score">${scoreboardRow.score}</span>`;
+                this.scoreboard.insertAfter(newRow, this.upperLoadingBlock);
+            });
+            this.upperOffset -= scoreboardArray.length;
+        }
+    }
+
+    popRows(nRows, where) {
+        this.scoreboard.querySelectorAll("scoreboard__row");
+
+        if (where === "back") {
+            let length = this.scoreboard.children.length;
+            for (let i = 0; i < nRows; ++i) {
+                this.scoreboard.removeChild(this.scoreboard.lastChild.previousSibling);
+            }
+            this.lowerOffset -= nRows;
+        } else if (where === "front") {
+            for (let i = 0; i < nRows; ++i) {
+                this.scoreboard.removeChild(this.scoreboard.children[1]);
+            }
+            this.upperOffset += nRows;
+        }
     }
 }
