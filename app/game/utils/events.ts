@@ -21,8 +21,7 @@ export default abstract class EVENTS {
     public static readonly GAMEVIEW_VALIDATE_WALL: string = "gameview:validate_wall";
     public static readonly GAMEVIEW_SEND_MESSAGE: string = "gameview:send_message";
     public static readonly GAMEVIEW_START_TIMER: string = "gameview:start_timer";
-
-
+    public static readonly GAMEVIEW_STOP_TIMER: string = "gameview:start_timer";
 
 
     // emitted in GameStrategy, handled in view
